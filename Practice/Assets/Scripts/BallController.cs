@@ -2,30 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum E_BallState
+{
+    Default,
+    Ready,
+    Attacking,
+}
 [RequireComponent(typeof(Rigidbody2D)), RequireComponent(typeof(LineRenderer))]
 public class BallController : MonoBehaviour
-{            
+{
+    [Header("Parameters")]
+    [SerializeField] private float Power;
+    [SerializeField] private float Mass;
+    [SerializeField] private float DefaultDrag;
+    [SerializeField] private float BeginDecelerateMagnitude;
+    [SerializeField] private float DecelerateDrag;
+    [SerializeField] private float StopMagnitude;
+    
     private Rigidbody2D rb;
     private LineRenderer lr;
-    private Vector2 currVelocity;    
-
-    private bool isReady;
-    private const float POWER = 40f;
-    private const float BALLRAD = 0.375f;
-    private const float epsilon = 1;
+    private Vector2 currVelocity;
+    private float epsilon; // Åº¼º °è¼ö.   
+    private E_BallState ballState;
+    private const float BALLRAD = 0.375f;    
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         lr = GetComponent<LineRenderer>();
+        
+        rb.mass = Mass;
+        rb.drag = DefaultDrag;        
+        epsilon = rb.sharedMaterial.bounciness;
+
         currVelocity = rb.velocity;
-        isReady = false;        
+        ballState = E_BallState.Default;
     }
     private void Update()
     {
         DecelerateBall();
         currVelocity = rb.velocity;
                 
-        if (isReady)
+        if (ballState == E_BallState.Ready)
         {
             Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 dir = CalculateDirection(worldPos);
@@ -33,11 +50,23 @@ public class BallController : MonoBehaviour
                 ShootBall(dir);            
             else            
                 DrawLine(dir);            
-        }        
-    }    
-    public void OnClickReadyButton()
+        }
+        else if (ballState == E_BallState.Attacking)
+        {
+            if (rb.velocity.magnitude == 0)
+            {
+                ballState = E_BallState.Default;
+                GameManager.Instance.GoNextTurn();
+            }
+        }
+    }
+    public void ChangeState(E_BallState state)
     {
-        isReady = true;       
+        ballState = state;
+    }
+    public void OnClickTestButton()
+    {
+        ShootBall(new Vector2(1, 1));
     }
     private Vector2 CalculateDirection(Vector2 mousePos)
     {
@@ -45,10 +74,10 @@ public class BallController : MonoBehaviour
     }
     private void ShootBall(Vector2 dir)
     {
-        rb.velocity = dir.normalized * POWER;
-        rb.drag = 0.4f;
+        rb.velocity = dir.normalized * Power;
+        rb.drag = DefaultDrag;
 
-        isReady = false;
+        ballState = E_BallState.Attacking;
         lr.enabled = false;
     }
     private void DrawLine(Vector2 dir)
@@ -60,6 +89,8 @@ public class BallController : MonoBehaviour
             {
                 Vector2 n = firstHit.normal;
 
+                float m1 = rb.mass;
+                float m2 = firstHit.collider.gameObject.GetComponent<Rigidbody2D>().mass;
                 Vector2 v1 = dir;
                 Vector2 v2 = Vector2.zero;
                 Vector2 p1 = firstHit.point + n * BALLRAD;
@@ -101,16 +132,16 @@ public class BallController : MonoBehaviour
                 }
 
                 Vector2 u1, u2;
-                u1 = ((1 - epsilon) * v1.magnitude * cos1 + (1 + epsilon) * v2.magnitude * cos2) / 2 * basisX - v1.magnitude * sin1 * basisY;
-                u2 = ((1 + epsilon) * v1.magnitude * cos1 + (1 - epsilon) * v2.magnitude * cos2) / 2 * basisX - v2.magnitude * sin2 * basisY;
+                u1 = ((m1 - epsilon * m2) * v1.magnitude * cos1 + m2 * (1 + epsilon) * v2.magnitude * cos2) / (m1 + m2) * basisX - v1.magnitude * sin1 * basisY;
+                u2 = (m1 * (1 + epsilon) * v1.magnitude * cos1 + (m2 - epsilon * m1) * v2.magnitude * cos2) / (m1 + m2) * basisX - v2.magnitude * sin2 * basisY;
 
                 RaycastHit2D secondHit = GetCircleCastHit(firstHit.point + n * BALLRAD, u1, gameObject, firstHit.collider.gameObject);
                 if (secondHit.collider != null)
                 {
                     lr.positionCount = 3;                    
                     lr.SetPosition(0, transform.position);
-                    lr.SetPosition(1, firstHit.point + n * 0.375f);
-                    lr.SetPosition(2, secondHit.point + secondHit.normal * 0.375f);
+                    lr.SetPosition(1, firstHit.point + n * BALLRAD);
+                    lr.SetPosition(2, secondHit.point + secondHit.normal * BALLRAD);
                     lr.enabled = true;
                 }
             }
@@ -120,9 +151,8 @@ public class BallController : MonoBehaviour
                 Vector2 modifyDir = firstHit.point + n * BALLRAD - new Vector2(transform.position.x, transform.position.y);
                 Vector2 p = -Vector2.Dot(modifyDir, n) / n.magnitude * n / n.magnitude;
                 Vector2 b = modifyDir + 2 * p;                
-
-                RaycastHit2D secondHit = Physics2D.CircleCast(firstHit.point + n * BALLRAD, BALLRAD, b, 100f);
-
+                
+                RaycastHit2D secondHit = GetCircleCastHit(firstHit.point + n * BALLRAD, b, gameObject);
                 if (secondHit.collider != null)
                 {
                     lr.positionCount = 3;
@@ -157,18 +187,22 @@ public class BallController : MonoBehaviour
         return new RaycastHit2D();
     }
     private void DecelerateBall()
-    {        
-        if (rb.velocity.magnitude < 1f)
+    {
+        if (rb.velocity.magnitude < StopMagnitude)
         {
-            rb.drag = 1f;            
+            rb.velocity = Vector2.zero;            
         }
-        else if (rb.velocity.magnitude < 0.5f)
+        else if (rb.velocity.magnitude < BeginDecelerateMagnitude)
         {
-            rb.velocity = Vector2.zero;
-        }
+            rb.drag = DecelerateDrag;            
+        }                
     }
     public Vector2 GetCurrVelocity()
     {
         return currVelocity;
+    }
+    public E_BallState GetBallState()
+    {
+        return ballState;
     }
 }
