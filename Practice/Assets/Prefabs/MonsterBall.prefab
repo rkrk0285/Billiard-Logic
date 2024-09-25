@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74f2b6e43a1f084cb268d03bdc2283b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Power: 40
+  Power: 3
   Mass: 1
   DefaultDrag: 0.4
   BeginDecelerateMagnitude: 0
