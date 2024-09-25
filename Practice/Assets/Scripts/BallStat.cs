@@ -18,7 +18,7 @@ public class BallStat : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")
+        if ((collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
             && collision.gameObject.GetComponent<BallController>().GetBallState() == E_BallState.Attacking)
         {
             TakeDamage(collision.gameObject.GetComponent<BallStat>().ATK);

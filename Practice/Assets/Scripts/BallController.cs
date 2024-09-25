@@ -19,12 +19,13 @@ public class BallController : MonoBehaviour
     [SerializeField] private float DecelerateDrag;
     [SerializeField] private float StopMagnitude;
     
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;    
+    protected float epsilon;
     private LineRenderer lr;
-    private Vector2 currVelocity;
-    private float epsilon; // Åº¼º °è¼ö.   
+    private Vector2 currVelocity;    
     private E_BallState ballState;
-    private const float BALLRAD = 0.375f;    
+
+    protected const float BALLRAD = 0.375f;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -72,7 +73,7 @@ public class BallController : MonoBehaviour
     {
         return mousePos - new Vector2(transform.position.x, transform.position.y);
     }
-    private void ShootBall(Vector2 dir)
+    protected void ShootBall(Vector2 dir)
     {
         rb.velocity = dir.normalized * Power;
         rb.drag = DefaultDrag;
@@ -85,7 +86,7 @@ public class BallController : MonoBehaviour
         RaycastHit2D firstHit = GetCircleCastHit(new Vector2(transform.position.x, transform.position.y), dir, gameObject);
         if (firstHit.collider != null)
         {
-            if (firstHit.collider.CompareTag("Player")) // Conflict another ball
+            if (firstHit.collider.CompareTag("Player") || firstHit.collider.CompareTag("Enemy")) // Conflict another ball
             {
                 Vector2 n = firstHit.normal;
 
@@ -164,7 +165,7 @@ public class BallController : MonoBehaviour
             }
         }
     }
-    private RaycastHit2D GetCircleCastHit(Vector2 startPos, Vector2 dir, GameObject startObj)
+    protected RaycastHit2D GetCircleCastHit(Vector2 startPos, Vector2 dir, GameObject startObj)
     {
         RaycastHit2D[] hit = Physics2D.CircleCastAll(startPos, BALLRAD, dir, 100f);
 
@@ -175,7 +176,7 @@ public class BallController : MonoBehaviour
         }
         return new RaycastHit2D();
     }
-    private RaycastHit2D GetCircleCastHit(Vector2 startPos, Vector2 dir, GameObject startObj, GameObject startObj2)
+    protected RaycastHit2D GetCircleCastHit(Vector2 startPos, Vector2 dir, GameObject startObj, GameObject startObj2)
     {
         RaycastHit2D[] hit = Physics2D.CircleCastAll(startPos, BALLRAD, dir, 100f);
 
