@@ -67,8 +67,7 @@ public class BallStat : MonoBehaviour
     }
     public virtual void ResetStartCondition()
     {
-        transform.GetComponent<SpriteRenderer>().color = Color.white;
-        transform.GetComponent<Collider2D>().enabled = true;
+        
     }
     public virtual void ResetEndCondition()
     {

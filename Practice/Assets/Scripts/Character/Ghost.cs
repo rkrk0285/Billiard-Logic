@@ -17,7 +17,7 @@ public class Ghost : BallStat
             }            
         }
         else
-        {            
+        {
             if (ballState == E_BallState.Attacking)
                 wallBounce++;
         }
