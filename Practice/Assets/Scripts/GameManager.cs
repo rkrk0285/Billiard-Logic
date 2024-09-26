@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -29,7 +30,6 @@ public class GameManager : MonoBehaviour
         else
             Destroy(this);
     }
-
     private void Start()
     {
         InitializeQueue();
@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
         enemyTurnIndex = -1;
         isAlleyTurn = true;
     }
-
     private void InitializeQueue()
     {
         alleyQueue = new Queue<GameObject>();
@@ -79,7 +78,6 @@ public class GameManager : MonoBehaviour
         isAlleyTurn = !isAlleyTurn;        
         readyButton.interactable = true;
     }
-
     public void OnClickReadyButton()
     {
         GameObject obj;
@@ -88,6 +86,8 @@ public class GameManager : MonoBehaviour
             if (alleyQueue.Count > 0)
             {
                 obj = alleyQueue.Dequeue();
+                obj.GetComponent<BallStat>().ResetActionParameter();
+                obj.GetComponent<BallStat>().ResetStartCondition();
                 obj.GetComponent<BallController>().ChangeState(E_BallState.Ready);
                 alleyQueue.Enqueue(obj);
             }
@@ -97,15 +97,16 @@ public class GameManager : MonoBehaviour
             if (enemyQueue.Count > 0)
             {
                 obj = enemyQueue.Dequeue();
+                obj.GetComponent<BallStat>().ResetActionParameter();
+                obj.GetComponent<BallStat>().ResetStartCondition();
                 obj.GetComponent<EnemyBallAI>().AIShooting();
                 enemyQueue.Enqueue(obj);
             }
-        }
-        
+        }        
         readyButton.interactable = false;
     }
     public void OnClickReloadButton()
     {
-        SceneManager.LoadSceneAsync(0);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
 }
