@@ -10,7 +10,7 @@ public class WallReflect : MonoBehaviour
     Vector2 CalculateReflect(Vector2 a, Vector2 n)
     {
         Vector2 p = -Vector2.Dot(a, n) / n.magnitude * n / n.magnitude;
-        Vector2 b = a + 2 * p;
+        Vector2 b = a + 2 * p;        
         return b;
     }
 
@@ -22,5 +22,29 @@ public class WallReflect : MonoBehaviour
             Vector2 velocity = collision.gameObject.GetComponent<BallController>().GetCurrVelocity();
             ballRb.velocity = CalculateReflect(velocity, -collision.GetContact(0).normal) * ReduceSpeed;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {            
+            Rigidbody2D ballRb = collision.GetComponent<Rigidbody2D>();
+            if (ballRb != null)
+            {                
+                Vector2 velocity = ballRb.velocity;                
+                Vector2 ballCenter = collision.bounds.center;
+                Vector2 closestPoint = GetClosestPoint(collision);                
+                Vector2 collisionNormal = (ballCenter - closestPoint).normalized;                
+                Vector2 reflectedVelocity = CalculateReflect(velocity, collisionNormal) * ReduceSpeed;
+                
+                ballRb.velocity = reflectedVelocity;
+            }
+        }
+    }
+    
+    private Vector2 GetClosestPoint(Collider2D ballCollider)
+    {
+        Collider2D wallCollider = GetComponent<Collider2D>();
+        return wallCollider.ClosestPoint(ballCollider.bounds.center);
     }
 }
