@@ -79,6 +79,7 @@ partial class SkillLists
     public void GoblinToGolem()
     {
         StartCoroutine(DelayedStopBall(goblin));
+        StartCoroutine(DelayedStopBall(golem));
         goblin.GetComponent<BallStat>().ResetActionParameter();
         goblin.GetComponent<BallController>().IncreasePowerMultiplier(GoblinToGolemSpeedMultiplier);
         GameManager.Instance.GoToExtraTurn();
