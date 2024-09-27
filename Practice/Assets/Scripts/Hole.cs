@@ -5,7 +5,7 @@ using UnityEngine;
 public class Hole : MonoBehaviour
 {
     [SerializeField] private float speedThreshold = 0.5f;  // 공이 죽을 속도 임계값
-    [SerializeField] private float stayDuration = 2f;      // 공이 구멍에 있을 때 죽을 때까지 기다리는 시간
+    [SerializeField] private float stayDuration = 0.1f;      // 공이 구멍에 있을 때 죽을 때까지 기다리는 시간
 
     private void OnTriggerStay2D(Collider2D other)
     {
