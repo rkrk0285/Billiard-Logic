@@ -1,20 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class BallStat : MonoBehaviour
 {
+    public enum E_Character
+    {
+        Golem,
+        Skeleton,
+        Goblin,
+        Ghost,
+    }
+
     [Header("Parameters")]
     [SerializeField] protected float MaxHP;
     [SerializeField] protected float ATK;
     [SerializeField] protected float DEF;
+    [SerializeField] protected 
     
     private float currentHP;
     public float currentATK;
     public float currentDEF;
     protected int wallBounce;
     protected int ballBounce;
+    public E_Character currentCharacter;
 
     [Header("Components")]
     [SerializeField] private HpBar hpBar;
@@ -112,5 +123,15 @@ public class BallStat : MonoBehaviour
     public void IncreaseDamageMultiplier(float multiplier)
     {
         currentATK *= multiplier;
+    }
+
+    public float GetCurrentHP()
+    {
+        return currentHP; 
+    }
+
+    public float GetMaxHP()
+    {
+        return MaxHP;
     }
 }

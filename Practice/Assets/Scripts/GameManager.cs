@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
                 obj.GetComponent<BallStat>().ResetStartCondition();
                 obj.GetComponent<BallController>().ChangeState(E_BallState.Ready);
                 alleyQueue.Enqueue(obj);
+
             }
         }
         else
