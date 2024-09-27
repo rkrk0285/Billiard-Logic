@@ -10,19 +10,21 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [Header("GameObject")]
-    [SerializeField] private Transform AlleyTrans;
+    [SerializeField] private Transform AllyTrans;
     [SerializeField] private Transform EnemyTrans;
 
     [Header("Components")]
     [SerializeField] private Button readyButton;
 
-    [Header("Parameters")]
-    private int alleyTurnIndex;
-    private int enemyTurnIndex;
-    private bool isAlleyTurn;
-    public Queue<GameObject> alleyQueue;
-    public Queue<GameObject> enemyQueue;
+    [Header("Parameters")]    
+    private bool isAllyTurn;
+    public bool isExtraTurn;
     
+    private Queue<GameObject> allyTurnQueue;
+    private Queue<GameObject> enemyTurnQueue;
+
+    private GameObject currentTurnObject;
+
     private void Awake()
     {
         if (Instance == null)
@@ -32,79 +34,160 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        InitializeQueue();
-        alleyTurnIndex = 0;
-        enemyTurnIndex = -1;
-        isAlleyTurn = true;
+        InitializeList();        
+        isAllyTurn = true;
+        isExtraTurn = false;
     }
-    private void InitializeQueue()
+    private void InitializeList()
     {
-        alleyQueue = new Queue<GameObject>();
-        enemyQueue = new Queue<GameObject>();
+        allyTurnQueue = new Queue<GameObject>();
+        enemyTurnQueue = new Queue<GameObject>();
 
-        for(int i = 0; i < AlleyTrans.childCount; i++)
+        for(int i = 0; i < AllyTrans.childCount; i++)
         {
-            alleyQueue.Enqueue(AlleyTrans.GetChild(i).gameObject);
+            allyTurnQueue.Enqueue(AllyTrans.GetChild(i).gameObject);
         }
         for (int i = 0; i < EnemyTrans.childCount; i++)
         {
-            enemyQueue.Enqueue(EnemyTrans.GetChild(i).gameObject);
+            enemyTurnQueue.Enqueue(EnemyTrans.GetChild(i).gameObject);
         }
     }
     private void UpdateQueue()
-    {
-        Queue<GameObject> newAlleyQueue = new Queue<GameObject>();
+    {        
+        Queue<GameObject> newAllyQueue = new Queue<GameObject>();
         Queue<GameObject> newEnemyQueue = new Queue<GameObject>();
-        while(alleyQueue.Count > 0)
+        while(allyTurnQueue.Count > 0)
         {
-            GameObject obj = alleyQueue.Dequeue();
+            GameObject obj = allyTurnQueue.Dequeue();
 
             if (obj != null)
-                newAlleyQueue.Enqueue(obj);
+                newAllyQueue.Enqueue(obj);
         }
-        while (enemyQueue.Count > 0)
+        while (enemyTurnQueue.Count > 0)
         {
-            GameObject obj = enemyQueue.Dequeue();
+            GameObject obj = enemyTurnQueue.Dequeue();
 
             if (obj != null)
                 newEnemyQueue.Enqueue(obj);
         }
-        alleyQueue = newAlleyQueue;
-        enemyQueue = newEnemyQueue;        
+        allyTurnQueue = newAllyQueue;
+        enemyTurnQueue = newEnemyQueue;        
     }
-    public void GoNextTurn()
-    {
+    public void TurnEnd()
+    {        
+        if (currentTurnObject.GetComponent<BallStat>().Interact)        
+            currentTurnObject.GetComponent<BallStat>().ActiveInteractiveSkill();        
+        else
+            GoToNextTurn();
+    }
+    public void GoToNextTurn()
+    {        
+        currentTurnObject.GetComponent<BallStat>().ResetActionParameter();
+        currentTurnObject.GetComponent<BallController>().ResetPhysicsParameter();
+
         UpdateQueue();
-        isAlleyTurn = !isAlleyTurn;        
+        isAllyTurn = !isAllyTurn;
+        isExtraTurn = false;
+        readyButton.interactable = true;
+    }
+    public void GoToExtraTurn()
+    {
+        isExtraTurn = true;
         readyButton.interactable = true;
     }
     public void OnClickReadyButton()
     {
-        GameObject obj;
-        if (isAlleyTurn)
+        ResetHandsUpAlly();        
+        if (isExtraTurn)
+        {            
+            currentTurnObject.GetComponent<BallStat>().ResetStartCondition();
+            currentTurnObject.GetComponent<BallStat>().InteractiveAllyName = "";
+            currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);            
+        }
+        else if (isAllyTurn)
         {
-            if (alleyQueue.Count > 0)
+            if (allyTurnQueue.Count > 0)
             {
-                obj = alleyQueue.Dequeue();
-                obj.GetComponent<BallStat>().ResetActionParameter();
-                obj.GetComponent<BallStat>().ResetStartCondition();
-                obj.GetComponent<BallController>().ChangeState(E_BallState.Ready);
-                alleyQueue.Enqueue(obj);
+                currentTurnObject = allyTurnQueue.Dequeue();
+                allyTurnQueue.Enqueue(currentTurnObject);
+                CheckHandsUpAlly(currentTurnObject);
+                
+                currentTurnObject.GetComponent<BallStat>().ResetStartCondition();
+                currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
             }
         }
         else
         {
-            if (enemyQueue.Count > 0)
+            if (enemyTurnQueue.Count > 0)
             {
-                obj = enemyQueue.Dequeue();
-                obj.GetComponent<BallStat>().ResetActionParameter();
-                obj.GetComponent<BallStat>().ResetStartCondition();
-                obj.GetComponent<EnemyBallAI>().AIShooting();
-                enemyQueue.Enqueue(obj);
+                currentTurnObject = enemyTurnQueue.Dequeue();
+                enemyTurnQueue.Enqueue(currentTurnObject);
+                
+                currentTurnObject.GetComponent<BallStat>().ResetStartCondition();
+                currentTurnObject.GetComponent<EnemyBallAI>().AIShooting();                
             }
-        }        
+        }
+        
         readyButton.interactable = false;
     }
+    public void CheckHandsUpAlly(GameObject currObj)
+    {        
+        Queue<GameObject> newAllyQueue = new Queue<GameObject>(allyTurnQueue);
+        List<GameObject> possibleAlly = new List<GameObject>();
+        
+        while (newAllyQueue.Count > 0)
+        {
+            GameObject obj = newAllyQueue.Dequeue();
+            if (obj != null && currObj != obj)
+            {                
+                if (isPossibleToUseInteractive(currObj.name, obj.name))
+                {                    
+                    possibleAlly.Add(obj);
+                }
+            }
+        }
+
+        if (possibleAlly.Count != 0)
+        {            
+            int rand = Random.Range(0, possibleAlly.Count);
+            currentTurnObject.GetComponent<BallStat>().SetInteractiveAllyName(possibleAlly[rand].name);
+            possibleAlly[rand].GetComponent<BallStat>().HandsUp();
+        }
+    }
+
+    public bool isPossibleToUseInteractive(string currName, string targetName)
+    {
+        switch (currName)
+        {
+            case "Skeleton":                
+                break;
+
+            case "Goblin":
+                if (targetName.Equals("Golem"))
+                    return true;
+                break;
+
+            case "Golem":                
+                if (targetName.Equals("Skeleton"))
+                    return true;
+                break;
+
+            case "Ghost":
+                if (targetName.Equals("Skeleton"))
+                    return true;
+                break;
+        }
+        return false;
+    }
+    public void ResetHandsUpAlly()
+    {
+        Queue<GameObject> newAllyQueue = new Queue<GameObject>(allyTurnQueue);
+        while (newAllyQueue.Count > 0)
+        {
+            GameObject obj = newAllyQueue.Dequeue();
+            obj.GetComponent<BallStat>().HandsDown();
+        }
+    }    
     public void OnClickReloadButton()
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
