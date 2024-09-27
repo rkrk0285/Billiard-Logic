@@ -174,6 +174,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2145146429}
     m_Modifications:
+    - target: {fileID: -7365604304712473437, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: MaxHP
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.64
@@ -229,6 +233,22 @@ PrefabInstance:
     - target: {fileID: 2505598208739393651, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: Power
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: DefaultDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: StopMagnitude
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: BeginDecelerateMagnitude
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3435239759494655773, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_Layer
@@ -334,8 +354,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1355839095}
   - {fileID: 284953285}
+  - {fileID: 1355839095}
   - {fileID: 1781099933}
   - {fileID: 1892766295}
   m_Father: {fileID: 72874033}
@@ -584,6 +604,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2145146429}
     m_Modifications:
+    - target: {fileID: -7365604304712473437, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: MaxHP
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.77
@@ -639,6 +663,22 @@ PrefabInstance:
     - target: {fileID: 2505598208739393651, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: Power
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: DefaultDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: StopMagnitude
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: BeginDecelerateMagnitude
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3435239759494655773, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_Layer
@@ -1564,6 +1604,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2145146429}
     m_Modifications:
+    - target: {fileID: -7365604304712473437, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: MaxHP
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.78
@@ -1620,6 +1664,22 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: Power
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: DefaultDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: StopMagnitude
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: BeginDecelerateMagnitude
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3435239759494655773, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -1672,7 +1732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredWallBounceCount: 3
-  criticalMultiplier: 2
+  criticalMultiplier: 3
 --- !u!114 &1355839103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1685,7 +1745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7236c4c2f9315234e88a68f2c1858237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 10
+  MaxHP: 20
   ATK: 2
   DEF: 0
   currentHP: 0
@@ -1705,6 +1765,22 @@ PrefabInstance:
     - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: Mass
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: Power
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: DefaultDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: StopMagnitude
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: BeginDecelerateMagnitude
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1762895433505770083, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Layer
@@ -1896,13 +1972,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2145146429}
     m_Modifications:
+    - target: {fileID: -7365604304712473437, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: MaxHP
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.57
+      value: -7.02
       objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.24
+      value: 2.78
       objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1951,6 +2031,22 @@ PrefabInstance:
     - target: {fileID: 2505598208739393651, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: Power
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: DefaultDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: StopMagnitude
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2534284033928696767, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: BeginDecelerateMagnitude
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3435239759494655773, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_Layer
@@ -2003,7 +2099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ee22582c53b3dd4ebf4d2ff5b4658de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 10
+  MaxHP: 14
   ATK: 2
   DEF: 0
   currentHP: 0
@@ -2376,6 +2472,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 286515861}
     m_Modifications:
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: Power
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: DefaultDrag
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: StopMagnitude
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: BeginDecelerateMagnitude
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1762895433505770083, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -2534,6 +2646,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 286515861}
     m_Modifications:
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: Mass
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: Power
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: DefaultDrag
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: StopMagnitude
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: BeginDecelerateMagnitude
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1762895433505770083, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -2578,6 +2710,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2314572505029151415, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: b8c5d65dadd249b4f9da036e9a0744b4, type: 2}
     - target: {fileID: 2413610394573740877, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Name
       value: Golem
@@ -2602,6 +2738,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5343083804575145709, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: b8c5d65dadd249b4f9da036e9a0744b4, type: 2}
     - target: {fileID: 7256215190365973541, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -2647,7 +2787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148b9989d8930a645862f00dc49c27ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 10
+  MaxHP: 20
   ATK: 2
   DEF: 0
   currentHP: 0
@@ -2699,6 +2839,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 286515861}
     m_Modifications:
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: Power
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: DefaultDrag
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: StopMagnitude
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: DecelerateDrag
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 577696515752375278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: BeginDecelerateMagnitude
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 635676810728896972, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
