@@ -9,7 +9,7 @@ public class GoblinSkill : SkillBase
 
     public override void ActivateSkill()
     {                
-        if (ballStat.GetWallBounceCount() >= requiredWallBounceCount)
+        if (ballStat.GetWallBounceCount() == requiredWallBounceCount && ballStat.GetBallBounceCount() == 0)
         {
             ballStat.IncreaseDamageMultiplier(criticalMultiplier);
             Debug.Log("고블린 액션 발동");
