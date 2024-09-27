@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6929403280516020751}
   - component: {fileID: -7365604304712473437}
   - component: {fileID: 2534284033928696767}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Enemy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -271,6 +271,11 @@ MonoBehaviour:
   MaxHP: 10
   ATK: 2
   DEF: 0
+  currentHP: 0
+  currentATK: 0
+  currentDEF: 0
+  Interact: 0
+  InteractiveAllyName: 
   hpBar: {fileID: 1271313571312839333}
 --- !u!114 &2534284033928696767
 MonoBehaviour:
@@ -290,6 +295,8 @@ MonoBehaviour:
   BeginDecelerateMagnitude: 0
   DecelerateDrag: 1
   StopMagnitude: 0.5
+  currentPower: 0
+  ballState: 0
 --- !u!1 &2505598208739393651
 GameObject:
   m_ObjectHideFlags: 0

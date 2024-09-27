@@ -20,17 +20,20 @@ public class BallController : MonoBehaviour
     [SerializeField] private float DecelerateDrag;
     [SerializeField] private float StopMagnitude;
 
+    [Header("Current Parameters")]
+    [SerializeField] private float currentPower;
+
     protected float epsilon;
     private Vector2 currVelocity;
-    private E_BallState ballState;
+    [SerializeField] private E_BallState ballState;
 
     protected const float BALLRAD = 0.375f;
 
     [Header("Components")]
     protected Rigidbody2D rb;
     private BallStat ballStat;
-    private LineRenderer lr;    
-    
+    private LineRenderer lr;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -38,17 +41,18 @@ public class BallController : MonoBehaviour
         ballStat = GetComponent<BallStat>();
 
         rb.mass = Mass;
-        rb.drag = DefaultDrag;        
+        rb.drag = DefaultDrag;
         epsilon = rb.sharedMaterial.bounciness;
 
         currVelocity = rb.velocity;
+        currentPower = Power;
         ballState = E_BallState.Default;
     }
     private void Update()
     {
         DecelerateBall();
         currVelocity = rb.velocity;
-                        
+
         switch (ballState)
         {
             case E_BallState.Ready:
@@ -65,10 +69,14 @@ public class BallController : MonoBehaviour
                 {
                     ChangeState(E_BallState.Default);
                     transform.GetComponent<BallStat>().ResetEndCondition();
-                    GameManager.Instance.GoNextTurn();
+                    GameManager.Instance.TurnEnd();
                 }
                 break;
         }
+    }
+    public void ResetPhysicsParameter()
+    {
+        currentPower = Power;
     }
     private void DrawLine(Vector2 dir)
     {
@@ -91,14 +99,26 @@ public class BallController : MonoBehaviour
             lr.SetPosition(2, secondHit.point);
             lr.enabled = true;
         }
-    }    
+    }
     protected void ShootBall(Vector2 dir)
     {
-        rb.velocity = dir.normalized * Power;
+        rb.velocity = dir.normalized * currentPower;
         rb.drag = DefaultDrag;
 
         ballState = E_BallState.Attacking;
         lr.enabled = false;
+
+        GameManager.Instance.ResetHandsUpAlly();
+    }
+    public void StopBall()
+    {
+        rb.velocity = Vector2.zero;
+    }
+    public IEnumerator DelayedStopBall()
+    {
+        yield return new WaitForFixedUpdate();
+        transform.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        StopCoroutine(DelayedStopBall());
     }
     protected Vector2 CalculateNextDirection(GameObject firstObj, GameObject secondObj, RaycastHit2D hit, Vector2 dir)
     {
@@ -170,7 +190,7 @@ public class BallController : MonoBehaviour
     {
         RaycastHit2D[] hit = Physics2D.CircleCastAll(startPos, BALLRAD, dir, 100f);
 
-        for(int i = 0; i < hit.Length; i++)
+        for (int i = 0; i < hit.Length; i++)
         {
             if (hit[i].collider.gameObject != startObj)
                 return hit[i];
@@ -192,12 +212,12 @@ public class BallController : MonoBehaviour
     {
         if (rb.velocity.magnitude < StopMagnitude)
         {
-            rb.velocity = Vector2.zero;            
+            rb.velocity = Vector2.zero;
         }
         else if (rb.velocity.magnitude < BeginDecelerateMagnitude)
         {
-            rb.drag = DecelerateDrag;            
-        }                
+            rb.drag = DecelerateDrag;
+        }
     }
     public void ChangeState(E_BallState state)
     {
@@ -210,5 +230,10 @@ public class BallController : MonoBehaviour
     public E_BallState GetBallState()
     {
         return ballState;
+    }
+    
+    public void IncreasePowerMultiplier(float multiplier)
+    {        
+        currentPower *= multiplier;
     }
 }
