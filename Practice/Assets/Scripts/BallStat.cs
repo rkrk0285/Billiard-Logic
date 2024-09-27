@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,71 +11,51 @@ public class BallStat : MonoBehaviour
     [SerializeField] protected float ATK;
     [SerializeField] protected float DEF;
     
-    private float currentHP;
-    public float currentATK;
+    public float currentHP;
+    public float currentATK;    
     public float currentDEF;
+    public bool Interact;
+    public string InteractiveAllyName;
+
     protected int wallBounce;
     protected int ballBounce;
-
+    
     [Header("Components")]
     [SerializeField] private HpBar hpBar;
     
-    protected SkillBase skill;
+    protected SkillBase skill;    
+    protected Dictionary<string, Action> InteractiveSkill = new Dictionary<string, Action>();
 
     private void Start()
     {
         currentHP = MaxHP;
         ResetActionParameter();
-
-        skill = GetComponent<SkillBase>();
-        if (skill != null)
-        {            
-            skill.Initialize(this);
-        }
+        InitializeSkill();        
     }
-    public void ResetActionParameter()
+    public virtual void ResetActionParameter()
     {
         currentATK = ATK;
         currentDEF = DEF;
         wallBounce = 0;
-        ballBounce = 0;                
+        ballBounce = 0;
+        Interact = false;
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        E_BallState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
-        {            
-            E_BallState collisionBallState = collision.gameObject.GetComponent<BallController>().GetBallState();
-            if (ballState == E_BallState.Attacking) // Attacking
-            {
-                ballBounce++;
-            }
-            else if (collisionBallState == E_BallState.Attacking) // Attacked
-            {
-                TakeDamage(collision.gameObject.GetComponent<BallStat>().currentATK);
-            }
-        }
-        else
-        {            
-            if (ballState == E_BallState.Attacking)
-                wallBounce++;
-        }
-
-        if (ballState == E_BallState.Attacking)
-        {            
-            skill?.ActivateSkill();
+    public void ActiveInteractiveSkill()
+    {        
+        if (InteractiveSkill.ContainsKey(InteractiveAllyName))
+        {
+            InteractiveSkill[InteractiveAllyName]?.Invoke();
         }
     }
-    public virtual void ResetStartCondition()
+    public void HandsUp()
     {
-        
+        transform.Find("HandsUp").gameObject.SetActive(true);        
     }
-    public virtual void ResetEndCondition()
+    public void HandsDown()
     {
-        // DO NOTHING
-        // Override this function when inherrit this class to child class
+        transform.Find("HandsUp").gameObject.SetActive(false);        
     }
-    protected void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         currentHP -= damage;
         if (currentHP <= 0)
@@ -108,8 +89,47 @@ public class BallStat : MonoBehaviour
     {
         return ballBounce;
     }    
+    public void SetInteractiveAllyName(string name)
+    {
+        InteractiveAllyName = name;
+    }
     public void IncreaseDamageMultiplier(float multiplier)
     {
         currentATK *= multiplier;
     }
+    protected virtual void InitializeSkill()
+    {
+        skill = GetComponent<SkillBase>();
+        if (skill != null)
+        {
+            skill.Initialize(this);
+        }
+    }
+    public virtual void ResetStartCondition()
+    {
+        // DO NOTHING
+        // Override this function when inherrit this class to child class
+    }
+    public virtual void ResetEndCondition()
+    {
+        // DO NOTHING
+        // Override this function when inherrit this class to child class
+    }
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        E_BallState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
+        if (ballState == E_BallState.Attacking)
+        {
+            if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
+            {
+                ballBounce++;
+                collision.gameObject.GetComponent<BallStat>().TakeDamage(currentATK);
+            }
+            else
+            {
+                wallBounce++;
+            }
+            //skill?.ActivateSkill();
+        }
+    }    
 }

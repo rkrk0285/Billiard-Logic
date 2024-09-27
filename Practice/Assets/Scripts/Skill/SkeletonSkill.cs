@@ -15,7 +15,7 @@ public class SkeletonSkill : SkillBase
         }
     }
 
-    IEnumerator DelayedProcess()
+    public IEnumerator DelayedProcess()
     {
         yield return new WaitForFixedUpdate();
         transform.GetComponent<SpriteRenderer>().color = Color.red;
