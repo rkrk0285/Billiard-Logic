@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class HpBar : MonoBehaviour
@@ -15,5 +16,24 @@ public class HpBar : MonoBehaviour
 
         fillTransform.localScale = new Vector3(hpPercent, originScale.y, originScale.z);
         fillTransform.localPosition = Vector3.zero - new Vector3((1 - hpPercent) / 2, 0, 0);
+    }
+    public void ShowBarrier(int barrierCount)
+    {
+        if (barrierCount > 0)
+        {
+            transform.Find("Barrier").GetChild(0).GetComponent<TextMeshPro>().text = barrierCount.ToString();
+            transform.Find("Barrier").gameObject.SetActive(true);
+        }
+        else
+        {
+            transform.Find("Barrier").gameObject.SetActive(false);
+        }
+    }
+    public void ShowAttack(float currentATK, float ATK)
+    {
+        if (currentATK > ATK)
+            transform.Find("Attack").gameObject.SetActive(true);
+        else
+            transform.Find("Attack").gameObject.SetActive(false);
     }
 }

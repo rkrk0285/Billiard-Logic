@@ -10,10 +10,13 @@ public class BallStat : MonoBehaviour
     [SerializeField] protected float MaxHP;
     [SerializeField] protected float ATK;
     [SerializeField] protected float DEF;
+    [SerializeField] protected float Heal;
     
     public float currentHP;
     public float currentATK;    
     public float currentDEF;
+    public float currentHeal;
+    public int currentBarrier;
     public bool Interact;
     public string InteractiveAllyName;
 
@@ -29,16 +32,19 @@ public class BallStat : MonoBehaviour
     private void Start()
     {
         currentHP = MaxHP;
-        ResetActionParameter();
+        currentBarrier = 0;
+
+        ResetEndParameter();
         InitializeSkill();        
     }
-    public virtual void ResetActionParameter()
-    {
+    public virtual void ResetEndParameter()
+    {        
         currentATK = ATK;
         currentDEF = DEF;
         wallBounce = 0;
         ballBounce = 0;
         Interact = false;
+        ShowInfo();
     }
     public void ActiveInteractiveSkill()
     {        
@@ -56,27 +62,36 @@ public class BallStat : MonoBehaviour
         transform.Find("HandsUp").gameObject.SetActive(false);        
     }
     public void TakeDamage(float damage)
-    {
-        currentHP -= damage;
-        if (currentHP <= 0)
+    {        
+        if (currentBarrier > 0)
         {
-            Destroy(this.gameObject);
+            currentBarrier--;
         }
-        ShowDamage();
+        else
+        {
+            currentHP -= damage;
+            if (currentHP <= 0)
+            {
+                gameObject.SetActive(false);
+            }            
+        }
+        ShowInfo();
     }
     public void TakeHeal(float heal)
-    {
+    {        
         currentHP += heal;
         if (currentHP >= MaxHP)
         {
             currentHP = MaxHP;
         }
-        ShowDamage();
+        ShowInfo();
     }
-    private void ShowDamage()
+    private void ShowInfo()
     {
         hpBar.ShowHpBar(currentHP / MaxHP);
-    }
+        hpBar.ShowBarrier(currentBarrier);
+        hpBar.ShowAttack(currentATK, ATK);
+    }       
     public int GetBounceCount()
     {
         return ballBounce + wallBounce;
@@ -93,9 +108,19 @@ public class BallStat : MonoBehaviour
     {
         InteractiveAllyName = name;
     }
+    public void AddBarrierCount(int amount)
+    {
+        currentBarrier += amount;
+        ShowInfo();
+    }
     public void IncreaseDamageMultiplier(float multiplier)
     {
         currentATK *= multiplier;
+    }
+    public void IncreaseDamage(float amount)
+    {
+        currentATK += amount;
+        ShowInfo();
     }
     protected virtual void InitializeSkill()
     {

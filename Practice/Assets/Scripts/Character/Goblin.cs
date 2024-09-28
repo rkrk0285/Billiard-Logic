@@ -14,9 +14,9 @@ public class Goblin : BallStat
             {
                 ballBounce++;
                 if (collision.gameObject.name == InteractiveAllyName)
-                {
-                    Interact = true;
-                    transform.gameObject.GetComponent<BallController>().StopBall();
+                {                    
+                    ActiveInteractiveSkill();
+                    InteractiveAllyName = null;
                 }
                 else
                     collision.gameObject.GetComponent<BallStat>().TakeDamage(currentATK);
@@ -33,5 +33,7 @@ public class Goblin : BallStat
     {
         base.InitializeSkill();
         InteractiveSkill.Add("Golem", () => { SkillLists.Instance.GoblinToGolem(); });
+        InteractiveSkill.Add("Ghost", () => { SkillLists.Instance.GoblinToGhost(); });
+        InteractiveSkill.Add("Skeleton", () => { SkillLists.Instance.GoblinToSkeleton(); });
     }
 }
