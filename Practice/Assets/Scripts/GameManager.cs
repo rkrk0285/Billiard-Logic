@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour
 
     private GameObject currentTurnObject;
 
+    //ADDED
+    public GameObject augment;
+    public PhysicsMaterial2D pm;
+
     private void Awake()
     {
         if (Instance == null)
@@ -190,6 +194,12 @@ public class GameManager : MonoBehaviour
     }    
     public void OnClickReloadButton()
     {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+        augment.SetActive(true);
+    }
+
+    public void OnClickResetButton()
+    {
+        pm.bounciness = 0.9f;
+        PlayerPrefs.DeleteAll();
     }
 }
