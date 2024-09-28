@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
     }
     public void GoToNextTurn()
     {        
-        currentTurnObject.GetComponent<BallStat>().ResetActionParameter();
+        currentTurnObject.GetComponent<BallStat>().ResetEndParameter();
         currentTurnObject.GetComponent<BallController>().ResetPhysicsParameter();
 
         UpdateQueue();
@@ -95,13 +95,19 @@ public class GameManager : MonoBehaviour
         isExtraTurn = true;
         readyButton.interactable = true;
     }
+    public void GoToExtraTurn(GameObject obj)
+    {
+        currentTurnObject = obj;
+        isExtraTurn = true;
+        readyButton.interactable = true;
+    }
     public void OnClickReadyButton()
     {
         ResetHandsUpAlly();        
         if (isExtraTurn)
         {            
             currentTurnObject.GetComponent<BallStat>().ResetStartCondition();
-            currentTurnObject.GetComponent<BallStat>().InteractiveAllyName = "";
+            currentTurnObject.GetComponent<BallStat>().InteractiveAllyName = null;
             currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);            
         }
         else if (isAllyTurn)
@@ -134,17 +140,12 @@ public class GameManager : MonoBehaviour
     {        
         Queue<GameObject> newAllyQueue = new Queue<GameObject>(allyTurnQueue);
         List<GameObject> possibleAlly = new List<GameObject>();
-        
+
         while (newAllyQueue.Count > 0)
         {
             GameObject obj = newAllyQueue.Dequeue();
             if (obj != null && currObj != obj)
-            {                
-                if (isPossibleToUseInteractive(currObj.name, obj.name))
-                {                    
-                    possibleAlly.Add(obj);
-                }
-            }
+                possibleAlly.Add(obj);
         }
 
         if (possibleAlly.Count != 0)
@@ -159,7 +160,7 @@ public class GameManager : MonoBehaviour
     {
         switch (currName)
         {
-            case "Skeleton":                
+            case "Skeleton":
                 break;
 
             case "Goblin":

@@ -180,11 +180,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.64
+      value: 6.13
       objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.31
+      value: 2.13
       objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.z
@@ -354,10 +354,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 284953285}
-  - {fileID: 1355839095}
   - {fileID: 1781099933}
+  - {fileID: 1355839095}
   - {fileID: 1892766295}
+  - {fileID: 284953285}
   m_Father: {fileID: 72874033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &470184024
@@ -610,11 +610,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.77
+      value: 7.08
       objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.33
+      value: -1.14
       objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1610,11 +1610,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.78
+      value: 0.99
       objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.75
+      value: -3.38
       objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1748,9 +1748,12 @@ MonoBehaviour:
   MaxHP: 20
   ATK: 2
   DEF: 0
+  Heal: 0
   currentHP: 0
   currentATK: 0
   currentDEF: 0
+  currentHeal: 0
+  currentBarrier: 0
   Interact: 0
   InteractiveAllyName: 
   hpBar: {fileID: 6615426735467878455}
@@ -1850,6 +1853,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4721595369313286163, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4802513879202481278, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5219190303797820326, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -1866,6 +1877,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0d52ca0b6420ce14399cdba64de7f05f, type: 3}
+    - target: {fileID: 8225123132976244583, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -7365604304712473437, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
     m_RemovedGameObjects: []
@@ -2102,9 +2117,12 @@ MonoBehaviour:
   MaxHP: 14
   ATK: 2
   DEF: 0
+  Heal: 2
   currentHP: 0
   currentATK: 0
   currentDEF: 0
+  currentHeal: 0
+  currentBarrier: 0
   Interact: 0
   InteractiveAllyName: 
   hpBar: {fileID: 99469012}
@@ -2141,9 +2159,12 @@ MonoBehaviour:
   MaxHP: 10
   ATK: 2
   DEF: 0
+  Heal: 0
   currentHP: 0
   currentATK: 0
   currentDEF: 0
+  currentHeal: 0
+  currentBarrier: 0
   Interact: 0
   InteractiveAllyName: 
   hpBar: {fileID: 2041308760}
@@ -2552,6 +2573,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4721595369313286163, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5219190303797820326, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -2635,9 +2660,9 @@ MonoBehaviour:
   golem: {fileID: 2118067241}
   ghost: {fileID: 1175252873}
   skeleton: {fileID: 242502387}
-  GoblinToGolemSpeedMultiplier: 2
-  GolemToSkeletonAttackRange: 2
-  GolemToSkeletonAttackDamage: 2
+  AttackPowerGivenByGoblin: 1
+  AdvancedHealPower: 3
+  BarrierGivenBySkeleton: 1
 --- !u!1001 &2118067239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2734,6 +2759,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4721595369313286163, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5219190303797820326, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -2790,9 +2819,12 @@ MonoBehaviour:
   MaxHP: 20
   ATK: 2
   DEF: 0
+  Heal: 0
   currentHP: 0
   currentATK: 0
   currentDEF: 0
+  currentHeal: 0
+  currentBarrier: 0
   Interact: 0
   InteractiveAllyName: 
   hpBar: {fileID: 2118067240}
@@ -2926,6 +2958,10 @@ PrefabInstance:
     - target: {fileID: 4603997466535918160, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721595369313286163, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5219190303797820326, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Layer
