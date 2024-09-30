@@ -13,8 +13,11 @@ public class Golem : BallStat
             if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
             {
                 ballBounce++;
-                if (GameManager.Instance.isPossibleToUseInteractive(transform.gameObject.name, collision.gameObject.name))                                    
-                    ActiveInteractiveSkill();                
+                if (collision.gameObject.name == InteractiveAllyName)
+                {
+                    Interact = true;                    
+                    transform.gameObject.GetComponent<BallController>().StopBall();
+                }
                 else
                     collision.gameObject.GetComponent<BallStat>().TakeDamage(currentATK);
             }
@@ -28,6 +31,8 @@ public class Golem : BallStat
     protected override void InitializeSkill()
     {
         base.InitializeSkill();
+        InteractiveSkill.Add("Goblin", () => { SkillLists.Instance.GolemToGoblin(); });
+        InteractiveSkill.Add("Ghost", () => { SkillLists.Instance.GolemToGhost(); });
         InteractiveSkill.Add("Skeleton", () => { SkillLists.Instance.GolemToSkeleton(); });
     }
 }

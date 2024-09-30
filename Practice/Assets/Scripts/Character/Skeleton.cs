@@ -12,7 +12,13 @@ public class Skeleton : BallStat
             if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
             {
                 ballBounce++;
-                collision.gameObject.GetComponent<BallStat>().TakeDamage(currentATK);
+                if (collision.gameObject.name == InteractiveAllyName)
+                {                    
+                    ActiveInteractiveSkill();
+                    InteractiveAllyName = null;
+                }
+                else
+                    collision.gameObject.GetComponent<BallStat>().TakeDamage(currentATK);
             }
             else
                 wallBounce++;                            
@@ -35,6 +41,9 @@ public class Skeleton : BallStat
 
     protected override void InitializeSkill()
     {
-        base.InitializeSkill();        
+        base.InitializeSkill();
+        InteractiveSkill.Add("Goblin", () => { SkillLists.Instance.SkeletonToGoblin(); });
+        InteractiveSkill.Add("Golem", () => { SkillLists.Instance.SkeletonToGolem(); });
+        InteractiveSkill.Add("Ghost", () => { SkillLists.Instance.SkeletonToGhost(); });        
     }
 }
