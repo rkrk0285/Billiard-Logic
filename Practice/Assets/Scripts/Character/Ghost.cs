@@ -19,7 +19,9 @@ public class Ghost : BallStat
                     InteractiveAllyName = null;
                 }
                 else
+                {                    
                     collision.GetComponent<BallStat>().TakeHeal(currentHeal);
+                }
             }
             //skill?.ActivateSkill();
         }

@@ -203,4 +203,10 @@ public class GameManager : MonoBehaviour
         pm.bounciness = 0.9f;
         PlayerPrefs.DeleteAll();
     }
+
+    // For Debug
+    public void OnClickOneMoreButton()
+    {
+        GoToExtraTurn(currentTurnObject);
+    }
 }
