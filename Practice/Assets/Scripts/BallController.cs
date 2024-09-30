@@ -41,13 +41,15 @@ public class BallController : MonoBehaviour
         ballStat = GetComponent<BallStat>();
 
         rb.mass = Mass;
-        rb.drag = DefaultDrag;
+        rb.drag = Mathf.Max(DefaultDrag + PlayerPrefs.GetFloat("Drag", 0), 0);
         epsilon = rb.sharedMaterial.bounciness;
 
+
         currVelocity = rb.velocity;
-        currentPower = Power;
+        currentPower = Power + PlayerPrefs.GetFloat("Power", 0);
         ballState = E_BallState.Default;
     }
+
     private void Update()
     {
         DecelerateBall();
