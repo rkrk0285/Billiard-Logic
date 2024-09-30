@@ -7,30 +7,30 @@ using UnityEngine.Rendering;
 public class BallStat : MonoBehaviour
 {
     [Header("Parameters")]
-    [SerializeField] protected float MaxHP;
+    [SerializeField] public float MaxHP;
     [SerializeField] protected float ATK;
     [SerializeField] protected float DEF;
-    
+
     public float currentHP;
-    public float currentATK;    
+    public float currentATK;
     public float currentDEF;
     public bool Interact;
     public string InteractiveAllyName;
 
     protected int wallBounce;
     protected int ballBounce;
-    
+
     [Header("Components")]
     [SerializeField] private HpBar hpBar;
-    
-    protected SkillBase skill;    
+
+    protected SkillBase skill;
     protected Dictionary<string, Action> InteractiveSkill = new Dictionary<string, Action>();
 
     private void Start()
     {
         currentHP = MaxHP;
         ResetActionParameter();
-        InitializeSkill();        
+        InitializeSkill();
     }
     public virtual void ResetActionParameter()
     {
@@ -41,7 +41,7 @@ public class BallStat : MonoBehaviour
         Interact = false;
     }
     public void ActiveInteractiveSkill()
-    {        
+    {
         if (InteractiveSkill.ContainsKey(InteractiveAllyName))
         {
             InteractiveSkill[InteractiveAllyName]?.Invoke();
@@ -49,11 +49,11 @@ public class BallStat : MonoBehaviour
     }
     public void HandsUp()
     {
-        transform.Find("HandsUp").gameObject.SetActive(true);        
+        transform.Find("HandsUp").gameObject.SetActive(true);
     }
     public void HandsDown()
     {
-        transform.Find("HandsUp").gameObject.SetActive(false);        
+        transform.Find("HandsUp").gameObject.SetActive(false);
     }
     public void TakeDamage(float damage)
     {
@@ -88,7 +88,7 @@ public class BallStat : MonoBehaviour
     public int GetBallBounceCount()
     {
         return ballBounce;
-    }    
+    }
     public void SetInteractiveAllyName(string name)
     {
         InteractiveAllyName = name;
@@ -131,5 +131,5 @@ public class BallStat : MonoBehaviour
             }
             //skill?.ActivateSkill();
         }
-    }    
+    }
 }

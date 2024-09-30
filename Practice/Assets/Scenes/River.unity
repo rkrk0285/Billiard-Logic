@@ -327,6 +327,57 @@ Transform:
   - {fileID: 1781099933}
   m_Father: {fileID: 72874033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &406822038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 406822040}
+  - component: {fileID: 406822039}
+  m_Layer: 0
+  m_Name: SkillManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &406822039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406822038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f9345b698b00f47bc205c6d65ea81d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goblin: {fileID: 0}
+  golem: {fileID: 0}
+  ghost: {fileID: 0}
+  skeleton: {fileID: 0}
+  GoblinToGolemSpeedMultiplier: 2
+  GolemToSkeletonAttackRange: 2
+  GolemToSkeletonAttackDamage: 2
+--- !u!4 &406822040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406822038}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.265035, y: -0.98264533, z: -2.6358414}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &408352215
 GameObject:
   m_ObjectHideFlags: 0
@@ -2551,8 +2602,11 @@ MonoBehaviour:
   MaxHP: 10
   ATK: 2
   DEF: 0
+  currentHP: 0
   currentATK: 0
   currentDEF: 0
+  Interact: 0
+  InteractiveAllyName: 
   hpBar: {fileID: 99469012}
 --- !u!4 &1892766295 stripped
 Transform:
@@ -2587,8 +2641,11 @@ MonoBehaviour:
   MaxHP: 10
   ATK: 2
   DEF: 0
+  currentHP: 0
   currentATK: 0
   currentDEF: 0
+  Interact: 0
+  InteractiveAllyName: 
   hpBar: {fileID: 2041308760}
 --- !u!1 &1894479261
 GameObject:
@@ -2767,9 +2824,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b9abb23a022d4649b224a1ad74c3c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AlleyTrans: {fileID: 286515861}
+  AllyTrans: {fileID: 286515861}
   EnemyTrans: {fileID: 2145146429}
   readyButton: {fileID: 965321086}
+  isExtraTurn: 0
 --- !u!1 &1982658143
 GameObject:
   m_ObjectHideFlags: 0
@@ -3191,3 +3249,4 @@ SceneRoots:
   - {fileID: 1133348873}
   - {fileID: 72874033}
   - {fileID: 1964405033}
+  - {fileID: 406822040}

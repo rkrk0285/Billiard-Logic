@@ -1831,8 +1831,11 @@ MonoBehaviour:
   MaxHP: 10
   ATK: 2
   DEF: 0
+  currentHP: 0
   currentATK: 0
   currentDEF: 0
+  Interact: 0
+  InteractiveAllyName: 
   hpBar: {fileID: 612349503}
 --- !u!1 &681536017
 GameObject:
@@ -3304,6 +3307,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHits: 3
   fadeAmount: 0.33
+--- !u!1 &1288625975 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2413610394573740877, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+  m_PrefabInstance: {fileID: 1297548756}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1293917834
 GameObject:
   m_ObjectHideFlags: 0
@@ -3537,22 +3545,58 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2413610394573740877, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Name
-      value: Stone
+      value: Golem
       objectReference: {fileID: 0}
     - target: {fileID: 7787004602807392721, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 76baedb45ca78dd45932bd1ffa159dae, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -7365604304712473437, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2413610394573740877, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1297548759}
   m_SourcePrefab: {fileID: 100100000, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
 --- !u!4 &1297548757 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2026136814847741423, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
   m_PrefabInstance: {fileID: 1297548756}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1297548758 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1271313571312839333, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+  m_PrefabInstance: {fileID: 1297548756}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 466c0f7c952d8444086adbadfdbeaab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1297548759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288625975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148b9989d8930a645862f00dc49c27ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHP: 10
+  ATK: 2
+  DEF: 0
+  currentHP: 0
+  currentATK: 0
+  currentDEF: 0
+  Interact: 0
+  InteractiveAllyName: 
+  hpBar: {fileID: 1297548758}
 --- !u!1 &1383002892
 GameObject:
   m_ObjectHideFlags: 0
@@ -3817,6 +3861,10 @@ PrefabInstance:
       propertyPath: StopMagnitude
       value: 0.35
       objectReference: {fileID: 0}
+    - target: {fileID: 1762895433505770083, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.29
@@ -3913,8 +3961,11 @@ MonoBehaviour:
   MaxHP: 10
   ATK: 2
   DEF: 0
+  currentHP: 0
   currentATK: 0
   currentDEF: 0
+  Interact: 0
+  InteractiveAllyName: 
   hpBar: {fileID: 1429690186}
 --- !u!114 &1429690189
 MonoBehaviour:
@@ -3929,6 +3980,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredBounceCount: 3
+--- !u!1 &1478457744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1478457746}
+  - component: {fileID: 1478457745}
+  m_Layer: 0
+  m_Name: SkillManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1478457745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478457744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f9345b698b00f47bc205c6d65ea81d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goblin: {fileID: 2033963190}
+  golem: {fileID: 1288625975}
+  ghost: {fileID: 612349504}
+  skeleton: {fileID: 1429690187}
+  GoblinToGolemSpeedMultiplier: 2
+  GolemToSkeletonAttackRange: 2
+  GolemToSkeletonAttackDamage: 2
+--- !u!4 &1478457746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478457744}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.265035, y: -0.98264533, z: -2.6358414}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1504869889
 GameObject:
   m_ObjectHideFlags: 0
@@ -4261,9 +4363,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1297548757}
   - {fileID: 1429690185}
   - {fileID: 2033963189}
-  - {fileID: 1297548757}
   - {fileID: 612349502}
   m_Father: {fileID: 203480462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5552,9 +5654,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b9abb23a022d4649b224a1ad74c3c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AlleyTrans: {fileID: 1580581274}
+  AllyTrans: {fileID: 1580581274}
   EnemyTrans: {fileID: 2032926841}
   readyButton: {fileID: 681536018}
+  isExtraTurn: 0
 --- !u!4 &2109797998
 Transform:
   m_ObjectHideFlags: 0
@@ -5580,3 +5683,4 @@ SceneRoots:
   - {fileID: 2011996347}
   - {fileID: 836190209}
   - {fileID: 203480462}
+  - {fileID: 1478457746}
