@@ -193,4 +193,10 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
+
+    // For Debug
+    public void OnClickOneMoreButton()
+    {
+        GoToExtraTurn(currentTurnObject);
+    }
 }

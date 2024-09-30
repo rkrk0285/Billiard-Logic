@@ -32,8 +32,7 @@ public class BallStat : MonoBehaviour
     private void Start()
     {
         currentHP = MaxHP;
-        currentBarrier = 0;
-
+        currentBarrier = 0;        
         ResetEndParameter();
         InitializeSkill();        
     }
@@ -41,6 +40,7 @@ public class BallStat : MonoBehaviour
     {        
         currentATK = ATK;
         currentDEF = DEF;
+        currentHeal = Heal;
         wallBounce = 0;
         ballBounce = 0;
         Interact = false;
