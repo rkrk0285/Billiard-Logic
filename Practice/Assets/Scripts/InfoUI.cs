@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Transactions;
 using TMPro;
 using UnityEngine;
 
-public class HpBar : MonoBehaviour
+public class InfoUI : MonoBehaviour
 {
     private Transform fillTransform;
     public void Awake()
@@ -35,5 +36,22 @@ public class HpBar : MonoBehaviour
             transform.Find("Attack").gameObject.SetActive(true);
         else
             transform.Find("Attack").gameObject.SetActive(false);
+    }
+    public void ShowPower(float currentPower, float power)
+    {
+        transform.Find("Accelerate").gameObject.SetActive(false);
+        transform.Find("Decelerate").gameObject.SetActive(false);
+
+        if (currentPower > power)
+            transform.Find("Accelerate").gameObject.SetActive(true);
+        else if (currentPower < power)
+            transform.Find("Decelerate").gameObject.SetActive(true);        
+    }
+    public void ShowMass(float currentMass, float mass)
+    {
+        if (currentMass > mass)
+            transform.Find("WeightUp").gameObject.SetActive(true);
+        else
+            transform.Find("WeightUp").gameObject.SetActive(false);
     }
 }

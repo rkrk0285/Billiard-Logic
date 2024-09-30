@@ -20,20 +20,26 @@ public class BallController : MonoBehaviour
     [SerializeField] private float DecelerateDrag;
     [SerializeField] private float StopMagnitude;
 
+    private bool isIncreasePower = false;
+    private bool isDecreasePower = false;
+    private bool isIncreaseMass = false;
+
     [Header("Current Parameters")]
     [SerializeField] private float currentPower;
 
     protected float epsilon;
     private Vector2 currVelocity;
-    [SerializeField] private E_BallState ballState;
+    private E_BallState ballState;
 
     protected const float BALLRAD = 0.375f;
 
     [Header("Components")]
+    [SerializeField] private InfoUI infoUI;
+    
     protected Rigidbody2D rb;
     private BallStat ballStat;
     private LineRenderer lr;
-
+        
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -43,7 +49,6 @@ public class BallController : MonoBehaviour
         rb.mass = Mass;
         rb.drag = Mathf.Max(DefaultDrag + PlayerPrefs.GetFloat("Drag", 0), 0);
         epsilon = rb.sharedMaterial.bounciness;
-
 
         currVelocity = rb.velocity;
         currentPower = Power + PlayerPrefs.GetFloat("Power", 0);
@@ -75,11 +80,7 @@ public class BallController : MonoBehaviour
                 }
                 break;
         }
-    }
-    public void ResetPhysicsParameter()
-    {
-        currentPower = Power;
-    }
+    }    
     private void DrawLine(Vector2 dir)
     {
         Vector2 nextDir = dir;
@@ -234,8 +235,42 @@ public class BallController : MonoBehaviour
         return ballState;
     }
     
+    public void ResetPhysicsParameter()
+    {
+        isIncreasePower = false;
+        isDecreasePower = false;
+        isIncreaseMass = false;
+
+        currentPower = Power;
+        rb.mass = Mass;
+        infoUI.ShowPower(currentPower, Power);
+        infoUI.ShowMass(rb.mass, Mass);
+    }
     public void IncreasePowerMultiplier(float multiplier)
-    {        
-        currentPower *= multiplier;
+    {
+        if (!isIncreasePower)
+        {
+            isIncreasePower = true;
+            currentPower *= multiplier;
+            infoUI.ShowPower(currentPower, Power);
+        }
+    }
+    public void DecreasePowerMultiplier(float multiplier)
+    {
+        if (!isDecreasePower)
+        {
+            isDecreasePower = true;
+            currentPower *= multiplier;
+            infoUI.ShowPower(currentPower, Power);
+        }
+    }
+    public void IncreaseMassMultiplier(float multiplier)
+    {
+        if (!isIncreaseMass)
+        {
+            isIncreaseMass = true;
+            rb.mass *= multiplier;
+            infoUI.ShowMass(rb.mass, Mass);
+        }
     }
 }
