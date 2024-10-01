@@ -20,10 +20,6 @@ public class BallController : MonoBehaviour
     [SerializeField] private float DecelerateDrag;
     [SerializeField] private float StopMagnitude;
 
-    private bool isIncreasePower = false;
-    private bool isDecreasePower = false;
-    private bool isIncreaseMass = false;
-
     [Header("Current Parameters")]
     [SerializeField] private float currentPower;
 
@@ -203,12 +199,12 @@ public class BallController : MonoBehaviour
     protected RaycastHit2D GetCircleCastHit(Vector2 startPos, Vector2 dir, GameObject startObj, GameObject startObj2)
     {
         RaycastHit2D[] hit = Physics2D.CircleCastAll(startPos, BALLRAD, dir, 100f);
-
         for (int i = 0; i < hit.Length; i++)
         {
             if (hit[i].collider.gameObject != startObj && hit[i].collider.gameObject != startObj2)
                 return hit[i];
         }
+
         return new RaycastHit2D();
     }
     private void DecelerateBall()
@@ -233,14 +229,9 @@ public class BallController : MonoBehaviour
     public E_BallState GetBallState()
     {
         return ballState;
-    }
-    
+    }    
     public void ResetPhysicsParameter()
-    {
-        isIncreasePower = false;
-        isDecreasePower = false;
-        isIncreaseMass = false;
-
+    { 
         currentPower = Power;
         rb.mass = Mass;
         infoUI.ShowPower(currentPower, Power);
@@ -248,29 +239,17 @@ public class BallController : MonoBehaviour
     }
     public void IncreasePowerMultiplier(float multiplier)
     {
-        if (!isIncreasePower)
-        {
-            isIncreasePower = true;
-            currentPower *= multiplier;
-            infoUI.ShowPower(currentPower, Power);
-        }
+        currentPower *= multiplier;
+        infoUI.ShowPower(currentPower, Power);
     }
     public void DecreasePowerMultiplier(float multiplier)
     {
-        if (!isDecreasePower)
-        {
-            isDecreasePower = true;
-            currentPower *= multiplier;
-            infoUI.ShowPower(currentPower, Power);
-        }
+        currentPower *= multiplier;
+        infoUI.ShowPower(currentPower, Power);
     }
     public void IncreaseMassMultiplier(float multiplier)
     {
-        if (!isIncreaseMass)
-        {
-            isIncreaseMass = true;
-            rb.mass *= multiplier;
-            infoUI.ShowMass(rb.mass, Mass);
-        }
+        rb.mass *= multiplier;
+        infoUI.ShowMass(rb.mass, Mass);
     }
 }

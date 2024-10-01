@@ -11,9 +11,9 @@ public class BallStat : MonoBehaviour
     [SerializeField] protected float ATK;
     [SerializeField] protected float DEF;
     [SerializeField] protected float Heal;
-
+    
     public float currentHP;
-    public float currentATK;
+    public float currentATK;    
     public float currentDEF;
     public float currentHeal;
     public int currentBarrier;
@@ -22,11 +22,11 @@ public class BallStat : MonoBehaviour
 
     protected int wallBounce;
     protected int ballBounce;
-
+    
     [Header("Components")]
     [SerializeField] private InfoUI infoUI;
-
-    protected SkillBase skill;
+    
+    protected SkillBase skill;    
     protected Dictionary<string, Action> InteractiveSkill = new Dictionary<string, Action>();
 
     private void Start()
@@ -34,10 +34,10 @@ public class BallStat : MonoBehaviour
         currentHP = MaxHP;
         currentBarrier = 0;
         ResetEndParameter();
-        InitializeSkill();
+        InitializeSkill();        
     }
     public virtual void ResetEndParameter()
-    {
+    {        
         currentATK = ATK;
         currentDEF = DEF;
         currentHeal = Heal;
@@ -47,7 +47,7 @@ public class BallStat : MonoBehaviour
         ShowInfo();
     }
     public void ActiveInteractiveSkill()
-    {
+    {        
         if (InteractiveSkill.ContainsKey(InteractiveAllyName))
         {
             InteractiveSkill[InteractiveAllyName]?.Invoke();
@@ -55,57 +55,43 @@ public class BallStat : MonoBehaviour
     }
     public void HandsUp()
     {
-        transform.Find("HandsUp").gameObject.SetActive(true);
+        transform.Find("HandsUp").gameObject.SetActive(true);        
     }
     public void HandsDown()
     {
-        transform.Find("HandsUp").gameObject.SetActive(false);
+        transform.Find("HandsUp").gameObject.SetActive(false);        
     }
     public void TakeDamage(float damage)
-    {
+    {        
         if (currentBarrier > 0)
         {
             currentBarrier--;
         }
         else
-        {
-            GameManager.Instance.AddPoint(damage);
+        {            
+            currentHP -= damage;
             if (currentHP <= 0)
             {
                 gameObject.SetActive(false);
-            }
+            }            
         }
         ShowInfo();
     }
-    private IEnumerator SlowMotionEffect(float slowDuration, float slowFactor)
-    {
-        // 게임 시간을 느리게 설정
-        Time.timeScale = slowFactor;
-        Time.fixedDeltaTime = 0.02f * Time.timeScale; // 물리 업데이트 시간도 맞춤
-
-        // 주어진 시간동안 기다림
-        yield return new WaitForSecondsRealtime(slowDuration);
-
-        // 시간 복구
-        Time.timeScale = 1f;
-        Time.fixedDeltaTime = 0.02f; // 물리 업데이트 시간 복구
-    }
     public void TakeHeal(float heal)
-    {
-        GameManager.Instance.AddPoint(heal);
+    {        
         currentHP += heal;
         if (currentHP >= MaxHP)
         {
             currentHP = MaxHP;
         }
         ShowInfo();
-    }
+    }    
     private void ShowInfo()
     {
-        //hpBar.ShowHpBar(currentHP / MaxHP);                
+        infoUI.ShowHpBar(currentHP / MaxHP);                
         //infoUI.ShowAttack(currentATK, ATK);
         infoUI.ShowBarrier(currentBarrier);
-    }
+    }       
     public int GetBounceCount()
     {
         return ballBounce + wallBounce;
@@ -117,7 +103,7 @@ public class BallStat : MonoBehaviour
     public int GetBallBounceCount()
     {
         return ballBounce;
-    }
+    }    
     public void SetInteractiveAllyName(string name)
     {
         InteractiveAllyName = name;
@@ -160,7 +146,7 @@ public class BallStat : MonoBehaviour
         E_BallState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
         if (ballState == E_BallState.Attacking)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
             {
                 ballBounce++;
                 collision.gameObject.GetComponent<BallStat>().TakeDamage(currentATK);
@@ -168,7 +154,7 @@ public class BallStat : MonoBehaviour
             else
             {
                 wallBounce++;
-            }
+            }            
         }
-    }
+    }    
 }
