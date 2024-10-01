@@ -7,6 +7,8 @@ public class Hole : MonoBehaviour
     [SerializeField] private float speedThreshold = 0.5f;  // 공이 죽을 속도 임계값
     [SerializeField] private float stayDuration = 0.1f;      // 공이 구멍에 있을 때 죽을 때까지 기다리는 시간
 
+    [SerializeField] private float damage = 20f;
+
     private void OnTriggerStay2D(Collider2D other)
     {
         // 공이 구멍 안에 들어와 있는 동안
@@ -45,7 +47,7 @@ public class Hole : MonoBehaviour
             BallStat ballStat = ball.GetComponent<BallStat>();
             if (ballStat != null)
             {
-                //ballStat.TakeDamage(ballStat.MaxHP); // MaxHP 사용
+                ballStat.TakeDamage(damage); // MaxHP 사용
                 Debug.Log("구멍!dp QKwls");
             }
             else
