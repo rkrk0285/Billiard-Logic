@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -16,6 +17,9 @@ public class GameManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Button readyButton;
     [SerializeField] private Button oneMoreButton;
+    [SerializeField] private TextMeshProUGUI allyPointText;
+    [SerializeField] private TextMeshProUGUI enemyPointText;
+
 
     [Header("Parameters")]    
     private bool isAllyTurn;
@@ -23,8 +27,10 @@ public class GameManager : MonoBehaviour
     
     private Queue<GameObject> allyTurnQueue;
     private Queue<GameObject> enemyTurnQueue;
-
     private GameObject currentTurnObject;
+
+    private float allyPoint;
+    private float enemyPoint;
 
     //ADDED
     public GameObject augment;
@@ -39,9 +45,12 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        InitializeList();        
+        InitializeList();
         isAllyTurn = true;
         isExtraTurn = false;
+
+        allyPoint = 0;
+        enemyPoint = 0;
     }
     private void InitializeList()
     {
@@ -61,32 +70,21 @@ public class GameManager : MonoBehaviour
     {        
         Queue<GameObject> newAllyQueue = new Queue<GameObject>();
         Queue<GameObject> newEnemyQueue = new Queue<GameObject>();
-
-        string DebugAlly = "";
-        string DebugEnemy = "";
+        
         while(allyTurnQueue.Count > 0)
         {
             GameObject obj = allyTurnQueue.Dequeue();
 
-            if (obj.activeSelf)
-            {
-                newAllyQueue.Enqueue(obj);
-                DebugAlly += obj.name + " ";
-            }
+            if (obj.activeSelf)            
+                newAllyQueue.Enqueue(obj);                
         }
         while (enemyTurnQueue.Count > 0)
         {
             GameObject obj = enemyTurnQueue.Dequeue();
 
-            if (obj.activeSelf)
-            {
-                newEnemyQueue.Enqueue(obj);
-                DebugEnemy += obj.name + " ";
-            }
-        }
-
-        Debug.Log(DebugAlly);
-        Debug.Log(DebugEnemy);
+            if (obj.activeSelf)            
+                newEnemyQueue.Enqueue(obj);                            
+        }        
         allyTurnQueue = newAllyQueue;
         enemyTurnQueue = newEnemyQueue;        
     }
@@ -132,7 +130,7 @@ public class GameManager : MonoBehaviour
             {
                 currentTurnObject = allyTurnQueue.Dequeue();
                 allyTurnQueue.Enqueue(currentTurnObject);
-                CheckHandsUpAlly(currentTurnObject);
+                //CheckHandsUpAlly(currentTurnObject);
                 
                 currentTurnObject.GetComponent<BallStat>().ResetStartCondition();
                 currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
@@ -172,31 +170,6 @@ public class GameManager : MonoBehaviour
             possibleAlly[rand].GetComponent<BallStat>().HandsUp();
         }
     }
-
-    public bool isPossibleToUseInteractive(string currName, string targetName)
-    {
-        switch (currName)
-        {
-            case "Skeleton":
-                break;
-
-            case "Goblin":
-                if (targetName.Equals("Golem"))
-                    return true;
-                break;
-
-            case "Golem":                
-                if (targetName.Equals("Skeleton"))
-                    return true;
-                break;
-
-            case "Ghost":
-                if (targetName.Equals("Skeleton"))
-                    return true;
-                break;
-        }
-        return false;
-    }
     public void ResetHandsUpAlly()
     {
         Queue<GameObject> newAllyQueue = new Queue<GameObject>(allyTurnQueue);
@@ -210,17 +183,29 @@ public class GameManager : MonoBehaviour
     {
         augment.SetActive(true);
     }
-
     public void OnClickResetButton()
     {
         pm.bounciness = 0.9f;
         PlayerPrefs.DeleteAll();
     }
-
     // For Debug
     public void OnClickOneMoreButton()
     {
         isAllyTurn = !isAllyTurn;
         GoToExtraTurn(currentTurnObject);
+    }
+    public void AddPoint(float damage)
+    {
+        if (isAllyTurn)        
+            allyPoint += damage;        
+        else        
+            enemyPoint += damage;
+
+        UpdatePointText();
+    }
+    private void UpdatePointText()
+    {
+        allyPointText.text = allyPoint.ToString();
+        enemyPointText.text = enemyPoint.ToString();
     }
 }
