@@ -69,7 +69,7 @@ public class BallStat : MonoBehaviour
         }
         else
         {            
-            GameManager.Instance.AddPoint(damage);
+            currentHP -= damage;
             if (currentHP <= 0)
             {
                 gameObject.SetActive(false);
@@ -78,8 +78,7 @@ public class BallStat : MonoBehaviour
         ShowInfo();
     }
     public void TakeHeal(float heal)
-    {
-        GameManager.Instance.AddPoint(heal);
+    {        
         currentHP += heal;
         if (currentHP >= MaxHP)
         {
@@ -89,7 +88,7 @@ public class BallStat : MonoBehaviour
     }    
     private void ShowInfo()
     {
-        //hpBar.ShowHpBar(currentHP / MaxHP);                
+        infoUI.ShowHpBar(currentHP / MaxHP);                
         //infoUI.ShowAttack(currentATK, ATK);
         infoUI.ShowBarrier(currentBarrier);
     }       
@@ -147,7 +146,7 @@ public class BallStat : MonoBehaviour
         E_BallState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
         if (ballState == E_BallState.Attacking)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
             {
                 ballBounce++;
                 collision.gameObject.GetComponent<BallStat>().TakeDamage(currentATK);

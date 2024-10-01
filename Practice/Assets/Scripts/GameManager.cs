@@ -16,10 +16,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private Button readyButton;
-    [SerializeField] private Button oneMoreButton;
-    [SerializeField] private TextMeshProUGUI allyPointText;
-    [SerializeField] private TextMeshProUGUI enemyPointText;
-
+    [SerializeField] private Button oneMoreButton;    
 
     [Header("Parameters")]    
     private bool isAllyTurn;
@@ -27,10 +24,7 @@ public class GameManager : MonoBehaviour
     
     private Queue<GameObject> allyTurnQueue;
     private Queue<GameObject> enemyTurnQueue;
-    private GameObject currentTurnObject;
-
-    private float allyPoint;
-    private float enemyPoint;
+    private GameObject currentTurnObject;    
 
     //ADDED
     public GameObject augment;
@@ -48,9 +42,6 @@ public class GameManager : MonoBehaviour
         InitializeList();
         isAllyTurn = true;
         isExtraTurn = false;
-
-        allyPoint = 0;
-        enemyPoint = 0;
     }
     private void InitializeList()
     {
@@ -188,24 +179,11 @@ public class GameManager : MonoBehaviour
         pm.bounciness = 0.9f;
         PlayerPrefs.DeleteAll();
     }
+    
     // For Debug
     public void OnClickOneMoreButton()
     {
         isAllyTurn = !isAllyTurn;
         GoToExtraTurn(currentTurnObject);
-    }
-    public void AddPoint(float damage)
-    {
-        if (isAllyTurn)        
-            allyPoint += damage;        
-        else        
-            enemyPoint += damage;
-
-        UpdatePointText();
-    }
-    private void UpdatePointText()
-    {
-        allyPointText.text = allyPoint.ToString();
-        enemyPointText.text = enemyPoint.ToString();
-    }
+    }    
 }
