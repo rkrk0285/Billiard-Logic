@@ -2714,7 +2714,7 @@ MonoBehaviour:
   Interact: 0
   InteractiveAllyName: 
   infoUI: {fileID: 99469012}
-  DecreasePowerAmount: 0.5
+  DecreasePowerAmount: 0.25
 --- !u!1 &1368297420
 GameObject:
   m_ObjectHideFlags: 0
@@ -3068,7 +3068,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2413610394573740877, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2505598208739393651, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Layer
@@ -4390,7 +4390,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2413610394573740877, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2505598208739393651, guid: 8bf7c3efcfdd687438bffd9e8237db0b, type: 3}
       propertyPath: m_Layer
@@ -4771,7 +4771,7 @@ MonoBehaviour:
   Interact: 0
   InteractiveAllyName: 
   infoUI: {fileID: 99469012}
-  IncreaseMass: 2
+  IncreaseMass: 5
 --- !u!1 &2136839525
 GameObject:
   m_ObjectHideFlags: 0
