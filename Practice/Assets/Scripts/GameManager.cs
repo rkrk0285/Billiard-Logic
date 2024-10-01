@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private Button readyButton;
+    [SerializeField] private Button oneMoreButton;
 
     [Header("Parameters")]    
     private bool isAllyTurn;
@@ -60,20 +61,32 @@ public class GameManager : MonoBehaviour
     {        
         Queue<GameObject> newAllyQueue = new Queue<GameObject>();
         Queue<GameObject> newEnemyQueue = new Queue<GameObject>();
+
+        string DebugAlly = "";
+        string DebugEnemy = "";
         while(allyTurnQueue.Count > 0)
         {
             GameObject obj = allyTurnQueue.Dequeue();
 
-            if (obj != null)
+            if (obj.activeSelf)
+            {
                 newAllyQueue.Enqueue(obj);
+                DebugAlly += obj.name + " ";
+            }
         }
         while (enemyTurnQueue.Count > 0)
         {
             GameObject obj = enemyTurnQueue.Dequeue();
 
-            if (obj != null)
+            if (obj.activeSelf)
+            {
                 newEnemyQueue.Enqueue(obj);
+                DebugEnemy += obj.name + " ";
+            }
         }
+
+        Debug.Log(DebugAlly);
+        Debug.Log(DebugEnemy);
         allyTurnQueue = newAllyQueue;
         enemyTurnQueue = newEnemyQueue;        
     }
@@ -93,17 +106,16 @@ public class GameManager : MonoBehaviour
         isAllyTurn = !isAllyTurn;
         isExtraTurn = false;
         readyButton.interactable = true;
-    }
-    public void GoToExtraTurn()
-    {
-        isExtraTurn = true;
-        readyButton.interactable = true;
+        oneMoreButton.interactable = true;
     }
     public void GoToExtraTurn(GameObject obj)
     {
-        currentTurnObject = obj;
+        UpdateQueue();        
         isExtraTurn = true;
         readyButton.interactable = true;
+        oneMoreButton.interactable = true;
+
+        currentTurnObject = obj;
     }
     public void OnClickReadyButton()
     {
@@ -139,6 +151,7 @@ public class GameManager : MonoBehaviour
         }
         
         readyButton.interactable = false;
+        oneMoreButton.interactable = false;
     }
     public void CheckHandsUpAlly(GameObject currObj)
     {        
@@ -207,6 +220,7 @@ public class GameManager : MonoBehaviour
     // For Debug
     public void OnClickOneMoreButton()
     {
+        isAllyTurn = !isAllyTurn;
         GoToExtraTurn(currentTurnObject);
     }
 }
