@@ -4,7 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Ghost : BallStat
-{    
+{
     private void OnTriggerEnter2D(Collider2D collision)
     {
         E_BallState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
@@ -19,7 +19,7 @@ public class Ghost : BallStat
                     InteractiveAllyName = null;
                 }
                 else
-                {                    
+                {
                     collision.GetComponent<BallStat>().TakeHeal(currentHeal);
                 }
             }
@@ -50,4 +50,18 @@ public class Ghost : BallStat
         InteractiveSkill.Add("Golem", () => { SkillLists.Instance.GhostToGolem(); });
         InteractiveSkill.Add("Skeleton", () => { SkillLists.Instance.GhostToSkeleton(); });
     }
+    private IEnumerator SlowMotionEffect(float slowDuration, float slowFactor)
+    {
+        // 게임 시간을 느리게 설정
+        Time.timeScale = slowFactor;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale; // 물리 업데이트 시간도 맞춤
+
+        // 주어진 시간동안 기다림
+        yield return new WaitForSecondsRealtime(slowDuration);
+
+        // 시간 복구
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f; // 물리 업데이트 시간 복구
+    }
+
 }
