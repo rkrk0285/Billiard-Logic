@@ -45,7 +45,7 @@ public class Hole : MonoBehaviour
             BallStat ballStat = ball.GetComponent<BallStat>();
             if (ballStat != null)
             {
-                ballStat.TakeDamage(ballStat.MaxHP); // MaxHP 사용
+                //ballStat.TakeDamage(ballStat.MaxHP); // MaxHP 사용
                 Debug.Log("구멍!dp QKwls");
             }
             else
