@@ -10,7 +10,7 @@ public class Ghost : BallStat
         E_BallState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
         if (ballState == E_BallState.Attacking)
         {
-            if (collision.CompareTag("Player") || collision.CompareTag("Enemy"))
+            if (collision.CompareTag("Player"))
             {
                 ballBounce++;
                 if (collision.gameObject.name == InteractiveAllyName)
