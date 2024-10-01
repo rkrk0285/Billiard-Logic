@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private Button readyButton;
+    [SerializeField] private Button oneMoreButton;    
 
     [Header("Parameters")]    
     private bool isAllyTurn;
@@ -22,8 +24,7 @@ public class GameManager : MonoBehaviour
     
     private Queue<GameObject> allyTurnQueue;
     private Queue<GameObject> enemyTurnQueue;
-
-    private GameObject currentTurnObject;
+    private GameObject currentTurnObject;    
 
     //ADDED
     public GameObject augment;
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        InitializeList();        
+        InitializeList();
         isAllyTurn = true;
         isExtraTurn = false;
     }
@@ -60,20 +61,21 @@ public class GameManager : MonoBehaviour
     {        
         Queue<GameObject> newAllyQueue = new Queue<GameObject>();
         Queue<GameObject> newEnemyQueue = new Queue<GameObject>();
+        
         while(allyTurnQueue.Count > 0)
         {
             GameObject obj = allyTurnQueue.Dequeue();
 
-            if (obj != null)
-                newAllyQueue.Enqueue(obj);
+            if (obj.activeSelf)            
+                newAllyQueue.Enqueue(obj);                
         }
         while (enemyTurnQueue.Count > 0)
         {
             GameObject obj = enemyTurnQueue.Dequeue();
 
-            if (obj != null)
-                newEnemyQueue.Enqueue(obj);
-        }
+            if (obj.activeSelf)            
+                newEnemyQueue.Enqueue(obj);                            
+        }        
         allyTurnQueue = newAllyQueue;
         enemyTurnQueue = newEnemyQueue;        
     }
@@ -93,17 +95,16 @@ public class GameManager : MonoBehaviour
         isAllyTurn = !isAllyTurn;
         isExtraTurn = false;
         readyButton.interactable = true;
-    }
-    public void GoToExtraTurn()
-    {
-        isExtraTurn = true;
-        readyButton.interactable = true;
+        oneMoreButton.interactable = true;
     }
     public void GoToExtraTurn(GameObject obj)
     {
-        currentTurnObject = obj;
+        UpdateQueue();        
         isExtraTurn = true;
         readyButton.interactable = true;
+        oneMoreButton.interactable = true;
+
+        currentTurnObject = obj;
     }
     public void OnClickReadyButton()
     {
@@ -120,7 +121,7 @@ public class GameManager : MonoBehaviour
             {
                 currentTurnObject = allyTurnQueue.Dequeue();
                 allyTurnQueue.Enqueue(currentTurnObject);
-                CheckHandsUpAlly(currentTurnObject);
+                //CheckHandsUpAlly(currentTurnObject);
                 
                 currentTurnObject.GetComponent<BallStat>().ResetStartCondition();
                 currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
@@ -139,6 +140,7 @@ public class GameManager : MonoBehaviour
         }
         
         readyButton.interactable = false;
+        oneMoreButton.interactable = false;
     }
     public void CheckHandsUpAlly(GameObject currObj)
     {        
@@ -159,31 +161,6 @@ public class GameManager : MonoBehaviour
             possibleAlly[rand].GetComponent<BallStat>().HandsUp();
         }
     }
-
-    public bool isPossibleToUseInteractive(string currName, string targetName)
-    {
-        switch (currName)
-        {
-            case "Skeleton":
-                break;
-
-            case "Goblin":
-                if (targetName.Equals("Golem"))
-                    return true;
-                break;
-
-            case "Golem":                
-                if (targetName.Equals("Skeleton"))
-                    return true;
-                break;
-
-            case "Ghost":
-                if (targetName.Equals("Skeleton"))
-                    return true;
-                break;
-        }
-        return false;
-    }
     public void ResetHandsUpAlly()
     {
         Queue<GameObject> newAllyQueue = new Queue<GameObject>(allyTurnQueue);
@@ -197,16 +174,16 @@ public class GameManager : MonoBehaviour
     {
         augment.SetActive(true);
     }
-
     public void OnClickResetButton()
     {
         pm.bounciness = 0.9f;
         PlayerPrefs.DeleteAll();
     }
-
+    
     // For Debug
     public void OnClickOneMoreButton()
     {
+        isAllyTurn = !isAllyTurn;
         GoToExtraTurn(currentTurnObject);
-    }
+    }    
 }

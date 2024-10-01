@@ -25,15 +25,17 @@ public class BallController : MonoBehaviour
 
     protected float epsilon;
     private Vector2 currVelocity;
-    [SerializeField] private E_BallState ballState;
+    private E_BallState ballState;
 
     protected const float BALLRAD = 0.375f;
 
     [Header("Components")]
+    [SerializeField] private InfoUI infoUI;
+    
     protected Rigidbody2D rb;
     private BallStat ballStat;
     private LineRenderer lr;
-
+        
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -43,7 +45,6 @@ public class BallController : MonoBehaviour
         rb.mass = Mass;
         rb.drag = Mathf.Max(DefaultDrag + PlayerPrefs.GetFloat("Drag", 0), 0);
         epsilon = rb.sharedMaterial.bounciness;
-
 
         currVelocity = rb.velocity;
         currentPower = Power + PlayerPrefs.GetFloat("Power", 0);
@@ -75,11 +76,7 @@ public class BallController : MonoBehaviour
                 }
                 break;
         }
-    }
-    public void ResetPhysicsParameter()
-    {
-        currentPower = Power;
-    }
+    }    
     private void DrawLine(Vector2 dir)
     {
         Vector2 nextDir = dir;
@@ -202,12 +199,12 @@ public class BallController : MonoBehaviour
     protected RaycastHit2D GetCircleCastHit(Vector2 startPos, Vector2 dir, GameObject startObj, GameObject startObj2)
     {
         RaycastHit2D[] hit = Physics2D.CircleCastAll(startPos, BALLRAD, dir, 100f);
-
         for (int i = 0; i < hit.Length; i++)
         {
             if (hit[i].collider.gameObject != startObj && hit[i].collider.gameObject != startObj2)
                 return hit[i];
         }
+
         return new RaycastHit2D();
     }
     private void DecelerateBall()
@@ -232,10 +229,27 @@ public class BallController : MonoBehaviour
     public E_BallState GetBallState()
     {
         return ballState;
+    }    
+    public void ResetPhysicsParameter()
+    { 
+        currentPower = Power;
+        rb.mass = Mass;
+        infoUI.ShowPower(currentPower, Power);
+        infoUI.ShowMass(rb.mass, Mass);
     }
-    
     public void IncreasePowerMultiplier(float multiplier)
-    {        
+    {
         currentPower *= multiplier;
+        infoUI.ShowPower(currentPower, Power);
+    }
+    public void DecreasePowerMultiplier(float multiplier)
+    {
+        currentPower *= multiplier;
+        infoUI.ShowPower(currentPower, Power);
+    }
+    public void IncreaseMassMultiplier(float multiplier)
+    {
+        rb.mass *= multiplier;
+        infoUI.ShowMass(rb.mass, Mass);
     }
 }

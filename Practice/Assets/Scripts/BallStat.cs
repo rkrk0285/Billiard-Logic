@@ -24,7 +24,7 @@ public class BallStat : MonoBehaviour
     protected int ballBounce;
     
     [Header("Components")]
-    [SerializeField] private HpBar hpBar;
+    [SerializeField] private InfoUI infoUI;
     
     protected SkillBase skill;    
     protected Dictionary<string, Action> InteractiveSkill = new Dictionary<string, Action>();
@@ -32,7 +32,7 @@ public class BallStat : MonoBehaviour
     private void Start()
     {
         currentHP = MaxHP;
-        currentBarrier = 0;        
+        currentBarrier = 0;
         ResetEndParameter();
         InitializeSkill();        
     }
@@ -68,7 +68,7 @@ public class BallStat : MonoBehaviour
             currentBarrier--;
         }
         else
-        {
+        {            
             currentHP -= damage;
             if (currentHP <= 0)
             {
@@ -85,12 +85,12 @@ public class BallStat : MonoBehaviour
             currentHP = MaxHP;
         }
         ShowInfo();
-    }
+    }    
     private void ShowInfo()
     {
-        hpBar.ShowHpBar(currentHP / MaxHP);
-        hpBar.ShowBarrier(currentBarrier);
-        hpBar.ShowAttack(currentATK, ATK);
+        infoUI.ShowHpBar(currentHP / MaxHP);                
+        //infoUI.ShowAttack(currentATK, ATK);
+        infoUI.ShowBarrier(currentBarrier);
     }       
     public int GetBounceCount()
     {
@@ -142,6 +142,7 @@ public class BallStat : MonoBehaviour
     }
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
+        // For Enemy.
         E_BallState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
         if (ballState == E_BallState.Attacking)
         {
@@ -153,8 +154,7 @@ public class BallStat : MonoBehaviour
             else
             {
                 wallBounce++;
-            }
-            //skill?.ActivateSkill();
+            }            
         }
     }    
 }

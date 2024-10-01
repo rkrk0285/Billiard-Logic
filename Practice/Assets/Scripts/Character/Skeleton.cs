@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Skeleton : BallStat
-{
+{    
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         E_BallState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
         if (ballState == E_BallState.Attacking)
         {
-            if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
+            if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Player"))
             {
                 ballBounce++;
                 if (collision.gameObject.name == InteractiveAllyName)
@@ -19,7 +19,7 @@ public class Skeleton : BallStat
                 }
                 else
                     collision.gameObject.GetComponent<BallStat>().TakeDamage(currentATK);
-            }
+            }            
             else
                 wallBounce++;                            
 
