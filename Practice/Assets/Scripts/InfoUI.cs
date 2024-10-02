@@ -54,4 +54,8 @@ public class InfoUI : MonoBehaviour
         else
             transform.Find("WeightUp").gameObject.SetActive(false);
     }
+    public void ShowSkip(bool toggle)
+    {
+        transform.Find("Skip").gameObject.SetActive(toggle);
+    }
 }

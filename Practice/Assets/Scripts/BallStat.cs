@@ -6,27 +6,33 @@ using UnityEngine.Rendering;
 
 public class BallStat : MonoBehaviour
 {
+    [Header("Objects")]
+    public GameObject holePrefab; // 구멍 프리팹 참조 변수
+
     [Header("Parameters")]
     [SerializeField] protected float MaxHP;
     [SerializeField] protected float ATK;
     [SerializeField] protected float DEF;
-    [SerializeField] protected float Heal;
-    public GameObject holePrefab; // 구멍 프리팹 참조 변수
+    [SerializeField] protected float Heal;    
 
     public float currentHP;
     public float currentATK;
     public float currentDEF;
     public float currentHeal;
-    public int currentBarrier;
-    public bool Interact;
-
-    public string InteractiveAllyName;
-    public string InteractiveEnemyName;
-
+    public int currentBarrier;    
+    
     protected int wallBounce;
     protected int ballBounce;
 
-    public bool skipNextTurn;
+    public bool Interact;
+    public GameObject InstructionAlly;
+    public GameObject InstructionEnemy;
+
+    [SerializeField] private float _decreasePower = 0.25f;
+    [SerializeField] private float _increasePower = 4f;
+    [SerializeField] protected float _InstructionDamageMultiplier = 1.5f;
+    private bool skipNextTurn;
+
     [Header("Components")]
     [SerializeField] private InfoUI infoUI;
 
@@ -49,17 +55,15 @@ public class BallStat : MonoBehaviour
         ballBounce = 0;
 
         Interact = false;
-        InteractiveAllyName = null;
-        InteractiveEnemyName = null;
+        InstructionAlly = null;
+        InstructionEnemy = null;
         skipNextTurn = false;
         ShowInfo();
     }
     public void ActiveInteractiveSkill()
-    {
-        if (InteractiveSkill.ContainsKey(InteractiveAllyName))
-        {
-            InteractiveSkill[InteractiveAllyName]?.Invoke();
-        }
+    {        
+        if (InteractiveSkill.ContainsKey(InstructionAlly.name))
+            InteractiveSkill[InstructionAlly.name]?.Invoke();        
     }
     public void HandsUp()
     {
@@ -70,18 +74,14 @@ public class BallStat : MonoBehaviour
         transform.Find("HandsUp").gameObject.SetActive(false);
     }
     public void TakeDamage(float damage)
-    {
-        if (currentBarrier > 0)
-        {
-            currentBarrier--;
-        }
+    {        
+        if (currentBarrier > 0)        
+            currentBarrier--;        
         else
         {
-            currentHP -= damage;
-            if (currentHP <= 0)
-            {
+            currentHP -= damage;            
+            if (currentHP <= 0)            
                 Dead();
-            }
         }
         ShowInfo();
     }
@@ -97,20 +97,21 @@ public class BallStat : MonoBehaviour
 
     public void Dead()
     {
+        // 캐릭터 비활성화
+        gameObject.SetActive(false);
+
         // 구멍 프리팹이 있는지 확인
         if (holePrefab != null)
         {
             // 캐릭터가 죽은 자리에 구멍을 생성
             Instantiate(holePrefab, transform.position, Quaternion.identity);
-        }
-
-        // 캐릭터 비활성화
-        gameObject.SetActive(false);
+        }        
     }
     private void ShowInfo()
     {
         infoUI.ShowHpBar(currentHP / MaxHP);
         infoUI.ShowBarrier(currentBarrier);
+        infoUI.ShowSkip(skipNextTurn);
     }
     public int GetBounceCount()
     {
@@ -123,14 +124,15 @@ public class BallStat : MonoBehaviour
     public int GetBallBounceCount()
     {
         return ballBounce;
-    }
-    public void SetInteractiveAllyName(string name)
+
+    }    
+    public void SetInstructionAlly(GameObject obj)
     {
-        InteractiveAllyName = name;
+        InstructionAlly = obj;
     }
-    public void SetInteractiveEnemyName(string name)
+    public void SetInstructionEnemy(GameObject obj)
     {
-        InteractiveEnemyName = name;
+        InstructionEnemy = obj;
     }
     public void AddBarrierCount(int amount)
     {
@@ -171,19 +173,46 @@ public class BallStat : MonoBehaviour
             }
         }
     }
-    public void SkipNextTurn()
+    public void SetSkipNextTurn()
     {
         skipNextTurn = true;
+        ShowInfo();
+    }
+    public bool GetSkipNextTurn()
+    {
+        return skipNextTurn;
     }
     public virtual void ResetStartCondition()
-    {
-        if (skipNextTurn)
-            GameManager.Instance.GoToNextTurn();
-    }
-    public virtual void ResetEndCondition()
-    {
+    {   
         // DO NOTHING
         // Override this function when inherrit this class to child class
+    }
+    public virtual void ResetEndCondition()
+    {        
+    }
+
+    public void NotFollowingInstruction()
+    {
+        if (InstructionAlly != null)
+        {
+            int rand = UnityEngine.Random.Range(0, 3);
+            switch (rand)
+            {
+                case 0:
+                    Debug.Log(InstructionAlly.name + " 속도 4배");
+                    InstructionAlly.GetComponent<BallController>().IncreasePowerMultiplier(_increasePower);
+                    break;
+                case 1:
+                    Debug.Log(InstructionAlly.name + " 속도 0.25배");
+                    InstructionAlly.GetComponent<BallController>().DecreasePowerMultiplier(_decreasePower);
+                    break;
+                case 2:
+                    Debug.Log(InstructionAlly.name + " 턴 스킵");
+                    InstructionAlly.GetComponent<BallStat>().SetSkipNextTurn();
+                    break;
+            }
+        }
+        
     }
 
     //protected IEnumerator SlowMotionEffect(float slowDuration, float slowFactor)

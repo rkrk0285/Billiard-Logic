@@ -9,8 +9,7 @@ public class SkeletonSkill : SkillBase
     public override void ActivateSkill()
     {
         if (ballStat.GetBounceCount() >= requiredBounceCount)
-        {
-            Debug.Log("½ºÄÌ·¹Åæ ¾×¼Ç ¹ßµ¿");
+        {            
             StartCoroutine(DelayedProcess());
         }
     }

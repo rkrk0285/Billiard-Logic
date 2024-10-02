@@ -17,16 +17,18 @@ public class GameManager : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private Button readyButton;
-    [SerializeField] private Button oneMoreButton;    
+    [SerializeField] private Button oneMoreButton;
 
-    [Header("Parameters")]    
+    [Header("Parameters")]
+    [Range(0, 1)] [SerializeField] private float InstructionEventProbability;
     private bool isAllyTurn;
+    public bool _activeInstructionEvent;
     public bool isExtraTurn;
     
     private Queue<GameObject> allyTurnQueue;
     private Queue<GameObject> enemyTurnQueue;
-    private GameObject currentTurnObject;    
-
+    private GameObject currentTurnObject;
+    private GameObject currentInstructionAlly;
     //ADDED
     public GameObject augment;
     public PhysicsMaterial2D pm;
@@ -82,7 +84,14 @@ public class GameManager : MonoBehaviour
     }
     public void TurnEnd()
     {
-        ResetPointOutObject();
+        ResetInstructionObject();
+
+        if (_activeInstructionEvent)
+        {
+            _activeInstructionEvent = false;
+            currentTurnObject.GetComponent<BallStat>().NotFollowingInstruction();
+        }
+
         if (currentTurnObject.GetComponent<BallStat>().Interact)
             currentTurnObject.GetComponent<BallStat>().ActiveInteractiveSkill();        
         else
@@ -112,7 +121,7 @@ public class GameManager : MonoBehaviour
     {        
         if (isExtraTurn)
         {                        
-            currentTurnObject.GetComponent<BallStat>().InteractiveAllyName = null;
+            currentTurnObject.GetComponent<BallStat>().InstructionAlly = null;
             currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);            
         }
         else if (isAllyTurn)
@@ -120,10 +129,21 @@ public class GameManager : MonoBehaviour
             if (allyTurnQueue.Count > 0)
             {
                 currentTurnObject = allyTurnQueue.Dequeue();
-                allyTurnQueue.Enqueue(currentTurnObject);                                                
-                currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
+                allyTurnQueue.Enqueue(currentTurnObject);
 
-                PointOutObject(currentTurnObject);
+                if (currentTurnObject.GetComponent<BallStat>().GetSkipNextTurn())
+                {
+                    GoToNextTurn();
+                    return;
+                }
+
+                currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
+                if (!currentTurnObject.name.Equals("Ghost"))
+                {
+                    float rand = Random.Range(0f, 1f);
+                    if (rand <= InstructionEventProbability)
+                        SetInstructionObject(currentTurnObject);
+                }
             }
         }
         else
@@ -140,35 +160,37 @@ public class GameManager : MonoBehaviour
         readyButton.interactable = false;
         oneMoreButton.interactable = false;
     }
-    public void PointOutObject(GameObject currObj)
+    public void SetInstructionObject(GameObject currObj)
     {        
         Queue<GameObject> newAllyQueue = new Queue<GameObject>(allyTurnQueue);
 
-        List<GameObject> possibleAlly = new List<GameObject>();
-        List<GameObject> possibleEnemy = enemyTurnQueue.ToList();
+        List<GameObject> AllyList = new List<GameObject>();
+        List<GameObject> EnemyList = enemyTurnQueue.ToList();
 
         while (newAllyQueue.Count > 0)
         {
             GameObject obj = newAllyQueue.Dequeue();
-            if (obj != null && currObj != obj)
-                possibleAlly.Add(obj);
+            if (obj != null && obj.name != "Ghost" && currObj != obj)
+                AllyList.Add(obj);
         }
 
-        if (possibleAlly.Count != 0)
+        if (AllyList.Count != 0)
         {            
-            int rand = Random.Range(0, possibleAlly.Count);
-            currentTurnObject.GetComponent<BallStat>().SetInteractiveAllyName(possibleAlly[rand].name);
-            possibleAlly[rand].GetComponent<BallStat>().HandsUp();
+            int rand = Random.Range(0, AllyList.Count);
+            currentTurnObject.GetComponent<BallStat>().SetInstructionAlly(AllyList[rand]);
+            AllyList[rand].GetComponent<BallStat>().HandsUp();
         }
         
-        if (possibleEnemy.Count != 0)
+        if (EnemyList.Count != 0)
         {
-            int rand = Random.Range(0, possibleEnemy.Count);
-            currentTurnObject.GetComponent<BallStat>().SetInteractiveAllyName(possibleEnemy[rand].name);
-            possibleEnemy[rand].GetComponent<BallStat>().HandsUp();
+            int rand = Random.Range(0, EnemyList.Count);
+            currentTurnObject.GetComponent<BallStat>().SetInstructionEnemy(EnemyList[rand]);
+            EnemyList[rand].GetComponent<BallStat>().HandsUp();
         }
+
+        _activeInstructionEvent = true;
     }
-    public void ResetPointOutObject()
+    public void ResetInstructionObject()
     {
         Queue<GameObject> newAllyQueue = new Queue<GameObject>(allyTurnQueue);
         Queue<GameObject> newEnemyQueue = new Queue<GameObject>(enemyTurnQueue);
@@ -186,7 +208,7 @@ public class GameManager : MonoBehaviour
     public void OnClickReloadButton()
     {
         augment.SetActive(true);
-        //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
     public void OnClickResetButton()
     {

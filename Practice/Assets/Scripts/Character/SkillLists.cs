@@ -16,11 +16,7 @@ partial class SkillLists : MonoBehaviour
 
     //[Header("Golem To Skeleton")]
     //[SerializeField] private int GolemToSkeletonAttackRange = 2;
-    //[SerializeField] private float GolemToSkeletonAttackDamage = 2;
-
-    [Header("Parameter")]
-    [SerializeField] private float _decreasePower = 0.25f;
-    [SerializeField] private float _increasePower = 4f;    
+    //[SerializeField] private float GolemToSkeletonAttackDamage = 2;    
 
     private void Awake()
     {
@@ -152,18 +148,5 @@ partial class SkillLists
     //{        
     //    ghost.GetComponent<BallStat>().AddBarrierCount(BarrierGivenBySkeleton);
     //}
-
-    public void Debuff_DecreasePower(GameObject currObject)
-    {
-        currObject.GetComponent<BallController>().DecreasePowerMultiplier(_decreasePower);
-    }
-    public void Debuff_IncreasePower(GameObject currObject)
-    {
-        currObject.GetComponent<BallController>().IncreasePowerMultiplier(_increasePower);
-    }
-    public void Debuff_SkipTurn(GameObject currObject)
-    {
-        currObject.GetComponent<BallStat>().SkipNextTurn();
-    }
 }
 
