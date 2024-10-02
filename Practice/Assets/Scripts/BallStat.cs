@@ -11,9 +11,10 @@ public class BallStat : MonoBehaviour
     [SerializeField] protected float ATK;
     [SerializeField] protected float DEF;
     [SerializeField] protected float Heal;
-    
+    public GameObject holePrefab; // êµ¬ë© í”„ë¦¬íŒ¹ ì°¸ì¡° ë³€ìˆ˜
+
     public float currentHP;
-    public float currentATK;    
+    public float currentATK;
     public float currentDEF;
     public float currentHeal;
     public int currentBarrier;
@@ -28,8 +29,8 @@ public class BallStat : MonoBehaviour
     public bool skipNextTurn;
     [Header("Components")]
     [SerializeField] private InfoUI infoUI;
-    
-    protected SkillBase skill;    
+
+    protected SkillBase skill;
     protected Dictionary<string, Action> InteractiveSkill = new Dictionary<string, Action>();
 
     private void Start()
@@ -37,16 +38,16 @@ public class BallStat : MonoBehaviour
         currentHP = MaxHP;
         currentBarrier = 0;
         ResetEndParameter();
-        InitializeSkill();        
+        InitializeSkill();
     }
     public virtual void ResetEndParameter()
-    {        
+    {
         currentATK = ATK;
         currentDEF = DEF;
         currentHeal = Heal;
         wallBounce = 0;
         ballBounce = 0;
-        
+
         Interact = false;
         InteractiveAllyName = null;
         InteractiveEnemyName = null;
@@ -54,7 +55,7 @@ public class BallStat : MonoBehaviour
         ShowInfo();
     }
     public void ActiveInteractiveSkill()
-    {        
+    {
         if (InteractiveSkill.ContainsKey(InteractiveAllyName))
         {
             InteractiveSkill[InteractiveAllyName]?.Invoke();
@@ -62,30 +63,30 @@ public class BallStat : MonoBehaviour
     }
     public void HandsUp()
     {
-        transform.Find("HandsUp").gameObject.SetActive(true);        
+        transform.Find("HandsUp").gameObject.SetActive(true);
     }
     public void HandsDown()
     {
-        transform.Find("HandsUp").gameObject.SetActive(false);        
+        transform.Find("HandsUp").gameObject.SetActive(false);
     }
     public void TakeDamage(float damage)
-    {        
+    {
         if (currentBarrier > 0)
         {
             currentBarrier--;
         }
         else
-        {            
+        {
             currentHP -= damage;
             if (currentHP <= 0)
             {
-                Dead();                
-            }            
+                Dead();
+            }
         }
         ShowInfo();
     }
     public void TakeHeal(float heal)
-    {        
+    {
         currentHP += heal;
         if (currentHP >= MaxHP)
         {
@@ -96,14 +97,21 @@ public class BallStat : MonoBehaviour
 
     public void Dead()
     {
-        gameObject.SetActive(false);        
-    }
+        // êµ¬ë© í”„ë¦¬íŒ¹ì´ ìˆëŠ”ì§€ í™•ì¸
+        if (holePrefab != null)
+        {
+            // ìºë¦­í„°ê°€ ì£½ì€ ìë¦¬ì— êµ¬ë©ì„ ìƒì„±
+            Instantiate(holePrefab, transform.position, Quaternion.identity);
+        }
 
+        // ìºë¦­í„° ë¹„í™œì„±í™”
+        gameObject.SetActive(false);
+    }
     private void ShowInfo()
     {
         infoUI.ShowHpBar(currentHP / MaxHP);
         infoUI.ShowBarrier(currentBarrier);
-    }       
+    }
     public int GetBounceCount()
     {
         return ballBounce + wallBounce;
@@ -115,7 +123,7 @@ public class BallStat : MonoBehaviour
     public int GetBallBounceCount()
     {
         return ballBounce;
-    }    
+    }
     public void SetInteractiveAllyName(string name)
     {
         InteractiveAllyName = name;
@@ -145,7 +153,7 @@ public class BallStat : MonoBehaviour
         {
             skill.Initialize(this);
         }
-    }    
+    }
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         // For Enemy.
@@ -160,7 +168,7 @@ public class BallStat : MonoBehaviour
             else
             {
                 wallBounce++;
-            }            
+            }
         }
     }
     public void SkipNextTurn()
@@ -180,15 +188,15 @@ public class BallStat : MonoBehaviour
 
     //protected IEnumerator SlowMotionEffect(float slowDuration, float slowFactor)
     //{
-    //    // °ÔÀÓ ½Ã°£À» ´À¸®°Ô ¼³Á¤
+    //    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     //    Time.timeScale = slowFactor;
-    //    Time.fixedDeltaTime = 0.02f * Time.timeScale; // ¹°¸® ¾÷µ¥ÀÌÆ® ½Ã°£µµ ¸ÂÃã
+    //    Time.fixedDeltaTime = 0.02f * Time.timeScale; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    //    // ÁÖ¾îÁø ½Ã°£µ¿¾È ±â´Ù¸²
+    //    // ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½
     //    yield return new WaitForSecondsRealtime(slowDuration);
 
-    //    // ½Ã°£ º¹±¸
+    //    // ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
     //    Time.timeScale = 1f;
-    //    Time.fixedDeltaTime = 0.02f; // ¹°¸® ¾÷µ¥ÀÌÆ® ½Ã°£ º¹±¸
+    //    Time.fixedDeltaTime = 0.02f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
     //}
 }
