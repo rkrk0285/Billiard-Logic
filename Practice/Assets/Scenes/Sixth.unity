@@ -312,6 +312,10 @@ PrefabInstance:
       propertyPath: MaxHP
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: -7365604304712473437, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: holePrefab
+      value: 
+      objectReference: {fileID: 3827983080784164314, guid: a91c6706ee99c244d93e76d08b5d97c7, type: 3}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.13
@@ -1020,6 +1024,10 @@ PrefabInstance:
       propertyPath: MaxHP
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: -7365604304712473437, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: holePrefab
+      value: 
+      objectReference: {fileID: 3827983080784164314, guid: a91c6706ee99c244d93e76d08b5d97c7, type: 3}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.08
@@ -2584,6 +2592,10 @@ PrefabInstance:
       propertyPath: MaxHP
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: -7365604304712473437, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: holePrefab
+      value: 
+      objectReference: {fileID: 3827983080784164314, guid: a91c6706ee99c244d93e76d08b5d97c7, type: 3}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.99
@@ -2729,6 +2741,7 @@ MonoBehaviour:
   ATK: 2
   DEF: 0
   Heal: 0
+  holePrefab: {fileID: 3827983080784164314, guid: a91c6706ee99c244d93e76d08b5d97c7, type: 3}
   currentHP: 0
   currentATK: 0
   currentDEF: 0
@@ -2736,6 +2749,8 @@ MonoBehaviour:
   currentBarrier: 0
   Interact: 0
   InteractiveAllyName: 
+  InteractiveEnemyName: 
+  skipNextTurn: 0
   infoUI: {fileID: 549248185}
 --- !u!1 &1368297420
 GameObject:
@@ -3257,6 +3272,10 @@ PrefabInstance:
       propertyPath: MaxHP
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: -7365604304712473437, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
+      propertyPath: holePrefab
+      value: 
+      objectReference: {fileID: 3827983080784164314, guid: a91c6706ee99c244d93e76d08b5d97c7, type: 3}
     - target: {fileID: 2026136814847741423, guid: dc6c4a04cbbb9444abbde9d2fcbb1c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.02
@@ -3521,6 +3540,7 @@ MonoBehaviour:
   ATK: 2
   DEF: 0
   Heal: 2
+  holePrefab: {fileID: 3827983080784164314, guid: a91c6706ee99c244d93e76d08b5d97c7, type: 3}
   currentHP: 0
   currentATK: 0
   currentDEF: 0
@@ -3528,6 +3548,8 @@ MonoBehaviour:
   currentBarrier: 0
   Interact: 0
   InteractiveAllyName: 
+  InteractiveEnemyName: 
+  skipNextTurn: 0
   infoUI: {fileID: 99469012}
 --- !u!1 &1884293804
 GameObject:
@@ -3699,6 +3721,7 @@ MonoBehaviour:
   ATK: 2
   DEF: 0
   Heal: 0
+  holePrefab: {fileID: 3827983080784164314, guid: a91c6706ee99c244d93e76d08b5d97c7, type: 3}
   currentHP: 0
   currentATK: 0
   currentDEF: 0
@@ -3706,6 +3729,8 @@ MonoBehaviour:
   currentBarrier: 0
   Interact: 0
   InteractiveAllyName: 
+  InteractiveEnemyName: 
+  skipNextTurn: 0
   infoUI: {fileID: 333720502}
 --- !u!1 &1894479261
 GameObject:
@@ -4380,9 +4405,8 @@ MonoBehaviour:
   golem: {fileID: 2118067241}
   ghost: {fileID: 1175252873}
   skeleton: {fileID: 242502387}
-  AttackPowerGivenByGoblin: 1
-  AdvancedHealPower: 3
-  BarrierGivenBySkeleton: 1
+  _decreasePower: 0.25
+  _increasePower: 4
 --- !u!1001 &2118067239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4533,6 +4557,7 @@ MonoBehaviour:
   ATK: 2
   DEF: 0
   Heal: 0
+  holePrefab: {fileID: 3827983080784164314, guid: a91c6706ee99c244d93e76d08b5d97c7, type: 3}
   currentHP: 0
   currentATK: 0
   currentDEF: 0
@@ -4540,6 +4565,8 @@ MonoBehaviour:
   currentBarrier: 0
   Interact: 0
   InteractiveAllyName: 
+  InteractiveEnemyName: 
+  skipNextTurn: 0
   infoUI: {fileID: 999576216}
 --- !u!1 &2145146428
 GameObject:
