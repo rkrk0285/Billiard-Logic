@@ -7,7 +7,8 @@ using UnityEngine.Rendering;
 public class BallStat : MonoBehaviour
 {
     [Header("Objects")]
-    public GameObject holePrefab; // 구멍 프리팹 참조 변수
+    public GameObject holePrefab;
+    public GameObject holePrefabParents;
 
     [Header("Parameters")]
     [SerializeField] protected float MaxHP;
@@ -96,16 +97,10 @@ public class BallStat : MonoBehaviour
     }
 
     public void Dead()
-    {
-        // 캐릭터 비활성화
-        gameObject.SetActive(false);
-
-        // 구멍 프리팹이 있는지 확인
-        if (holePrefab != null)
-        {
-            // 캐릭터가 죽은 자리에 구멍을 생성
-            Instantiate(holePrefab, transform.position, Quaternion.identity);
-        }        
+    {        
+        gameObject.SetActive(false);        
+        if (holePrefab != null)        
+            Instantiate(holePrefab, transform.position, Quaternion.identity, holePrefabParents.transform);
     }
     private void ShowInfo()
     {
