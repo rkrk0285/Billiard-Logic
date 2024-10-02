@@ -32,8 +32,8 @@ public class Goblin : BallStat
     protected override void InitializeSkill()
     {
         base.InitializeSkill();
-        InteractiveSkill.Add("Golem", () => { SkillLists.Instance.GoblinToGolem(); });
-        InteractiveSkill.Add("Ghost", () => { SkillLists.Instance.GoblinToGhost(); });
-        InteractiveSkill.Add("Skeleton", () => { SkillLists.Instance.GoblinToSkeleton(); });
-    }
+        //InteractiveSkill.Add("Golem", () => { SkillLists.Instance.GoblinToGolem(); });
+        //InteractiveSkill.Add("Ghost", () => { SkillLists.Instance.GoblinToGhost(); });
+        //InteractiveSkill.Add("Skeleton", () => { SkillLists.Instance.GoblinToSkeleton(); });
+    }    
 }

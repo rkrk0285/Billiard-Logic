@@ -18,11 +18,14 @@ public class BallStat : MonoBehaviour
     public float currentHeal;
     public int currentBarrier;
     public bool Interact;
+
     public string InteractiveAllyName;
+    public string InteractiveEnemyName;
 
     protected int wallBounce;
     protected int ballBounce;
-    
+
+    public bool skipNextTurn;
     [Header("Components")]
     [SerializeField] private InfoUI infoUI;
     
@@ -43,7 +46,11 @@ public class BallStat : MonoBehaviour
         currentHeal = Heal;
         wallBounce = 0;
         ballBounce = 0;
+        
         Interact = false;
+        InteractiveAllyName = null;
+        InteractiveEnemyName = null;
+        skipNextTurn = false;
         ShowInfo();
     }
     public void ActiveInteractiveSkill()
@@ -72,7 +79,7 @@ public class BallStat : MonoBehaviour
             currentHP -= damage;
             if (currentHP <= 0)
             {
-                gameObject.SetActive(false);
+                Dead();                
             }            
         }
         ShowInfo();
@@ -85,11 +92,16 @@ public class BallStat : MonoBehaviour
             currentHP = MaxHP;
         }
         ShowInfo();
-    }    
+    }
+
+    public void Dead()
+    {
+        gameObject.SetActive(false);        
+    }
+
     private void ShowInfo()
     {
-        infoUI.ShowHpBar(currentHP / MaxHP);                
-        //infoUI.ShowAttack(currentATK, ATK);
+        infoUI.ShowHpBar(currentHP / MaxHP);
         infoUI.ShowBarrier(currentBarrier);
     }       
     public int GetBounceCount()
@@ -107,6 +119,10 @@ public class BallStat : MonoBehaviour
     public void SetInteractiveAllyName(string name)
     {
         InteractiveAllyName = name;
+    }
+    public void SetInteractiveEnemyName(string name)
+    {
+        InteractiveEnemyName = name;
     }
     public void AddBarrierCount(int amount)
     {
@@ -129,17 +145,7 @@ public class BallStat : MonoBehaviour
         {
             skill.Initialize(this);
         }
-    }
-    public virtual void ResetStartCondition()
-    {
-        // DO NOTHING
-        // Override this function when inherrit this class to child class
-    }
-    public virtual void ResetEndCondition()
-    {
-        // DO NOTHING
-        // Override this function when inherrit this class to child class
-    }
+    }    
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         // For Enemy.
@@ -156,5 +162,33 @@ public class BallStat : MonoBehaviour
                 wallBounce++;
             }            
         }
-    }    
+    }
+    public void SkipNextTurn()
+    {
+        skipNextTurn = true;
+    }
+    public virtual void ResetStartCondition()
+    {
+        if (skipNextTurn)
+            GameManager.Instance.GoToNextTurn();
+    }
+    public virtual void ResetEndCondition()
+    {
+        // DO NOTHING
+        // Override this function when inherrit this class to child class
+    }
+
+    //protected IEnumerator SlowMotionEffect(float slowDuration, float slowFactor)
+    //{
+    //    // 게임 시간을 느리게 설정
+    //    Time.timeScale = slowFactor;
+    //    Time.fixedDeltaTime = 0.02f * Time.timeScale; // 물리 업데이트 시간도 맞춤
+
+    //    // 주어진 시간동안 기다림
+    //    yield return new WaitForSecondsRealtime(slowDuration);
+
+    //    // 시간 복구
+    //    Time.timeScale = 1f;
+    //    Time.fixedDeltaTime = 0.02f; // 물리 업데이트 시간 복구
+    //}
 }
