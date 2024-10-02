@@ -15,6 +15,8 @@ public class EnemyBallAI : BallController
         {
             if (firstHit.collider.CompareTag("Player"))
                 result++;
+            //else if (firstHit.collider.CompareTag("Enemy"))
+            //    result--;
 
             nextDir = CalculateNextDirection(gameObject, firstHit.collider.gameObject, firstHit, nextDir);
             nextPos = firstHit.point + firstHit.normal * BALLRAD;
@@ -25,6 +27,8 @@ public class EnemyBallAI : BallController
         {
             if (secondHit.collider.CompareTag("Player"))
                 result++;
+            //else if (secondHit.collider.CompareTag("Enemy"))
+            //    result--;
         }
         
         return result;        
@@ -33,37 +37,31 @@ public class EnemyBallAI : BallController
     {
         int canHitCount = 0;
         List<Vector2> canHitDirection = new List<Vector2>();
-        for (int i = 0; i < 180; i++)
+        for (int i = 0; i < 360; i++)
         {
-            Vector2 dir1 = new Vector2(1, Mathf.Tan(Mathf.Deg2Rad * i));
-            Vector2 dir2 = new Vector2(-1, Mathf.Tan(Mathf.Deg2Rad * i));
+            float angle = Mathf.Deg2Rad * i;
+            Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
-            int c1 = CanHitEnemyCount(dir1);
-            int c2 = CanHitEnemyCount(dir2);
-            
-            if (c1 > canHitCount)
+            int c = CanHitEnemyCount(dir);
+            if (c > canHitCount)
             {
                 canHitDirection.Clear();
-                canHitDirection.Add(dir1);
-                canHitCount = c1;
+                canHitDirection.Add(dir);
+                canHitCount = c;
             }
-            else if (c1 == canHitCount)
+            else if (c == canHitCount)
             {
-                canHitDirection.Add(dir1);
-            }
-
-            if (c2 > canHitCount)
-            {
-                canHitDirection.Clear();
-                canHitDirection.Add(dir2);
-                canHitCount = c2;
-            }
-            else if (c2 == canHitCount)
-            {
-                canHitDirection.Add(dir2);
+                canHitDirection.Add(dir);
             }
         }
-        
+
+        Debug.Log("CanHitCount = " + canHitCount);
+        Debug.Log("List Count = " + canHitDirection.Count);
+
+        for(int i = 0; i < canHitDirection.Count; i++)
+        {            
+            Debug.DrawLine(transform.position, transform.position + new Vector3 (canHitDirection[i].normalized.x, canHitDirection[i].normalized.y, 0) * 20);
+        }
         int rand = Random.Range(0, canHitDirection.Count);
         ShootBall(canHitDirection[rand]);
     }

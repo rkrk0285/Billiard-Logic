@@ -46,9 +46,9 @@ public class Ghost : BallStat
     protected override void InitializeSkill()
     {
         base.InitializeSkill();
-        InteractiveSkill.Add("Goblin", () => { SkillLists.Instance.GhostToGoblin(); });
-        InteractiveSkill.Add("Golem", () => { SkillLists.Instance.GhostToGolem(); });
-        InteractiveSkill.Add("Skeleton", () => { SkillLists.Instance.GhostToSkeleton(); });
+        //InteractiveSkill.Add("Goblin", () => { SkillLists.Instance.GhostToGoblin(); });
+        //InteractiveSkill.Add("Golem", () => { SkillLists.Instance.GhostToGolem(); });
+        //InteractiveSkill.Add("Skeleton", () => { SkillLists.Instance.GhostToSkeleton(); });
     }
     private IEnumerator SlowMotionEffect(float slowDuration, float slowFactor)
     {

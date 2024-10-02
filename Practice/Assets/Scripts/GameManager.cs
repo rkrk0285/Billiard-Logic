@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -80,8 +81,9 @@ public class GameManager : MonoBehaviour
         enemyTurnQueue = newEnemyQueue;        
     }
     public void TurnEnd()
-    {        
-        if (currentTurnObject.GetComponent<BallStat>().Interact)        
+    {
+        ResetPointOutObject();
+        if (currentTurnObject.GetComponent<BallStat>().Interact)
             currentTurnObject.GetComponent<BallStat>().ActiveInteractiveSkill();        
         else
             GoToNextTurn();
@@ -107,11 +109,9 @@ public class GameManager : MonoBehaviour
         currentTurnObject = obj;
     }
     public void OnClickReadyButton()
-    {
-        ResetHandsUpAlly();        
+    {        
         if (isExtraTurn)
-        {            
-            currentTurnObject.GetComponent<BallStat>().ResetStartCondition();
+        {                        
             currentTurnObject.GetComponent<BallStat>().InteractiveAllyName = null;
             currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);            
         }
@@ -120,11 +120,10 @@ public class GameManager : MonoBehaviour
             if (allyTurnQueue.Count > 0)
             {
                 currentTurnObject = allyTurnQueue.Dequeue();
-                allyTurnQueue.Enqueue(currentTurnObject);
-                //CheckHandsUpAlly(currentTurnObject);
-                
-                currentTurnObject.GetComponent<BallStat>().ResetStartCondition();
+                allyTurnQueue.Enqueue(currentTurnObject);                                                
                 currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
+
+                PointOutObject(currentTurnObject);
             }
         }
         else
@@ -132,20 +131,21 @@ public class GameManager : MonoBehaviour
             if (enemyTurnQueue.Count > 0)
             {
                 currentTurnObject = enemyTurnQueue.Dequeue();
-                enemyTurnQueue.Enqueue(currentTurnObject);
-                
-                currentTurnObject.GetComponent<BallStat>().ResetStartCondition();
+                enemyTurnQueue.Enqueue(currentTurnObject);                                
                 currentTurnObject.GetComponent<EnemyBallAI>().AIShooting();                
             }
         }
-        
+
+        currentTurnObject.GetComponent<BallStat>().ResetStartCondition();
         readyButton.interactable = false;
         oneMoreButton.interactable = false;
     }
-    public void CheckHandsUpAlly(GameObject currObj)
+    public void PointOutObject(GameObject currObj)
     {        
         Queue<GameObject> newAllyQueue = new Queue<GameObject>(allyTurnQueue);
+
         List<GameObject> possibleAlly = new List<GameObject>();
+        List<GameObject> possibleEnemy = enemyTurnQueue.ToList();
 
         while (newAllyQueue.Count > 0)
         {
@@ -160,19 +160,33 @@ public class GameManager : MonoBehaviour
             currentTurnObject.GetComponent<BallStat>().SetInteractiveAllyName(possibleAlly[rand].name);
             possibleAlly[rand].GetComponent<BallStat>().HandsUp();
         }
+        
+        if (possibleEnemy.Count != 0)
+        {
+            int rand = Random.Range(0, possibleEnemy.Count);
+            currentTurnObject.GetComponent<BallStat>().SetInteractiveAllyName(possibleEnemy[rand].name);
+            possibleEnemy[rand].GetComponent<BallStat>().HandsUp();
+        }
     }
-    public void ResetHandsUpAlly()
+    public void ResetPointOutObject()
     {
         Queue<GameObject> newAllyQueue = new Queue<GameObject>(allyTurnQueue);
+        Queue<GameObject> newEnemyQueue = new Queue<GameObject>(enemyTurnQueue);
         while (newAllyQueue.Count > 0)
         {
             GameObject obj = newAllyQueue.Dequeue();
+            obj.GetComponent<BallStat>().HandsDown();
+        }
+        while (newEnemyQueue.Count > 0)
+        {
+            GameObject obj = newEnemyQueue.Dequeue();
             obj.GetComponent<BallStat>().HandsDown();
         }
     }    
     public void OnClickReloadButton()
     {
         augment.SetActive(true);
+        //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
     public void OnClickResetButton()
     {

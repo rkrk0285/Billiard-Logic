@@ -18,16 +18,9 @@ partial class SkillLists : MonoBehaviour
     //[SerializeField] private int GolemToSkeletonAttackRange = 2;
     //[SerializeField] private float GolemToSkeletonAttackDamage = 2;
 
-    [Header("Goblin")]
-    [SerializeField] private float AttackPowerGivenByGoblin = 1;
-
-    [Header("Golem")]
-
-    [Header("Ghost")]
-    [SerializeField] private float AdvancedHealPower = 3;
-
-    [Header("Skeleton")]
-    [SerializeField] private int BarrierGivenBySkeleton = 1;
+    [Header("Parameter")]
+    [SerializeField] private float _decreasePower = 0.25f;
+    [SerializeField] private float _increasePower = 4f;    
 
     private void Awake()
     {
@@ -101,63 +94,76 @@ partial class SkillLists
     //    ghost.GetComponent<BallStat>().ResetActionParameter();
     //    GameManager.Instance.GoToExtraTurn();
     //}
-    public void GoblinToGolem()
+    //public void GoblinToGolem()
+    //{
+    //    golem.GetComponent<BallStat>().IncreaseDamage(AttackPowerGivenByGoblin);
+    //}
+    //public void GoblinToGhost()
+    //{
+    //    ghost.GetComponent<BallStat>().IncreaseDamage(AttackPowerGivenByGoblin);
+    //}
+    //public void GoblinToSkeleton()
+    //{
+    //    skeleton.GetComponent<BallStat>().IncreaseDamage(AttackPowerGivenByGoblin);
+    //}
+    //public void GolemToGoblin()
+    //{
+    //    GolemInteractiveSkill(goblin);
+    //}
+    //public void GolemToGhost()
+    //{
+    //    GolemInteractiveSkill(ghost);
+    //}
+    //public void GolemToSkeleton()
+    //{        
+    //    GolemInteractiveSkill(skeleton);
+    //}
+    //public void GolemInteractiveSkill(GameObject obj)
+    //{
+    //    StartCoroutine(DelayedStopBall(golem));
+    //    StartCoroutine(DelayedStopBall(obj));
+    //    obj.GetComponent<BallStat>().ResetEndParameter();
+    //    GameManager.Instance.GoToExtraTurn(obj);
+    //}
+    //public void GhostToGoblin()
+    //{        
+    //    ghost.GetComponent<BallStat>().TakeHeal(AdvancedHealPower);
+    //    goblin.GetComponent<BallStat>().TakeHeal(AdvancedHealPower);
+    //}
+    //public void GhostToGolem()
+    //{        
+    //    ghost.GetComponent<BallStat>().TakeHeal(AdvancedHealPower);
+    //    golem.GetComponent<BallStat>().TakeHeal(AdvancedHealPower);
+    //}
+    //public void GhostToSkeleton()
+    //{
+    //    ghost.GetComponent<BallStat>().TakeHeal(AdvancedHealPower);
+    //    skeleton.GetComponent<BallStat>().TakeHeal(AdvancedHealPower);
+    //}
+    //public void SkeletonToGoblin()
+    //{        
+    //    goblin.GetComponent<BallStat>().AddBarrierCount(BarrierGivenBySkeleton);
+    //}
+    //public void SkeletonToGolem()
+    //{
+    //    golem.GetComponent<BallStat>().AddBarrierCount(BarrierGivenBySkeleton);
+    //}
+    //public void SkeletonToGhost()
+    //{        
+    //    ghost.GetComponent<BallStat>().AddBarrierCount(BarrierGivenBySkeleton);
+    //}
+
+    public void Debuff_DecreasePower(GameObject currObject)
     {
-        golem.GetComponent<BallStat>().IncreaseDamage(AttackPowerGivenByGoblin);
+        currObject.GetComponent<BallController>().DecreasePowerMultiplier(_decreasePower);
     }
-    public void GoblinToGhost()
+    public void Debuff_IncreasePower(GameObject currObject)
     {
-        ghost.GetComponent<BallStat>().IncreaseDamage(AttackPowerGivenByGoblin);
+        currObject.GetComponent<BallController>().IncreasePowerMultiplier(_increasePower);
     }
-    public void GoblinToSkeleton()
+    public void Debuff_SkipTurn(GameObject currObject)
     {
-        skeleton.GetComponent<BallStat>().IncreaseDamage(AttackPowerGivenByGoblin);
-    }
-    public void GolemToGoblin()
-    {
-        GolemInteractiveSkill(goblin);
-    }
-    public void GolemToGhost()
-    {
-        GolemInteractiveSkill(ghost);
-    }
-    public void GolemToSkeleton()
-    {        
-        GolemInteractiveSkill(skeleton);
-    }
-    public void GolemInteractiveSkill(GameObject obj)
-    {
-        StartCoroutine(DelayedStopBall(golem));
-        StartCoroutine(DelayedStopBall(obj));
-        obj.GetComponent<BallStat>().ResetEndParameter();
-        GameManager.Instance.GoToExtraTurn(obj);
-    }
-    public void GhostToGoblin()
-    {        
-        ghost.GetComponent<BallStat>().TakeHeal(AdvancedHealPower);
-        goblin.GetComponent<BallStat>().TakeHeal(AdvancedHealPower);
-    }
-    public void GhostToGolem()
-    {        
-        ghost.GetComponent<BallStat>().TakeHeal(AdvancedHealPower);
-        golem.GetComponent<BallStat>().TakeHeal(AdvancedHealPower);
-    }
-    public void GhostToSkeleton()
-    {
-        ghost.GetComponent<BallStat>().TakeHeal(AdvancedHealPower);
-        skeleton.GetComponent<BallStat>().TakeHeal(AdvancedHealPower);
-    }
-    public void SkeletonToGoblin()
-    {        
-        goblin.GetComponent<BallStat>().AddBarrierCount(BarrierGivenBySkeleton);
-    }
-    public void SkeletonToGolem()
-    {
-        golem.GetComponent<BallStat>().AddBarrierCount(BarrierGivenBySkeleton);
-    }
-    public void SkeletonToGhost()
-    {        
-        ghost.GetComponent<BallStat>().AddBarrierCount(BarrierGivenBySkeleton);
+        currObject.GetComponent<BallStat>().SkipNextTurn();
     }
 }
 
