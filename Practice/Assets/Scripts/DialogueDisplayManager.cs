@@ -34,35 +34,36 @@ public class DialogueDisplayManager : MonoBehaviour
     private float dialogueDuration = 2f;
     public GameObject dialoguePanelPrefab;
     private Queue<GameObject> characters;
-    public Canvas canvas;
     private GameObject targetCharacter;
     private void Update()
     {
-        remainingEnemies = GameManager.Instance.enemyQueue.Count;
-        remainingCharacters = GameManager.Instance.alleyQueue.Count;
-        characters = GameManager.Instance.alleyQueue;
+        remainingEnemies = GameManager.Instance.GetEnemyQueue().Count;
+        remainingCharacters = GameManager.Instance.GetAllyQueue().Count;
+        characters = GameManager.Instance.GetEnemyQueue();
 
         CheckDialogueDuringCombat();
 
-        /*foreach (GameObject character in characters)
+        foreach (GameObject character in characters)
         {
             if(character != null)
             {
                 BallStat ballStat = character.GetComponent<BallStat>();
-
                 currentHP = ballStat.GetCurrentHP();
                 maxHP = ballStat.GetMaxHP();
-                Vector3 Position = character.transform.position;
                 CheckDialogueDuringCombat();
             }
-        }*/
+        }
     }
     void Awake()
     {
         // Populate dialogue list with conditions
         dialogueList.Add(new DialogueEntry("We're ready to roll out!", () => remainingCharacters == 4, false));
-        dialogueList.Add(new DialogueEntry("I'm not sure I can hold on!", () => currentHP / maxHP < 0.25f, false));
+        dialogueList.Add(new DialogueEntry("There's three left!", () => remainingCharacters == 3, false));
+        dialogueList.Add(new DialogueEntry("There's two left!", () => remainingCharacters == 2, false));
+        dialogueList.Add(new DialogueEntry("There's one left!", () => remainingCharacters == 1, false));
         dialogueList.Add(new DialogueEntry("Only one left! Let's finish this!", () => remainingEnemies == 1, false));
+
+        dialogueList.Add(new DialogueEntry("I'm not sure I can hold on!", () => currentHP / maxHP < 0.25f, false));
         dialogueList.Add(new DialogueEntry("Stay focused, we can still win!", () => currentHP / maxHP < 0.5f, false));
         dialogueList.Add(new DialogueEntry("Is that all they've got?", () => remainingEnemies < 3, false));
     }
@@ -79,10 +80,11 @@ public class DialogueDisplayManager : MonoBehaviour
         {
             if (entry.dialogue != null && entry.condition() && !entry.displayed)
             {
-                
                 entry.displayed = true;
                 Debug.Log(entry.dialogue);
+
                 StartCoroutine(TriggerDialogue(entry.dialogue));
+
                 lastDialogueTime = Time.time; // Reset cooldown timer
                 break; // Trigger only one dialogue at a time
             }
@@ -91,21 +93,29 @@ public class DialogueDisplayManager : MonoBehaviour
     }
     private IEnumerator TriggerDialogue(string dialogue)
     {
+        Debug.Log("Hello");
         int randomInt = Random.Range(0, remainingCharacters);
         targetCharacter = characters.ToArray()[randomInt];
-        
-        // Instantiate the panel as a child of the target character
-        GameObject instantiatedPanel = Instantiate(dialoguePanelPrefab, targetCharacter.transform);
 
-        DialoguePanel dialoguePanelScript = instantiatedPanel.GetComponent<DialoguePanel>();
-        dialoguePanelScript.UpdateText(dialogue);
-        
+        DialoguePanel[] allPanels = FindObjectsOfType<DialoguePanel>();
+        BallController ballController = targetCharacter.GetComponent<BallController>();
+ 
+        foreach (DialoguePanel panel in allPanels) 
+        {
+            if (panel.currentCharacter == ballController.currentCharacter)
+            {
+                panel.UpdateText(dialogue);
+                panel.transform.GetChild(0).gameObject.SetActive(true);
+            }
+            
+        }
+
         // Wait for the specified duration
         yield return new WaitForSeconds(dialogueDuration);
 
-
-        // Destroy the dialogue panel after the duration
-     
-        Destroy(instantiatedPanel);
+        foreach (DialoguePanel panel in allPanels)
+        {
+                panel.gameObject.SetActive(false);
+        }
     }
 }

@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class DialoguePanel : MonoBehaviour
 {
+    public E_Characters currentCharacter;
     public TextMeshProUGUI dialogueText;
     private Transform target; // The target object (e.g., the character) to follow
     private Camera mainCamera; // Reference to the main camera
 
+    
 
     void Awake()
     {

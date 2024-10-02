@@ -35,7 +35,7 @@ public class BallController : MonoBehaviour
     protected Rigidbody2D rb;
     private BallStat ballStat;
     private LineRenderer lr;
-        
+    public E_Characters currentCharacter;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();

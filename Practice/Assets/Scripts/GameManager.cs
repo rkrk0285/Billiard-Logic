@@ -186,4 +186,14 @@ public class GameManager : MonoBehaviour
         isAllyTurn = !isAllyTurn;
         GoToExtraTurn(currentTurnObject);
     }    
+
+    public Queue<GameObject> GetAllyQueue()
+    {
+        return allyTurnQueue;
+    }
+
+    public Queue<GameObject> GetEnemyQueue()
+    {
+        return enemyTurnQueue;
+    }
 }

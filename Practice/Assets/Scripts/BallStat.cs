@@ -156,5 +156,15 @@ public class BallStat : MonoBehaviour
                 wallBounce++;
             }            
         }
-    }    
+    }
+    
+    public float GetCurrentHP()
+    {
+        return currentHP;
+    }
+
+    public float GetMaxHP()
+    {
+        return MaxHP;
+    }
 }
