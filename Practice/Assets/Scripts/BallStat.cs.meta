@@ -3,7 +3,9 @@ guid: d992903692ed7f043be188619c69d8c2
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - holePrefab: {fileID: 3827983080784164314, guid: a91c6706ee99c244d93e76d08b5d97c7, type: 3}
+  - infoUI: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
