@@ -21,7 +21,7 @@ public class Hole : MonoBehaviour
                 // 공의 속도가 특정 임계치보다 낮은 경우
                 if (rb.velocity.magnitude <= speedThreshold)
                 {
-                    // 일정 시간 동안 속도가 낮다면 공을 죽임
+                    // 일정 시간 동안 속도가 낮다면 공을 죽임                    
                     StartCoroutine(CheckForDeath(other.gameObject));
                 }
             }

@@ -13,15 +13,7 @@ public class Ghost : BallStat
             if (collision.CompareTag("Player") || collision.CompareTag("Enemy"))
             {
                 ballBounce++;
-                if (collision.gameObject.name == InteractiveAllyName)
-                {
-                    ActiveInteractiveSkill();
-                    InteractiveAllyName = null;
-                }
-                else
-                {
-                    collision.GetComponent<BallStat>().TakeHeal(currentHeal);
-                }
+                collision.GetComponent<BallStat>().TakeHeal(currentHeal);
             }
             //skill?.ActivateSkill();
         }

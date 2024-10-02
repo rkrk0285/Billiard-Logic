@@ -53,10 +53,7 @@ public class EnemyBallAI : BallController
             {
                 canHitDirection.Add(dir);
             }
-        }
-
-        Debug.Log("CanHitCount = " + canHitCount);
-        Debug.Log("List Count = " + canHitDirection.Count);
+        }        
 
         for(int i = 0; i < canHitDirection.Count; i++)
         {            
