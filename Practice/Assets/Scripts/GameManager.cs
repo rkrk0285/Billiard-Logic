@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -10,19 +12,25 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [Header("GameObject")]
-    [SerializeField] private Transform AlleyTrans;
+    [SerializeField] private Transform AllyTrans;
     [SerializeField] private Transform EnemyTrans;
 
     [Header("Components")]
     [SerializeField] private Button readyButton;
+    [SerializeField] private Button oneMoreButton;    
 
-    [Header("Parameters")]
-    private int alleyTurnIndex;
-    private int enemyTurnIndex;
-    private bool isAlleyTurn;
-    public Queue<GameObject> alleyQueue;
-    public Queue<GameObject> enemyQueue;
+    [Header("Parameters")]    
+    private bool isAllyTurn;
+    public bool isExtraTurn;
     
+    private Queue<GameObject> allyTurnQueue;
+    private Queue<GameObject> enemyTurnQueue;
+    private GameObject currentTurnObject;    
+
+    //ADDED
+    public GameObject augment;
+    public PhysicsMaterial2D pm;
+
     private void Awake()
     {
         if (Instance == null)
@@ -32,82 +40,164 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        InitializeQueue();
-        alleyTurnIndex = 0;
-        enemyTurnIndex = -1;
-        isAlleyTurn = true;
+        InitializeList();
+        isAllyTurn = true;
+        isExtraTurn = false;
     }
-    private void InitializeQueue()
+    private void InitializeList()
     {
-        alleyQueue = new Queue<GameObject>();
-        enemyQueue = new Queue<GameObject>();
+        allyTurnQueue = new Queue<GameObject>();
+        enemyTurnQueue = new Queue<GameObject>();
 
-        for(int i = 0; i < AlleyTrans.childCount; i++)
+        for(int i = 0; i < AllyTrans.childCount; i++)
         {
-            alleyQueue.Enqueue(AlleyTrans.GetChild(i).gameObject);
+            allyTurnQueue.Enqueue(AllyTrans.GetChild(i).gameObject);
         }
         for (int i = 0; i < EnemyTrans.childCount; i++)
         {
-            enemyQueue.Enqueue(EnemyTrans.GetChild(i).gameObject);
+            enemyTurnQueue.Enqueue(EnemyTrans.GetChild(i).gameObject);
         }
     }
     private void UpdateQueue()
-    {
-        Queue<GameObject> newAlleyQueue = new Queue<GameObject>();
+    {        
+        Queue<GameObject> newAllyQueue = new Queue<GameObject>();
         Queue<GameObject> newEnemyQueue = new Queue<GameObject>();
-        while(alleyQueue.Count > 0)
+        
+        while(allyTurnQueue.Count > 0)
         {
-            GameObject obj = alleyQueue.Dequeue();
+            GameObject obj = allyTurnQueue.Dequeue();
 
-            if (obj != null)
-                newAlleyQueue.Enqueue(obj);
+            if (obj.activeSelf)            
+                newAllyQueue.Enqueue(obj);                
         }
-        while (enemyQueue.Count > 0)
+        while (enemyTurnQueue.Count > 0)
         {
-            GameObject obj = enemyQueue.Dequeue();
+            GameObject obj = enemyTurnQueue.Dequeue();
 
-            if (obj != null)
-                newEnemyQueue.Enqueue(obj);
-        }
-        alleyQueue = newAlleyQueue;
-        enemyQueue = newEnemyQueue;        
+            if (obj.activeSelf)            
+                newEnemyQueue.Enqueue(obj);                            
+        }        
+        allyTurnQueue = newAllyQueue;
+        enemyTurnQueue = newEnemyQueue;        
     }
-    public void GoNextTurn()
+    public void TurnEnd()
     {
+        ResetPointOutObject();
+        if (currentTurnObject.GetComponent<BallStat>().Interact)
+            currentTurnObject.GetComponent<BallStat>().ActiveInteractiveSkill();        
+        else
+            GoToNextTurn();
+    }
+    public void GoToNextTurn()
+    {        
+        currentTurnObject.GetComponent<BallStat>().ResetEndParameter();
+        currentTurnObject.GetComponent<BallController>().ResetPhysicsParameter();
+
         UpdateQueue();
-        isAlleyTurn = !isAlleyTurn;        
+        isAllyTurn = !isAllyTurn;
+        isExtraTurn = false;
         readyButton.interactable = true;
+        oneMoreButton.interactable = true;
+    }
+    public void GoToExtraTurn(GameObject obj)
+    {
+        UpdateQueue();        
+        isExtraTurn = true;
+        readyButton.interactable = true;
+        oneMoreButton.interactable = true;
+
+        currentTurnObject = obj;
     }
     public void OnClickReadyButton()
-    {
-        GameObject obj;
-        if (isAlleyTurn)
+    {        
+        if (isExtraTurn)
+        {                        
+            currentTurnObject.GetComponent<BallStat>().InteractiveAllyName = null;
+            currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);            
+        }
+        else if (isAllyTurn)
         {
-            if (alleyQueue.Count > 0)
+            if (allyTurnQueue.Count > 0)
             {
-                obj = alleyQueue.Dequeue();
-                obj.GetComponent<BallStat>().ResetActionParameter();
-                obj.GetComponent<BallStat>().ResetStartCondition();
-                obj.GetComponent<BallController>().ChangeState(E_BallState.Ready);
-                alleyQueue.Enqueue(obj);
+                currentTurnObject = allyTurnQueue.Dequeue();
+                allyTurnQueue.Enqueue(currentTurnObject);                                                
+                currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
 
+                PointOutObject(currentTurnObject);
             }
         }
         else
         {
-            if (enemyQueue.Count > 0)
+            if (enemyTurnQueue.Count > 0)
             {
-                obj = enemyQueue.Dequeue();
-                obj.GetComponent<BallStat>().ResetActionParameter();
-                obj.GetComponent<BallStat>().ResetStartCondition();
-                obj.GetComponent<EnemyBallAI>().AIShooting();
-                enemyQueue.Enqueue(obj);
+                currentTurnObject = enemyTurnQueue.Dequeue();
+                enemyTurnQueue.Enqueue(currentTurnObject);                                
+                currentTurnObject.GetComponent<EnemyBallAI>().AIShooting();                
             }
-        }        
+        }
+
+        currentTurnObject.GetComponent<BallStat>().ResetStartCondition();
         readyButton.interactable = false;
+        oneMoreButton.interactable = false;
     }
+    public void PointOutObject(GameObject currObj)
+    {        
+        Queue<GameObject> newAllyQueue = new Queue<GameObject>(allyTurnQueue);
+
+        List<GameObject> possibleAlly = new List<GameObject>();
+        List<GameObject> possibleEnemy = enemyTurnQueue.ToList();
+
+        while (newAllyQueue.Count > 0)
+        {
+            GameObject obj = newAllyQueue.Dequeue();
+            if (obj != null && currObj != obj)
+                possibleAlly.Add(obj);
+        }
+
+        if (possibleAlly.Count != 0)
+        {            
+            int rand = Random.Range(0, possibleAlly.Count);
+            currentTurnObject.GetComponent<BallStat>().SetInteractiveAllyName(possibleAlly[rand].name);
+            possibleAlly[rand].GetComponent<BallStat>().HandsUp();
+        }
+        
+        if (possibleEnemy.Count != 0)
+        {
+            int rand = Random.Range(0, possibleEnemy.Count);
+            currentTurnObject.GetComponent<BallStat>().SetInteractiveAllyName(possibleEnemy[rand].name);
+            possibleEnemy[rand].GetComponent<BallStat>().HandsUp();
+        }
+    }
+    public void ResetPointOutObject()
+    {
+        Queue<GameObject> newAllyQueue = new Queue<GameObject>(allyTurnQueue);
+        Queue<GameObject> newEnemyQueue = new Queue<GameObject>(enemyTurnQueue);
+        while (newAllyQueue.Count > 0)
+        {
+            GameObject obj = newAllyQueue.Dequeue();
+            obj.GetComponent<BallStat>().HandsDown();
+        }
+        while (newEnemyQueue.Count > 0)
+        {
+            GameObject obj = newEnemyQueue.Dequeue();
+            obj.GetComponent<BallStat>().HandsDown();
+        }
+    }    
     public void OnClickReloadButton()
     {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+        augment.SetActive(true);
+        //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
+    public void OnClickResetButton()
+    {
+        pm.bounciness = 0.9f;
+        PlayerPrefs.DeleteAll();
+    }
+    
+    // For Debug
+    public void OnClickOneMoreButton()
+    {
+        isAllyTurn = !isAllyTurn;
+        GoToExtraTurn(currentTurnObject);
+    }    
 }

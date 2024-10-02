@@ -11,9 +11,16 @@ public class SkeletonSkill : SkillBase
         if (ballStat.GetBounceCount() >= requiredBounceCount)
         {
             Debug.Log("½ºÄÌ·¹Åæ ¾×¼Ç ¹ßµ¿");
-            transform.GetComponent<SpriteRenderer>().color = Color.red;
-            transform.GetComponent<Collider2D>().enabled = false;
-            transform.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            StartCoroutine(DelayedProcess());
         }
+    }
+
+    public IEnumerator DelayedProcess()
+    {
+        yield return new WaitForFixedUpdate();
+        transform.GetComponent<SpriteRenderer>().color = Color.red;
+        transform.GetComponent<Collider2D>().enabled = false;
+        transform.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        StopCoroutine(DelayedProcess());
     }
 }
