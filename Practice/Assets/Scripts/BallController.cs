@@ -89,15 +89,15 @@ public class BallController : MonoBehaviour
             nextPos = firstHit.point + firstHit.normal * BALLRAD;
         }
 
-        RaycastHit2D secondHit = GetCircleCastHit(nextPos, nextDir, gameObject, firstHit.collider.gameObject);
-        if (secondHit.collider != null)
-        {
+        //RaycastHit2D secondHit = GetCircleCastHit(nextPos, nextDir, gameObject, firstHit.collider.gameObject);
+        //if (secondHit.collider != null)
+        //{
             lr.positionCount = 2;
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, firstHit.point + firstHit.normal * BALLRAD);
             //lr.SetPosition(2, secondHit.point);
             lr.enabled = true;
-        }
+        //}
     }
     protected void ShootBall(Vector2 dir)
     {
