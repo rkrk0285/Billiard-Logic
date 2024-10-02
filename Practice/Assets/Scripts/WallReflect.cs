@@ -31,7 +31,7 @@ public class WallReflect : MonoBehaviour
             Rigidbody2D ballRb = collision.GetComponent<Rigidbody2D>();
             if (ballRb != null)
             {
-                Vector2 velocity = collision.gameObject.GetComponent<BallController>().GetCurrVelocity();
+                Vector2 velocity = ballRb.velocity;
                 Vector2 ballCenter = collision.bounds.center;
                 Vector2 closestPoint = GetClosestPoint(collision);
                 Vector2 collisionNormal = (ballCenter - closestPoint).normalized;
