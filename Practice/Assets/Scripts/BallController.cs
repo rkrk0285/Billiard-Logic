@@ -207,13 +207,16 @@ public class BallController : MonoBehaviour
     }
     private void DecelerateBall()
     {
-        if (rb.velocity.magnitude < StopMagnitude)
+        if (rb.bodyType == RigidbodyType2D.Dynamic)
         {
-            rb.velocity = Vector2.zero;
-        }
-        else if (rb.velocity.magnitude < BeginDecelerateMagnitude)
-        {
-            rb.drag = DecelerateDrag;
+            if (rb.velocity.magnitude < StopMagnitude)
+            {
+                rb.velocity = Vector2.zero;
+            }
+            else if (rb.velocity.magnitude < BeginDecelerateMagnitude)
+            {
+                rb.drag = DecelerateDrag;
+            }
         }
     }
     public void ChangeState(E_BallState state)

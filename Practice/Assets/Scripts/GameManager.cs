@@ -27,8 +27,9 @@ public class GameManager : MonoBehaviour
     
     private Queue<GameObject> allyTurnQueue;
     private Queue<GameObject> enemyTurnQueue;
+    private Queue<GameObject> currentTurnQueue;
     private GameObject currentTurnObject;
-    private GameObject currentInstructionAlly;
+    private GameObject currentInstructionAlly;    
     //ADDED
     public GameObject augment;
     public PhysicsMaterial2D pm;
@@ -45,6 +46,9 @@ public class GameManager : MonoBehaviour
         InitializeList();
         isAllyTurn = true;
         isExtraTurn = false;
+        currentTurnQueue = new Queue<GameObject>(allyTurnQueue);
+
+        Queue<GameObject> newAllyQueue = new Queue<GameObject>(allyTurnQueue);
     }
     private void InitializeList()
     {
@@ -102,15 +106,15 @@ public class GameManager : MonoBehaviour
         currentTurnObject.GetComponent<BallStat>().ResetEndParameter();
         currentTurnObject.GetComponent<BallController>().ResetPhysicsParameter();
 
-        UpdateQueue();
-        isAllyTurn = !isAllyTurn;
+        //UpdateQueue();
+        //isAllyTurn = !isAllyTurn;
         isExtraTurn = false;
         readyButton.interactable = true;
         oneMoreButton.interactable = true;
     }
     public void GoToExtraTurn(GameObject obj)
     {
-        UpdateQueue();        
+        //UpdateQueue();
         isExtraTurn = true;
         readyButton.interactable = true;
         oneMoreButton.interactable = true;
@@ -120,45 +124,73 @@ public class GameManager : MonoBehaviour
     public void OnClickReadyButton()
     {        
         if (isExtraTurn)
-        {                        
+        {
             currentTurnObject.GetComponent<BallStat>().InstructionAlly = null;
-            currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);            
+            currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
         }
         else if (isAllyTurn)
         {
-            if (allyTurnQueue.Count > 0)
+            // Set Alive Unit
+            SetUnitBodyType(AllyTrans, RigidbodyType2D.Dynamic);
+            SetUnitBodyType(EnemyTrans, RigidbodyType2D.Static);
+            currentTurnObject = GetCurrentTurnObject();
+            if (currentTurnQueue.Count == 0)
             {
-                currentTurnObject = allyTurnQueue.Dequeue();
-                allyTurnQueue.Enqueue(currentTurnObject);
+                // Last Turn
+                isAllyTurn = !isAllyTurn;
+                currentTurnQueue = new Queue<GameObject>(enemyTurnQueue);
 
-                if (currentTurnObject.GetComponent<BallStat>().GetSkipNextTurn())
+                // Still Null
+                if (currentTurnObject == null)
                 {
-                    GoToNextTurn();
+                    OnClickReadyButton();
                     return;
-                }
-
-                currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
-                if (!currentTurnObject.name.Equals("Ghost"))
-                {
-                    float rand = Random.Range(0f, 1f);
-                    if (rand <= InstructionEventProbability)
-                        SetInstructionObject(currentTurnObject);
-                }
+                }                
             }
+
+            //if (currentTurnObject.GetComponent<BallStat>().GetSkipNextTurn())
+            //{
+            //    GoToNextTurn();
+            //    return;
+            //}
+
+            currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
+
+            //if (!currentTurnObject.name.Equals("Ghost"))
+            //{
+            //    float rand = Random.Range(0f, 1f);
+            //    if (rand <= InstructionEventProbability)
+            //        SetInstructionObject(currentTurnObject);
+            //}
+
         }
         else
         {
-            if (enemyTurnQueue.Count > 0)
+            // Set Alive Unit
+            SetUnitBodyType(AllyTrans, RigidbodyType2D.Static);
+            SetUnitBodyType(EnemyTrans, RigidbodyType2D.Dynamic);
+            currentTurnObject = GetCurrentTurnObject();
+            if (currentTurnQueue.Count == 0)
             {
-                currentTurnObject = enemyTurnQueue.Dequeue();
-                enemyTurnQueue.Enqueue(currentTurnObject);                                
-                currentTurnObject.GetComponent<EnemyBallAI>().AIShooting();                
+                // Last Turn
+                isAllyTurn = !isAllyTurn;
+                currentTurnQueue = new Queue<GameObject>(allyTurnQueue);
+
+                // Still Null
+                if (currentTurnObject == null)
+                {
+                    OnClickReadyButton();
+                    return;
+                }
             }
+
+            //currentTurnObject.GetComponent<EnemyBallAI>().AIShooting();
+            currentTurnObject.GetComponent<EnemyBallAI>().AIStraightShooting();
         }
 
         currentTurnObject.GetComponent<BallStat>().ResetStartCondition();
         readyButton.interactable = false;
-        oneMoreButton.interactable = false;
+        oneMoreButton.interactable = false;        
     }
     public void SetInstructionObject(GameObject currObj)
     {        
@@ -221,5 +253,36 @@ public class GameManager : MonoBehaviour
     {
         isAllyTurn = !isAllyTurn;
         GoToExtraTurn(currentTurnObject);
+    }    
+
+    public int GetActiveObjectCount(Transform trans)
+    {
+        int result = 0;
+        for(int i = 0; i < trans.childCount; i++)
+        {
+            if (trans.GetChild(i).gameObject.activeSelf)
+                result++;
+        }
+        return result;
+    }
+    public GameObject GetCurrentTurnObject()
+    {
+        GameObject result = currentTurnQueue.Dequeue();
+        while (!result.activeSelf)
+        {
+            if (currentTurnQueue.Count > 0)
+                result = currentTurnQueue.Dequeue();
+            else
+                return null;
+        }
+        return result;
+    }
+    private void SetUnitBodyType(Transform trans, RigidbodyType2D type)
+    {
+        for(int i = 0; i < trans.childCount; i++)
+        {
+            if (trans.GetChild(i).gameObject.activeSelf)
+                trans.GetChild(i).GetComponent<Rigidbody2D>().bodyType = type;
+        }
     }    
 }

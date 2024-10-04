@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyBallAI : BallController
 {
+    [SerializeField] private Transform AllyTrans;
+
     private int CanHitEnemyCount(Vector2 dir)
     {
         int result = 0;        
@@ -61,5 +63,44 @@ public class EnemyBallAI : BallController
         }
         int rand = Random.Range(0, canHitDirection.Count);
         ShootBall(canHitDirection[rand]);
+    }
+    public void AIStraightShooting()
+    {
+        Vector2 finalDir = Vector2.zero;
+        float finalDistance = 1000f;
+        for(int i = 0; i < AllyTrans.childCount; i++)
+        {            
+            if (AllyTrans.GetChild(i).gameObject.activeSelf)
+            {
+                Vector2 posA = AllyTrans.GetChild(i).position;
+                Vector2 posB = transform.position;
+                Vector2 dir = posA - posB;
+
+                RaycastHit2D hit = GetCircleCastHit(transform.position, dir, gameObject);
+                if (hit.collider.CompareTag("Player"))
+                {
+                    float dist = Vector2.Distance(posA, posB);
+                    if (dist < finalDistance)
+                    {
+                        finalDistance = dist;
+                        finalDir = dir;
+                    }
+                }
+            }
+        }
+
+        if (finalDir == Vector2.zero)
+        {
+            int rand = Random.Range(0, 360);
+            float angle = Mathf.Deg2Rad * rand;
+            Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));                        
+            ShootBall(dir);
+
+            Debug.Log("ทฃดý น฿ป็");
+        }
+        else
+        {
+            ShootBall(finalDir);
+        }        
     }
 }
