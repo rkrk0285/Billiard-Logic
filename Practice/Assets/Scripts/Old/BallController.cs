@@ -2,13 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_BallState
-{
-    Default,
-    Ready,
-    Attacking,
-}
-
 [RequireComponent(typeof(Rigidbody2D)), RequireComponent(typeof(LineRenderer))]
 public class BallController : MonoBehaviour
 {
