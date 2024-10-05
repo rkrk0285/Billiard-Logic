@@ -14,7 +14,7 @@ public class BallStat : MonoBehaviour
     [SerializeField] protected float MaxHP;
     [SerializeField] protected float ATK;
     [SerializeField] protected float DEF;
-    [SerializeField] protected float Heal;    
+    [SerializeField] protected float Heal;
 
     public float currentHP;
     public float currentATK;
@@ -36,16 +36,14 @@ public class BallStat : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private InfoUI infoUI;
-
-    protected SkillBase skill;
+    
     protected Dictionary<string, Action> InteractiveSkill = new Dictionary<string, Action>();
 
     private void Start()
     {
         currentHP = MaxHP;
         currentBarrier = 0;
-        ResetEndParameter();
-        InitializeSkill();
+        ResetEndParameter();        
     }
     public virtual void ResetEndParameter()
     {
@@ -119,7 +117,6 @@ public class BallStat : MonoBehaviour
     public int GetBallBounceCount()
     {
         return ballBounce;
-
     }    
     public void SetInstructionAlly(GameObject obj)
     {
@@ -142,14 +139,6 @@ public class BallStat : MonoBehaviour
     {
         currentATK += amount;
         ShowInfo();
-    }
-    protected virtual void InitializeSkill()
-    {
-        skill = GetComponent<SkillBase>();
-        if (skill != null)
-        {
-            skill.Initialize(this);
-        }
     }
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class Golem : BallStat
+public class Goblin_Old : BallStat
 {    
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
@@ -23,15 +23,9 @@ public class Golem : BallStat
                     collision.gameObject.GetComponent<BallStat>().TakeDamage(currentATK);
             }            
             else
-                wallBounce++;
+            {
+                wallBounce++;                
+            }
         }
-    }
-
-    protected override void InitializeSkill()
-    {
-        base.InitializeSkill();
-        //InteractiveSkill.Add("Goblin", () => { SkillLists.Instance.GolemToGoblin(); });
-        //InteractiveSkill.Add("Ghost", () => { SkillLists.Instance.GolemToGhost(); });
-        //InteractiveSkill.Add("Skeleton", () => { SkillLists.Instance.GolemToSkeleton(); });
     }
 }

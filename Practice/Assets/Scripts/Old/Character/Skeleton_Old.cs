@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skeleton : BallStat
+public class Skeleton_Old : BallStat
 {    
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
@@ -22,9 +22,7 @@ public class Skeleton : BallStat
                     collision.gameObject.GetComponent<BallStat>().TakeDamage(currentATK);
             }            
             else
-                wallBounce++;                            
-
-            skill?.ActivateSkill();
+                wallBounce++;
         }
     }
 
@@ -38,13 +36,5 @@ public class Skeleton : BallStat
     public override void ResetEndCondition()
     {
         base.ResetEndCondition();               
-    }
-
-    protected override void InitializeSkill()
-    {
-        base.InitializeSkill();
-        //InteractiveSkill.Add("Goblin", () => { SkillLists.Instance.SkeletonToGoblin(); });
-        //InteractiveSkill.Add("Golem", () => { SkillLists.Instance.SkeletonToGolem(); });
-        //InteractiveSkill.Add("Ghost", () => { SkillLists.Instance.SkeletonToGhost(); });         
     }
 }

@@ -2,13 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum E_BallState
-{
-    Default,
-    Ready,
-    Attacking,
-}
-
 [RequireComponent(typeof(Rigidbody2D)), RequireComponent(typeof(LineRenderer))]
 public class BallController : MonoBehaviour
 {
@@ -72,7 +65,7 @@ public class BallController : MonoBehaviour
                 {
                     ChangeState(E_BallState.Default);
                     transform.GetComponent<BallStat>().ResetEndCondition();
-                    GameManager.Instance.TurnEnd();
+                    GameManager_Old.Instance.TurnEnd();
                 }
                 break;
         }
@@ -105,7 +98,7 @@ public class BallController : MonoBehaviour
         rb.drag = DefaultDrag;
 
         ballState = E_BallState.Attacking;
-        lr.enabled = false;        
+        lr.enabled = false;
     }
     public void StopBall()
     {
