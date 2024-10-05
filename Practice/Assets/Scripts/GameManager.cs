@@ -1,0 +1,114 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager Instance;
+
+    [Header("GameObject")]
+    [SerializeField] private Transform AllyTransform;
+    [SerializeField] private Transform EnemyTransform;
+
+    [Header("Parameters")]
+    private int remainTurnCount;
+    private int currentAllyTurn;
+    private int currentEnemyTurn;
+
+    private const int TURN_COUNT = 8;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(this);
+    }
+    private void Start()
+    {
+        Initialize();        
+    }
+    private void Initialize()
+    {
+        remainTurnCount = 0;
+        currentAllyTurn = 0;
+        currentEnemyTurn = 0;
+    }
+    IEnumerator TurnEndAction()
+    {
+        while (remainTurnCount < TURN_COUNT)
+        {
+            if (remainTurnCount % 2 == 0)
+            {
+                while (currentAllyTurn < AllyTransform.childCount && !AllyTransform.GetChild(currentAllyTurn).gameObject.activeSelf)
+                {                                        
+                    currentAllyTurn++;
+                }
+
+                if (currentAllyTurn < AllyTransform.childCount)
+                {
+                    AllyTransform.GetChild(currentAllyTurn).GetComponent<MonsterStat>().OnNotifyTurnEnd();
+                    currentAllyTurn++;
+                }
+            }
+            else
+            {
+                while (currentEnemyTurn < EnemyTransform.childCount && !EnemyTransform.GetChild(currentEnemyTurn).gameObject.activeSelf)
+                {
+                    currentEnemyTurn++;
+                }
+
+                if (currentEnemyTurn < EnemyTransform.childCount)
+                {
+                    EnemyTransform.GetChild(currentEnemyTurn).GetComponent<MonsterStat>().OnNotifyTurnEnd();
+                    currentEnemyTurn++;
+                }
+            }
+            remainTurnCount++;            
+            yield return new WaitForSeconds(1f);
+        }
+
+        remainTurnCount = 0;
+        currentAllyTurn = 0;
+        currentEnemyTurn = 0;
+        Debug.Log("턴이 모두 종료되었습니다.");
+    }    
+
+    // For Debug.
+    public void OnClickReadyButton(GameObject clickedObj)
+    {
+        clickedObj.GetComponent<MonsterController>().ChangeState(E_BallState.Ready);
+    }    
+    public void OnClickTurnEndButton()
+    {
+        StartCoroutine(TurnEndAction());
+    }
+    public void OnClickClearLineRenderer()
+    {
+        for (int i = 0; i < AllyTransform.childCount; i++)
+        {
+            AllyTransform.GetChild(i).GetComponent<LineRenderer>().enabled = false;
+        }
+        for (int i = 0; i < EnemyTransform.childCount; i++)
+        {
+            EnemyTransform.GetChild(i).GetComponent<LineRenderer>().enabled = false;
+        }
+    }
+    public void OnClickRandomEnemy()
+    {        
+        List<GameObject> aliveEnemy = new List<GameObject>();
+        for (int i = 0; i < EnemyTransform.childCount; i++)
+        {
+            if (EnemyTransform.GetChild(i).gameObject.activeSelf)
+                aliveEnemy.Add(EnemyTransform.GetChild(i).gameObject);
+        }
+
+        int rand = Random.Range(0, aliveEnemy.Count);
+        aliveEnemy[rand].GetComponent<EnemyBallAI>().AIStraightShooting();
+    }
+    public void OnClickReload()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+    }
+}

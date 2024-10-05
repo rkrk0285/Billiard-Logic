@@ -7,9 +7,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager_Old : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager_Old Instance;
 
     [Header("GameObject")]
     [SerializeField] private Transform AllyTrans;
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
                 newEnemyQueue.Enqueue(obj);                            
         }        
         allyTurnQueue = newAllyQueue;
-        enemyTurnQueue = newEnemyQueue;        
+        enemyTurnQueue = newEnemyQueue;
     }
     public void TurnEnd()
     {
@@ -147,22 +147,7 @@ public class GameManager : MonoBehaviour
                     return;
                 }                
             }
-
-            //if (currentTurnObject.GetComponent<BallStat>().GetSkipNextTurn())
-            //{
-            //    GoToNextTurn();
-            //    return;
-            //}
-
             currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
-
-            //if (!currentTurnObject.name.Equals("Ghost"))
-            //{
-            //    float rand = Random.Range(0f, 1f);
-            //    if (rand <= InstructionEventProbability)
-            //        SetInstructionObject(currentTurnObject);
-            //}
-
         }
         else
         {

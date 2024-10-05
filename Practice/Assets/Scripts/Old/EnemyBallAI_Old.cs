@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBallAI : BallController
+public class EnemyBallAI_Old : BallController
 {
     [SerializeField] private Transform AllyTrans;
 
@@ -16,9 +16,7 @@ public class EnemyBallAI : BallController
         if (firstHit.collider != null)
         {
             if (firstHit.collider.CompareTag("Player"))
-                result++;
-            //else if (firstHit.collider.CompareTag("Enemy"))
-            //    result--;
+                result++;            
 
             nextDir = CalculateNextDirection(gameObject, firstHit.collider.gameObject, firstHit, nextDir);
             nextPos = firstHit.point + firstHit.normal * BALLRAD;
@@ -28,9 +26,7 @@ public class EnemyBallAI : BallController
         if (secondHit.collider != null)
         {
             if (secondHit.collider.CompareTag("Player"))
-                result++;
-            //else if (secondHit.collider.CompareTag("Enemy"))
-            //    result--;
+                result++;            
         }
         
         return result;        

@@ -65,7 +65,7 @@ public class BallController : MonoBehaviour
                 {
                     ChangeState(E_BallState.Default);
                     transform.GetComponent<BallStat>().ResetEndCondition();
-                    GameManager.Instance.TurnEnd();
+                    GameManager_Old.Instance.TurnEnd();
                 }
                 break;
         }
@@ -98,7 +98,7 @@ public class BallController : MonoBehaviour
         rb.drag = DefaultDrag;
 
         ballState = E_BallState.Attacking;
-        lr.enabled = false;        
+        lr.enabled = false;
     }
     public void StopBall()
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class Ghost : BallStat
+public class Ghost_Old : BallStat
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -34,14 +34,7 @@ public class Ghost : BallStat
         base.ResetEndCondition();
         transform.GetComponent<Collider2D>().isTrigger = false;
     }
-
-    protected override void InitializeSkill()
-    {
-        base.InitializeSkill();
-        //InteractiveSkill.Add("Goblin", () => { SkillLists.Instance.GhostToGoblin(); });
-        //InteractiveSkill.Add("Golem", () => { SkillLists.Instance.GhostToGolem(); });
-        //InteractiveSkill.Add("Skeleton", () => { SkillLists.Instance.GhostToSkeleton(); });
-    }
+    
     private IEnumerator SlowMotionEffect(float slowDuration, float slowFactor)
     {
         // 게임 시간을 느리게 설정
