@@ -231,6 +231,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2413610394573740877, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: AllyTrans
       value: 
@@ -535,6 +539,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2413610394573740877, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: AllyTrans
       value: 
@@ -635,6 +643,10 @@ PrefabInstance:
     - target: {fileID: 2413610394573740877, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2413610394573740877, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: AllyTrans
@@ -5926,6 +5938,8 @@ MonoBehaviour:
   range: 4
   damage: 2
   count: 2
+  closeFirst: 1
+  enemyAlsoAttack: 1
 --- !u!1 &846752593
 GameObject:
   m_ObjectHideFlags: 0
@@ -6488,11 +6502,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DecelerateDrag
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: BeginDecelerateMagnitude
-      value: 1.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2413610394573740877, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_Name
@@ -6550,9 +6564,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa92257e24627649bd8c872b660596f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 4
+  range: 100
   damage: 2
   count: 2
+  closeFirst: 1
+  enemyAlsoAttack: 1
 --- !u!1001 &1207616678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6629,6 +6645,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2413610394573740877, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: AllyTrans
       value: 
@@ -6669,6 +6689,8 @@ MonoBehaviour:
   range: 4
   damage: 2
   count: 2
+  closeFirst: 1
+  enemyAlsoAttack: 1
 --- !u!1 &1256421947
 GameObject:
   m_ObjectHideFlags: 0
@@ -7225,6 +7247,8 @@ MonoBehaviour:
   range: 4
   damage: 2
   count: 2
+  closeFirst: 1
+  enemyAlsoAttack: 1
 --- !u!1 &1537121028
 GameObject:
   m_ObjectHideFlags: 0
@@ -7779,6 +7803,8 @@ MonoBehaviour:
   range: 4
   damage: 2
   count: 2
+  closeFirst: 1
+  enemyAlsoAttack: 1
 --- !u!1001 &1691892844
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7857,11 +7883,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DecelerateDrag
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: BeginDecelerateMagnitude
-      value: 1.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2413610394573740877, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_Name
@@ -7869,7 +7895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2413610394573740877, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3300025129495681157, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_Sprite
@@ -7926,6 +7952,8 @@ MonoBehaviour:
   range: 4
   damage: 2
   count: 2
+  closeFirst: 1
+  enemyAlsoAttack: 1
 --- !u!1 &1713361560
 GameObject:
   m_ObjectHideFlags: 0
@@ -8140,15 +8168,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DecelerateDrag
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: BeginDecelerateMagnitude
-      value: 1.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2413610394573740877, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_Name
       value: Cerberus
+      objectReference: {fileID: 0}
+    - target: {fileID: 2413610394573740877, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3300025129495681157, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_Sprite
@@ -8205,6 +8237,8 @@ MonoBehaviour:
   range: 4
   damage: 2
   count: 2
+  closeFirst: 1
+  enemyAlsoAttack: 1
 --- !u!1 &1916634113
 GameObject:
   m_ObjectHideFlags: 0
@@ -8880,6 +8914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8397ea082b6aa814b8064b94ff788fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showRange: 0
 --- !u!1001 &2117943690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8958,11 +8993,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DecelerateDrag
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: BeginDecelerateMagnitude
-      value: 1.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2413610394573740877, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_Name
@@ -8970,7 +9005,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2413610394573740877, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3300025129495681157, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_Sprite
@@ -9027,6 +9062,8 @@ MonoBehaviour:
   range: 4
   heal: 2
   count: 2
+  closeFirst: 1
+  enemyAlsoAttack: 0
 --- !u!1 &2145146428
 GameObject:
   m_ObjectHideFlags: 0
