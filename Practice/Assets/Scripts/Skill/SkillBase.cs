@@ -2,15 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SkillBase : MonoBehaviour
+public class SkillBase : MonoBehaviour
 {
-    protected BallStat ballStat;
-    protected BallController ballController;
-
-    public virtual void Initialize(BallStat ballStat)
-    {
-        this.ballStat = ballStat;
-    }
-
-    public abstract void ActivateSkill();
+    public virtual void Activate() { }    
 }
