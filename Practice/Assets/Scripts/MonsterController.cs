@@ -19,6 +19,7 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private float BeginDecelerateMagnitude;
     [SerializeField] private float DecelerateDrag;
     [SerializeField] private float StopMagnitude;
+    [SerializeField] private float BreakDrag;
 
     [Header("Current Parameters")]
     private float ballRadius;
@@ -33,7 +34,7 @@ public class MonsterController : MonoBehaviour
     private Rigidbody2D rb;
     private BallStat ballStat;
     private LineRenderer lr;
-
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -84,6 +85,7 @@ public class MonsterController : MonoBehaviour
             case E_BallState.Attacking:
                 if (rb.velocity.magnitude == 0)
                 {
+                    ResetEndPhysicsParameter();
                     ChangeState(E_BallState.Default);                    
                 }
                 break;
@@ -119,13 +121,18 @@ public class MonsterController : MonoBehaviour
         }
         return new RaycastHit2D();
     }
-    public void ResetPhysicsParameter()
+    public void ResetEndPhysicsParameter()
     {
         currentPower = Power;
-        rb.mass = Mass;        
+        rb.mass = Mass;
+        rb.drag = Mathf.Max(DefaultDrag + PlayerPrefs.GetFloat("Drag", 0), 0);
     }
     public Vector2 GetCurrVelocity()
     {
         return currVelocity;
+    }
+    public void BreakMonster()
+    {
+        rb.drag = BreakDrag;
     }
 }

@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     private int remainTurnCount;
     private int currentAllyTurn;
     private int currentEnemyTurn;
-
+    private GameObject currentObject;
     private const int TURN_COUNT = 8;
 
     private void Awake()
@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
     // For Debug.
     public void OnClickReadyButton(GameObject clickedObj)
     {
+        currentObject = clickedObj;
         clickedObj.GetComponent<MonsterController>().ChangeState(E_BallState.Ready);
     }    
     public void OnClickTurnEndButton()
@@ -110,5 +111,14 @@ public class GameManager : MonoBehaviour
     public void OnClickReload()
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+    }
+    public void OnClickBreak()
+    {
+        currentObject.GetComponent<MonsterController>().BreakMonster();
+    }
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+            OnClickBreak();
     }
 }
