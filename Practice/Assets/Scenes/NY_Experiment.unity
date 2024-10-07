@@ -656,6 +656,7 @@ MonoBehaviour:
   bedPosition: {fileID: 435435046}
   movementSpeed: 2
   sleepDuration: 15
+  isSleeping: 0
 --- !u!1 &326893776
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +668,7 @@ GameObject:
   - component: {fileID: 326893778}
   - component: {fileID: 326893777}
   m_Layer: 0
-  m_Name: Hexagon Pointed-Top
+  m_Name: Stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1230,6 +1231,8 @@ MonoBehaviour:
   rotationSpeed: 100
   ship: {fileID: 671254251}
   player: {fileID: 140248206}
+  leftSailor: {fileID: 1133409740}
+  rightSailor: {fileID: 176956522}
   isControllingShip: 0
   spriteRenderer: {fileID: 0}
 --- !u!58 &865238420
@@ -1537,6 +1540,7 @@ MonoBehaviour:
   bedPosition: {fileID: 969269132}
   movementSpeed: 2
   sleepDuration: 15
+  isSleeping: 0
 --- !u!58 &1133409741
 CircleCollider2D:
   m_ObjectHideFlags: 0

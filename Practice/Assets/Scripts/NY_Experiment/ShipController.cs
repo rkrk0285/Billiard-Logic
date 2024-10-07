@@ -6,14 +6,17 @@ public class ShipController : MonoBehaviour
     public Transform ship;               // Reference to the ship to rotate
     public Transform player;             // Reference to the player object
 
+    public SailorBehaviour leftSailor;            // Reference to the left-side sailor
+    public SailorBehaviour rightSailor;           // Reference to the right-side sailor
+
     private bool isInTrigger = false;    // Flag to track whether the player is in the trigger zone
     public bool isControllingShip = false; // Flag to track if the player is controlling the ship
 
     private Transform originalParent;    // Store the player's original parent (to restore hierarchy)
-    public SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer; // To change colors based on interactions
+
     void Start()
     {
-        // Store the player's original parent (or null if it doesn't have a parent)
         originalParent = player.parent;
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -30,19 +33,24 @@ public class ShipController : MonoBehaviour
                 // Make the player a child of the ship
                 player.SetParent(ship);
             }
+            else
+            {
+                // Restore the player to the original hierarchy (remove from ship)
+                player.SetParent(null);
+            }
         }
 
         // If the player is controlling the ship, allow rotation
         if (isControllingShip)
         {
-            // Rotate left when A is pressed
-            if (Input.GetKey(KeyCode.A))
+            // Check if left sailor is sleeping to block right rotation
+            if (!leftSailor.isSleeping && Input.GetKey(KeyCode.A))
             {
                 RotateLeft();
             }
 
-            // Rotate right when D is pressed
-            if (Input.GetKey(KeyCode.D))
+            // Check if right sailor is sleeping to block left rotation
+            if (!rightSailor.isSleeping && Input.GetKey(KeyCode.D))
             {
                 RotateRight();
             }
