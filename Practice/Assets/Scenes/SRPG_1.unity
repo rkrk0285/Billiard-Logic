@@ -235,10 +235,34 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3217832786208557996, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217832786208557996, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: Power
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: AllyTrans
       value: 
       objectReference: {fileID: 286515861}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: StopMagnitude
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: DecelerateDrag
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: BeginDecelerateMagnitude
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7145597766684118758, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: ATK
       value: 2
@@ -543,10 +567,34 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3217832786208557996, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217832786208557996, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: Power
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: AllyTrans
       value: 
       objectReference: {fileID: 286515861}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: StopMagnitude
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: DecelerateDrag
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: BeginDecelerateMagnitude
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7145597766684118758, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: ATK
       value: 2
@@ -648,10 +696,34 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3217832786208557996, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217832786208557996, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: Power
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: AllyTrans
       value: 
       objectReference: {fileID: 286515861}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: StopMagnitude
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: DecelerateDrag
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: BeginDecelerateMagnitude
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7145597766684118758, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: ATK
       value: 2
@@ -5935,7 +6007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa92257e24627649bd8c872b660596f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 4
+  range: 2
   damage: 2
   count: 2
   closeFirst: 1
@@ -6432,6 +6504,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 286515861}
     m_Modifications:
+    - target: {fileID: 1552284408129852198, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1552284408129852198, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -6493,16 +6573,20 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: BreakDrag
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DefaultDrag
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: StopMagnitude
-      value: 0.4
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DecelerateDrag
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: BeginDecelerateMagnitude
@@ -6519,6 +6603,10 @@ PrefabInstance:
     - target: {fileID: 3300025129495681157, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_SortingOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540654312835737702, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7145597766684118758, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: ATK
@@ -6564,7 +6652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa92257e24627649bd8c872b660596f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 100
+  range: 5
   damage: 2
   count: 2
   closeFirst: 1
@@ -6649,10 +6737,34 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3217832786208557996, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217832786208557996, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: Power
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: AllyTrans
       value: 
       objectReference: {fileID: 286515861}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: StopMagnitude
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: DecelerateDrag
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074698244181623095, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
+      propertyPath: BeginDecelerateMagnitude
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7145597766684118758, guid: 3cf98594a0b426f4f8bdaa4c40e59faf, type: 3}
       propertyPath: ATK
       value: 2
@@ -6686,7 +6798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa92257e24627649bd8c872b660596f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 4
+  range: 2
   damage: 2
   count: 2
   closeFirst: 1
@@ -7244,7 +7356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa92257e24627649bd8c872b660596f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 4
+  range: 2
   damage: 2
   count: 2
   closeFirst: 1
@@ -7800,7 +7912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa92257e24627649bd8c872b660596f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 4
+  range: 2
   damage: 2
   count: 2
   closeFirst: 1
@@ -7813,6 +7925,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 286515861}
     m_Modifications:
+    - target: {fileID: 1552284408129852198, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1552284408129852198, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -7874,16 +7994,20 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: BreakDrag
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DefaultDrag
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: StopMagnitude
-      value: 0.4
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DecelerateDrag
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: BeginDecelerateMagnitude
@@ -7895,7 +8019,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2413610394573740877, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3300025129495681157, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_Sprite
@@ -7911,7 +8035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7145597766684118758, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: MaxHP
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7787004602807392721, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_Sprite
@@ -7949,7 +8073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa92257e24627649bd8c872b660596f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 4
+  range: 2
   damage: 2
   count: 2
   closeFirst: 1
@@ -8098,6 +8222,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 286515861}
     m_Modifications:
+    - target: {fileID: 1552284408129852198, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1552284408129852198, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -8159,16 +8291,20 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: BreakDrag
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DefaultDrag
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: StopMagnitude
-      value: 0.4
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DecelerateDrag
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: BeginDecelerateMagnitude
@@ -8180,7 +8316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2413610394573740877, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3300025129495681157, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_Sprite
@@ -8192,11 +8328,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7145597766684118758, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: ATK
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7145597766684118758, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: MaxHP
-      value: 20
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7787004602807392721, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_Sprite
@@ -8234,8 +8370,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa92257e24627649bd8c872b660596f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 4
-  damage: 2
+  range: 1
+  damage: 10
   count: 2
   closeFirst: 1
   enemyAlsoAttack: 1
@@ -8914,7 +9050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8397ea082b6aa814b8064b94ff788fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showRange: 0
+  showRange: 1
 --- !u!1001 &2117943690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8923,6 +9059,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 286515861}
     m_Modifications:
+    - target: {fileID: 1552284408129852198, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1552284408129852198, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2026136814847741423, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -8984,16 +9128,20 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: BreakDrag
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DefaultDrag
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: StopMagnitude
-      value: 0.4
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DecelerateDrag
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: BeginDecelerateMagnitude
@@ -9005,7 +9153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2413610394573740877, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3300025129495681157, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: m_Sprite
@@ -9059,7 +9207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf3c3f8514e6d2419986516dd505bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 4
+  range: 2
   heal: 2
   count: 2
   closeFirst: 1

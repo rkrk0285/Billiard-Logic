@@ -13,7 +13,7 @@ public class RangeAttackSkill : SkillBase
     public override void Activate()
     {
         base.Activate();
-        Debug.Log(this.gameObject.name + " ½ºÅ³ ¹ßµ¿");
+        Debug.Log(this.gameObject.name + " ï¿½ï¿½Å³ ï¿½ßµï¿½");
         SkillList.Instance.RangeAttackWithCount(gameObject, range, damage, count, closeFirst, enemyAlsoAttack);
     }
 }
