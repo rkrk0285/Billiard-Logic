@@ -13,14 +13,15 @@ public class BallStat : MonoBehaviour
     [SerializeField] protected float MaxHP;
     [SerializeField] protected float ATK;
     [SerializeField] protected float DEF;
-    [SerializeField] protected float Heal;    
+    [SerializeField] protected float Heal;
+    private bool isDead = false; // 캐릭터가 이미 죽었는지 추적하는 플래그
 
     public float currentHP;
     public float currentATK;
     public float currentDEF;
     public float currentHeal;
-    public int currentBarrier;    
-    
+    public int currentBarrier;
+
     protected int wallBounce;
     protected int ballBounce;
 
@@ -61,9 +62,9 @@ public class BallStat : MonoBehaviour
         ShowInfo();
     }
     public void ActiveInteractiveSkill()
-    {        
+    {
         if (InteractiveSkill.ContainsKey(InstructionAlly.name))
-            InteractiveSkill[InstructionAlly.name]?.Invoke();        
+            InteractiveSkill[InstructionAlly.name]?.Invoke();
     }
     public void HandsUp()
     {
@@ -74,13 +75,13 @@ public class BallStat : MonoBehaviour
         transform.Find("HandsUp").gameObject.SetActive(false);
     }
     public void TakeDamage(float damage)
-    {        
-        if (currentBarrier > 0)        
-            currentBarrier--;        
+    {
+        if (currentBarrier > 0)
+            currentBarrier--;
         else
         {
-            currentHP -= damage;            
-            if (currentHP <= 0)            
+            currentHP -= damage;
+            if (currentHP <= 0)
                 Dead();
         }
         ShowInfo();
@@ -97,16 +98,24 @@ public class BallStat : MonoBehaviour
 
     public void Dead()
     {
-        // 캐릭터 비활성화
-        gameObject.SetActive(false);
+
+        // 캐릭터가 이미 죽었다면 아무 작업도 하지 않음
+        if (isDead)
+        {
+            return;
+        }
+
+        // 캐릭터가 죽은 것으로 설정
+        isDead = true;
 
         // 구멍 프리팹이 있는지 확인
         if (holePrefab != null)
         {
             // 캐릭터가 죽은 자리에 구멍을 생성
             Instantiate(holePrefab, transform.position, Quaternion.identity);
-        }        
+        }
     }
+
     private void ShowInfo()
     {
         infoUI.ShowHpBar(currentHP / MaxHP);
@@ -125,7 +134,7 @@ public class BallStat : MonoBehaviour
     {
         return ballBounce;
 
-    }    
+    }
     public void SetInstructionAlly(GameObject obj)
     {
         InstructionAlly = obj;
@@ -183,12 +192,12 @@ public class BallStat : MonoBehaviour
         return skipNextTurn;
     }
     public virtual void ResetStartCondition()
-    {   
+    {
         // DO NOTHING
         // Override this function when inherrit this class to child class
     }
     public virtual void ResetEndCondition()
-    {        
+    {
     }
 
     public void NotFollowingInstruction()
@@ -212,7 +221,7 @@ public class BallStat : MonoBehaviour
                     break;
             }
         }
-        
+
     }
 
     //protected IEnumerator SlowMotionEffect(float slowDuration, float slowFactor)
