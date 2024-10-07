@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,7 +42,7 @@ public class DialogueDisplayManager : MonoBehaviour
 
         CheckDialogueDuringCombat();
 
-        /*foreach (GameObject character in characters)
+        *//*foreach (GameObject character in characters)
         {
             if(character != null)
             {
@@ -53,7 +53,7 @@ public class DialogueDisplayManager : MonoBehaviour
                 Vector3 Position = character.transform.position;
                 CheckDialogueDuringCombat();
             }
-        }*/
+        }*//*
     }
     void Awake()
     {
@@ -102,3 +102,4 @@ public class DialogueDisplayManager : MonoBehaviour
         Destroy(instantiatedPanel);
     }
 }
+*/

@@ -25,7 +25,6 @@ public class BallStat : MonoBehaviour
     
     protected int wallBounce;
     protected int ballBounce;
-    public E_Character currentCharacter;
 
     public bool Interact;
     public GameObject InstructionAlly;
@@ -147,7 +146,6 @@ public class BallStat : MonoBehaviour
     {
         return MaxHP;
     }
-}
     public void IncreaseDamage(float amount)
     {
         currentATK += amount;
