@@ -9,7 +9,7 @@ public class RangeAttackSkill : SkillBase
     [SerializeField] private float damage = 2;
     [SerializeField] private int count = 2;
     [SerializeField] private bool closeFirst = true;
-    [SerializeField] private bool enemyAlsoAttack = true;
+    [SerializeField] private bool enemyAlsoAttack = false;
     public override void Activate()
     {
         base.Activate();
