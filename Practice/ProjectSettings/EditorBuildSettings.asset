@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Old/Fifth.unity
-    guid: 13eb743c819d63949896939486e85320
+    path: Assets/Scenes/JungMin_Test.unity
+    guid: 899e28c52c5481940b8c91013d344a75
   m_configObjects: {}

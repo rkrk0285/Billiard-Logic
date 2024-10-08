@@ -43,22 +43,14 @@ public class MonsterStat : MonoBehaviour
         skill += () => GetComponent<SkillBase>().Activate();
     }
     public void TakeDamage(float damage)
-    {
-        if (gameObject.name == "Orc")
-        {
-            Debug.Log("Orc " + damage);
-        }
+    {        
         currentHP -= damage;
         if (currentHP <= 0)
             Dead();
         ShowInfo();
     }
     public void TakeHeal(float heal)
-    {
-        if (gameObject.name == "Orc")
-        {
-            Debug.Log("Orc " + heal);
-        }
+    {        
         currentHP += heal;
         if (currentHP >= MaxHP)
             currentHP = MaxHP;
