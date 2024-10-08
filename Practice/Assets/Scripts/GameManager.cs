@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,14 +10,14 @@ public class GameManager : MonoBehaviour
 
     [Header("GameObject")]
     [SerializeField] private Transform AllyTransform;
-    [SerializeField] private Transform EnemyTransform;
+    [SerializeField] private Transform EnemyTransform;    
 
     [Header("Parameters")]
     private int remainTurnCount;
     private int currentAllyTurn;
     private int currentEnemyTurn;
     private GameObject currentObject;
-    private const int TURN_COUNT = 8;
+    private const int TURN_COUNT = 8;  
 
     private void Awake()
     {
@@ -83,7 +84,8 @@ public class GameManager : MonoBehaviour
     }    
     public void OnClickTurnEndButton()
     {
-        StartCoroutine(TurnEndAction());
+        //StartCoroutine(TurnEndAction());
+        currentObject.GetComponent<MonsterStat>().OnNotifyTurnEnd();
     }
     public void OnClickClearLineRenderer()
     {
@@ -95,9 +97,9 @@ public class GameManager : MonoBehaviour
         {
             EnemyTransform.GetChild(i).GetComponent<LineRenderer>().enabled = false;
         }
-    }
+    }   
     public void OnClickRandomEnemy()
-    {        
+    {
         List<GameObject> aliveEnemy = new List<GameObject>();
         for (int i = 0; i < EnemyTransform.childCount; i++)
         {
@@ -105,7 +107,7 @@ public class GameManager : MonoBehaviour
                 aliveEnemy.Add(EnemyTransform.GetChild(i).gameObject);
         }
 
-        int rand = Random.Range(0, aliveEnemy.Count);
+        int rand = UnityEngine.Random.Range(0, aliveEnemy.Count);
         aliveEnemy[rand].GetComponent<EnemyBallAI>().AIStraightShooting();
     }
     public void OnClickReload()
