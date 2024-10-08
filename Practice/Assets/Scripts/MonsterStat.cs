@@ -70,4 +70,8 @@ public class MonsterStat : MonoBehaviour
         // Todo. Call this funcion When Any Character's turn ended.
         skill?.Invoke();
     }
+    public void IncreaseDamageMultiplier(float multiplier)
+    {
+        currentATK *= multiplier;
+    }
 }
