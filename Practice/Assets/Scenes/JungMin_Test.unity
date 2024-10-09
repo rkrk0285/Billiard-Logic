@@ -15642,6 +15642,21 @@ MonoBehaviour:
   infoUI: {fileID: 1333812657}
   monsterController: {fileID: 1184005349}
   knockDownDamage: 3
+--- !u!114 &1184005354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184005335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01659815d3dcb304a87c9e478b33decc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 3604906096185510738, guid: 78a7b26423e7087499fa3aca171f4c9e, type: 3}
+  droppedArrowPrefab: {fileID: 3604906096185510738, guid: b25b0467794d41342be920e982b9ee7e, type: 3}
+  spawnOffset: {x: 1, y: -1}
 --- !u!1001 &1207616678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18145,14 +18160,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7738907869492437671, guid: 93f2bdd98f1c4cb4493f79a029bdd42c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5054483425366978704, guid: 93f2bdd98f1c4cb4493f79a029bdd42c, type: 3}
+    - {fileID: 7738907869492437671, guid: 93f2bdd98f1c4cb4493f79a029bdd42c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 320247569459651899, guid: 93f2bdd98f1c4cb4493f79a029bdd42c, type: 3}
       insertIndex: 2
       addedObject: {fileID: 1184005353}
+    - targetCorrespondingSourceObject: {fileID: 320247569459651899, guid: 93f2bdd98f1c4cb4493f79a029bdd42c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1184005354}
   m_SourcePrefab: {fileID: 100100000, guid: 93f2bdd98f1c4cb4493f79a029bdd42c, type: 3}
 --- !u!1001 &6964927493821770893
 PrefabInstance:
