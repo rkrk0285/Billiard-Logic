@@ -6,8 +6,8 @@ public class Golem_Old : BallStat
 {    
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        E_BallState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
-        if (ballState == E_BallState.Attacking)
+        E_MonsterState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
+        if (ballState == E_MonsterState.Moving)
         {
             if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Player"))
             {

@@ -126,7 +126,7 @@ public class GameManager_Old : MonoBehaviour
         if (isExtraTurn)
         {
             currentTurnObject.GetComponent<BallStat>().InstructionAlly = null;
-            currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
+            currentTurnObject.GetComponent<BallController>().ChangeState(E_MonsterState.Ready);
         }
         else if (isAllyTurn)
         {
@@ -147,7 +147,7 @@ public class GameManager_Old : MonoBehaviour
                     return;
                 }                
             }
-            currentTurnObject.GetComponent<BallController>().ChangeState(E_BallState.Ready);
+            currentTurnObject.GetComponent<BallController>().ChangeState(E_MonsterState.Ready);
         }
         else
         {
