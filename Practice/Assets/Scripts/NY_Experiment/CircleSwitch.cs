@@ -31,9 +31,9 @@ public class CircleSwitch : MonoBehaviour
         List<E_CircleType> otherTypes = new List<E_CircleType>
         {
             E_CircleType.BullsEye,
-            E_CircleType.heal,
             E_CircleType.attack,
-            E_CircleType.damageBuff
+            E_CircleType.damageBuff,
+            E_CircleType.heal
         };
 
         circleTypes = otherTypes;
@@ -173,7 +173,7 @@ public class CircleSwitch : MonoBehaviour
             {
                 if (character.gameObject.tag == "Player") 
                 {
-                    MonsterStat monsterStat = unit.gameObject.GetComponent<MonsterStat>();
+                    MonsterStat monsterStat = character.gameObject.GetComponent<MonsterStat>();
                     monsterStat.TakeDamage(attackCircleDamage);
                     Debug.Log(unit.gameObject.name + "took damage from enemy's bull's eye");
                 }
@@ -185,7 +185,7 @@ public class CircleSwitch : MonoBehaviour
             {
                 if (character.gameObject.tag == "Enemy")
                 {
-                    MonsterStat monsterStat = unit.gameObject.GetComponent<MonsterStat>();
+                    MonsterStat monsterStat = character.gameObject.GetComponent<MonsterStat>();
                     monsterStat.TakeDamage(attackCircleDamage);
                     Debug.Log(unit.gameObject.name + "took damage from player's bull's eye");
                 }
