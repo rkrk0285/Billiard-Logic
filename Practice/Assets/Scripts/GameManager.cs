@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
     private int currentAllyTurn;
     private int currentEnemyTurn;
     private GameObject currentObject;
-    private const int TURN_COUNT = 8;  
+    private const int TURN_COUNT = 8;
+
+    public Action TurnEndEvent;
 
     private void Awake()
     {
@@ -80,11 +82,12 @@ public class GameManager : MonoBehaviour
     public void OnClickReadyButton(GameObject clickedObj)
     {
         currentObject = clickedObj;
-        clickedObj.GetComponent<MonsterController>().ChangeState(E_BallState.Ready);
-    }    
+        clickedObj.GetComponent<MonsterController>().ChangeState(E_MonsterState.Ready);
+    }
     public void OnClickTurnEndButton()
     {
         //StartCoroutine(TurnEndAction());
+        TurnEndEvent?.Invoke();
         currentObject.GetComponent<MonsterStat>().OnNotifyTurnEnd();
     }
     public void OnClickClearLineRenderer()
@@ -122,5 +125,13 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
             OnClickBreak();
+    }
+    public Transform GetAllyTransform()
+    {
+        return AllyTransform;
+    }
+    public Transform GetEnemyTransform()
+    {
+        return EnemyTransform;
     }
 }

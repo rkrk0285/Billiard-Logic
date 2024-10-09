@@ -18,7 +18,7 @@ public class BallController : MonoBehaviour
 
     protected float epsilon;
     private Vector2 currVelocity;
-    private E_BallState ballState;
+    private E_MonsterState ballState;
 
     protected const float BALLRAD = 0.375f;
 
@@ -41,7 +41,7 @@ public class BallController : MonoBehaviour
 
         currVelocity = rb.velocity;
         currentPower = Power + PlayerPrefs.GetFloat("Power", 0);
-        ballState = E_BallState.Default;
+        ballState = E_MonsterState.Default;
     }
 
     private void Update()
@@ -51,7 +51,7 @@ public class BallController : MonoBehaviour
 
         switch (ballState)
         {
-            case E_BallState.Ready:
+            case E_MonsterState.Ready:
                 Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 dir = worldPos - new Vector2(transform.position.x, transform.position.y);
 
@@ -60,10 +60,10 @@ public class BallController : MonoBehaviour
                 else
                     DrawLine(dir);
                 break;
-            case E_BallState.Attacking:
+            case E_MonsterState.Moving:
                 if (rb.velocity.magnitude == 0)
                 {
-                    ChangeState(E_BallState.Default);
+                    ChangeState(E_MonsterState.Default);
                     transform.GetComponent<BallStat>().ResetEndCondition();
                     GameManager_Old.Instance.TurnEnd();
                 }
@@ -97,7 +97,7 @@ public class BallController : MonoBehaviour
         rb.velocity = dir.normalized * currentPower;
         rb.drag = DefaultDrag;
 
-        ballState = E_BallState.Attacking;
+        ballState = E_MonsterState.Moving;
         lr.enabled = false;
     }
     public void StopBall()
@@ -212,7 +212,7 @@ public class BallController : MonoBehaviour
             }
         }
     }
-    public void ChangeState(E_BallState state)
+    public void ChangeState(E_MonsterState state)
     {
         ballState = state;
     }
@@ -220,7 +220,7 @@ public class BallController : MonoBehaviour
     {
         return currVelocity;
     }
-    public E_BallState GetBallState()
+    public E_MonsterState GetBallState()
     {
         return ballState;
     }    

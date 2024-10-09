@@ -16,12 +16,16 @@ public class MonsterStat : MonoBehaviour
     public float currentDEF;
     public float currentHeal;
 
+    private float originalATK;
+    private float originalDEF;
+
     protected int wallBounce;
     protected int ballBounce;
 
     [Header("Components")]
-    [SerializeField] private InfoUI infoUI;
-    private Action skill;
+    [SerializeField] private InfoUI infoUI;    
+    
+    protected Action skill;
     
     private void Awake()
     {
@@ -42,7 +46,7 @@ public class MonsterStat : MonoBehaviour
         currentHP = MaxHP;
         skill += () => GetComponent<SkillBase>().Activate();
     }
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {        
         currentHP -= damage;
         if (currentHP <= 0)
@@ -55,19 +59,62 @@ public class MonsterStat : MonoBehaviour
         if (currentHP >= MaxHP)
             currentHP = MaxHP;
         ShowInfo();
-    }    
-    private void ShowInfo()
+    }
+    protected void ShowInfo()
     {
         infoUI.ShowHpBar(currentHP / MaxHP);
     }
-    private void Dead()
-    {
-        // Todo. Dead Function
+    protected void Dead()
+    {        
         gameObject.SetActive(false);
     }
     public virtual void OnNotifyTurnEnd()
-    {
-        // Todo. Call this funcion When Any Character's turn ended.
+    {        
         skill?.Invoke();
+    }
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Do Nothing.
+        // Override this function.
+    }
+
+    public void IncreaseDamageAmount(float addAmount)
+    {
+        originalATK = currentATK;
+        currentATK += addAmount;
+    }
+
+    public void IncreaseDefenseAmount(float addAmount)
+    {
+        originalDEF = currentDEF;
+        currentDEF += addAmount;
+    }
+
+    public void DecreaseDamageAmount(float addAmount)
+    {
+        currentATK -= addAmount;
+    }
+
+    public void DecreaseDefenseAmount(float addAmount)
+    {
+        currentDEF -= addAmount;
+    }
+
+    public bool IsAttackBuffedOrDebuffed()
+    {
+        if(originalATK != currentATK)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsDefenseBuffedOrDebuffed()
+    {
+        if (originalDEF != currentDEF)
+        {
+            return true;
+        }
+        return false;
     }
 }
