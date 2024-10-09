@@ -18026,6 +18026,26 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4270464066866741047, guid: f547fe2d88fc8484fa3114fbd352b59b, type: 3}
   m_PrefabInstance: {fileID: 1444215314236919983}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2117943693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117943692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90235d91282568a42ae8a25afd07861c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 4
+  healRange:
+  - 5
+  - 10
+  count: 1
+  closeFirst: 1
+  enemyAlsoAttack: 1
+  injectorImage: {fileID: 6689540406030356271, guid: 553e7231373bef74c9bd1169f5cb419a, type: 3}
 --- !u!1 &2145146428
 GameObject:
   m_ObjectHideFlags: 0
@@ -18113,10 +18133,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ghost
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4752233646390272817, guid: f547fe2d88fc8484fa3114fbd352b59b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4270464066866741047, guid: f547fe2d88fc8484fa3114fbd352b59b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2117943693}
   m_SourcePrefab: {fileID: 100100000, guid: f547fe2d88fc8484fa3114fbd352b59b, type: 3}
 --- !u!4 &2026136815455400323 stripped
 Transform:
