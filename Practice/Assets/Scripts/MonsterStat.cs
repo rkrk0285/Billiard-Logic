@@ -22,7 +22,7 @@ public class MonsterStat : MonoBehaviour
     [Header("Components")]
     [SerializeField] private InfoUI infoUI;    
     
-    private Action skill;
+    protected Action skill;
     
     private void Awake()
     {

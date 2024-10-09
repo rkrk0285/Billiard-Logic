@@ -77,6 +77,10 @@ PrefabInstance:
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: monsterStat
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: StopMagnitude
       value: 0.4
       objectReference: {fileID: 0}
@@ -119,6 +123,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -7365604304712473437, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
     - {fileID: 577696515752375278, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+    - {fileID: 7145597766684118758, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -126,4 +126,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
             OnClickBreak();
     }
+    public Transform GetAllyTransform()
+    {
+        return AllyTransform;
+    }
+    public Transform GetEnemyTransform()
+    {
+        return EnemyTransform;
+    }
 }

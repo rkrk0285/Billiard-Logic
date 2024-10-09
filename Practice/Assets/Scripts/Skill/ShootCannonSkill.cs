@@ -30,12 +30,12 @@ public class ShootCannonSkill : SkillBase
         base.Activate();
         Debug.Log(this.gameObject.name + " 스킬 발동");        
         activeSkill = true;
-    }    
+    }
 
     private void ShootCannon(Vector2 dir)
     {        
         GameObject clone = Instantiate(CannonBall, transform.position, Quaternion.identity, transform);
-        clone.GetComponent<Rigidbody2D>().AddForce(dir.normalized * 2000);
+        clone.GetComponent<Rigidbody2D>().AddForce(dir.normalized * 2000);        
         Destroy(clone, 5f);
     }
 }

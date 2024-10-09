@@ -29,7 +29,7 @@ public class ArrowScript : MonoBehaviour
             DealDamage(collision.gameObject);
 
             // 바닥에 떨어진 화살을 생성
-            Instantiate(droppedArrowPrefab, transform.position, Quaternion.identity);
+            Instantiate(droppedArrowPrefab, transform.position, Quaternion.identity, GameObject.Find("Objects").transform);
 
             Destroy(this.gameObject); // 현재 화살 제거
         }

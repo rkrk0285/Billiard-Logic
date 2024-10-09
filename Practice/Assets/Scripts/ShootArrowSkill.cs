@@ -7,6 +7,7 @@ public class ShootArrowSkill : SkillBase
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject droppedArrowPrefab; // 바닥에 떨어진 화살 프리팹
     [SerializeField] private Vector2 spawnOffset; // 화살 발사 위치 오프셋
+    [SerializeField] private Transform arrowParents;
 
     private bool hasArrow = true; // 스켈레톤이 화살을 가지고 있는지 여부
     private bool activeSkill = false;
@@ -48,7 +49,7 @@ public class ShootArrowSkill : SkillBase
         Vector2 spawnPosition = (Vector2)transform.position + spawnOffset;
 
         // 화살 생성
-        GameObject arrow = Instantiate(arrowPrefab, spawnPosition, Quaternion.identity);
+        GameObject arrow = Instantiate(arrowPrefab, spawnPosition, Quaternion.identity, arrowParents.transform);
         Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
         rb.gravityScale = 0; // 중력 영향 제거
         rb.AddForce(dir.normalized * 2000); // 화살 발사

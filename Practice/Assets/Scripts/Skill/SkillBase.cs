@@ -34,5 +34,40 @@ public class SkillBase : MonoBehaviour
         return new RaycastHit2D();
     }
 
+    protected GameObject GetClosestMonster(GameObject currObj)
+    {
+        Transform AllyTransform = GameManager.Instance.GetAllyTransform();
+        Transform EnemyTransform = GameManager.Instance.GetEnemyTransform();
+
+        GameObject result = null;
+        float closestDist = float.MaxValue;
+        for (int i = 0; i < AllyTransform.childCount; i++)
+        {
+            if (AllyTransform.GetChild(i).gameObject != currObj)
+            {
+                float dist = Vector2.Distance(currObj.transform.position, AllyTransform.GetChild(i).position);
+                if (closestDist > dist)
+                {
+                    closestDist = dist;
+                    result = AllyTransform.GetChild(i).gameObject;
+                }
+            }
+        }
+
+        for (int i = 0; i < EnemyTransform.childCount; i++)
+        {
+            if (EnemyTransform.GetChild(i).gameObject != currObj)
+            {
+                float dist = Vector2.Distance(currObj.transform.position, EnemyTransform.GetChild(i).position);
+                if (closestDist > dist)
+                {
+                    closestDist = dist;
+                    result = EnemyTransform.GetChild(i).gameObject;
+                }
+            }
+        }
+        return result;
+    }
+
     public virtual void Activate() { }
 }
