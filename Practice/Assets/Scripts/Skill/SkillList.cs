@@ -135,4 +135,26 @@ partial class SkillList : MonoBehaviour
             angle += angleStep;
         }
     }
+
+    public IEnumerator Injection(GameObject obj, float range, float value, int count, bool ascending, bool enemyAlsoAttack)
+    {
+        int currCount = 0;
+        Vector2 origin = obj.transform.position;
+        Collider2D[] ObjectInRange = GetObjectInRange(origin, range, ascending, enemyAlsoAttack);
+
+        for (int i = 0; i < ObjectInRange.Length; i++)
+        {
+            if (currCount == count)
+                break;
+
+            if (ObjectInRange[i].gameObject != obj)
+            {
+                currCount++;
+                ObjectInRange[i].GetComponent<MonsterStat>().TakeDamage(value);
+                yield return new WaitForSeconds(1);
+                if (ObjectInRange[i].gameObject.activeInHierarchy)
+                    ObjectInRange[i].GetComponent<MonsterStat>().TakeHeal(value * 2); 
+            }
+        }
+    }
 }
