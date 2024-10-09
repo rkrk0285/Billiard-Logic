@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ArrowScript : MonoBehaviour
 {
+    [SerializeField] private GameObject droppedArrowPrefab; // 바닥에 떨어진 화살 프리팹
     private Vector2 lastVelocity;
     private Rigidbody2D rb;
     private bool hasBounced = false; // 벽에 한 번 부딪힌 후만 데미지 적용
@@ -23,21 +24,24 @@ public class ArrowScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        if (collision.CompareTag("Enemy") && collision.CompareTag("Player"))
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Player"))
         {
             DealDamage(collision.gameObject);
-            Destroy(this.gameObject);
+
+            // 바닥에 떨어진 화살을 생성
+            Instantiate(droppedArrowPrefab, transform.position, Quaternion.identity);
+
+            Destroy(this.gameObject); // 현재 화살 제거
         }
     }
 
-    private void DealDamage(GameObject enemy)
+    private void DealDamage(GameObject target)
     {
-        var monsterStat = enemy.GetComponent<MonsterStat>();
+        var monsterStat = target.GetComponent<MonsterStat>();
         if (monsterStat != null)
         {
             monsterStat.TakeDamage(4);
-            Debug.Log("화살이 크리쳐를 맞췄습니다!");
+            Debug.Log("화살이 대상을 맞췄습니다!");
         }
         else
         {
