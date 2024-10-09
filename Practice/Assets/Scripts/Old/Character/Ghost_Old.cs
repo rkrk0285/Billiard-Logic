@@ -6,8 +6,8 @@ public class Ghost_Old : BallStat
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        E_BallState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
-        if (ballState == E_BallState.Attacking)
+        E_MonsterState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
+        if (ballState == E_MonsterState.Moving)
         {
             if (collision.CompareTag("Player") || collision.CompareTag("Enemy"))
             {

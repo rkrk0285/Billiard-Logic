@@ -143,8 +143,8 @@ public class BallStat : MonoBehaviour
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         // For Enemy.
-        E_BallState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
-        if (ballState == E_BallState.Attacking)
+        E_MonsterState ballState = transform.gameObject.GetComponent<BallController>().GetBallState();
+        if (ballState == E_MonsterState.Moving)
         {
             if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
             {

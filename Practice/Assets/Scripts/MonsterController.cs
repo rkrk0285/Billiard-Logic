@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public enum E_BallState
+public enum E_MonsterState
 {
     Default,
     Ready,
-    Attacking,
+    Moving,
 }
 
 [RequireComponent(typeof(Rigidbody2D)), RequireComponent(typeof(LineRenderer))]
@@ -26,8 +26,9 @@ public class MonsterController : MonoBehaviour
     private float ballRadius;
     private float currentPower;
     private float epsilon;
+    private int skipTurn;
     private Vector2 currVelocity;
-    private E_BallState ballState;
+    private E_MonsterState monsterState;
 
     [Header("Components")]
     [SerializeField] private MonsterStat monsterStat;
@@ -49,7 +50,8 @@ public class MonsterController : MonoBehaviour
         ballRadius = transform.localScale.x / 2;
         currVelocity = rb.velocity;
         currentPower = Power + PlayerPrefs.GetFloat("Power", 0);
-        ballState = E_BallState.Default;
+        skipTurn = 0;
+        monsterState = E_MonsterState.Default;
     }
 
     private void Update()
@@ -67,27 +69,38 @@ public class MonsterController : MonoBehaviour
         else if (rb.velocity.magnitude < BeginDecelerateMagnitude)
             rb.drag = DecelerateDrag;
     }
-    public void ChangeState(E_BallState state)
+    public void ChangeState(E_MonsterState state)
     {
-        ballState = state;
+        monsterState = state;
+        switch (monsterState)
+        {
+            case E_MonsterState.Ready:
+                monsterStat.ResetStartParameter();
+                break;
+        }
     }
     private void CheckBallState()
     {
-        switch (ballState)
+        switch (monsterState)
         {
-            case E_BallState.Ready:
+            case E_MonsterState.Ready:
                 Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 dir = worldPos - new Vector2(transform.position.x, transform.position.y);
+
+                if (CheckAnyTurnToSkip())
+                    break;                
+
                 if (Input.GetMouseButtonDown(0))
                     MoveMonster(dir);                    
                 else
                     DrawLine(dir);
+
                 break;
-            case E_BallState.Attacking:
+            case E_MonsterState.Moving:
                 if (rb.velocity.magnitude == 0)
                 {
                     ResetEndPhysicsParameter();
-                    ChangeState(E_BallState.Default);                    
+                    ChangeState(E_MonsterState.Default);
                 }
                 break;
         }
@@ -97,7 +110,7 @@ public class MonsterController : MonoBehaviour
         rb.velocity = dir.normalized * currentPower;
         rb.drag = DefaultDrag;
 
-        ballState = E_BallState.Attacking;
+        monsterState = E_MonsterState.Moving;
         lr.enabled = false;
     }    
     private void DrawLine(Vector2 dir)
@@ -122,16 +135,40 @@ public class MonsterController : MonoBehaviour
         }
         return new RaycastHit2D();
     }
+    private bool CheckAnyTurnToSkip()
+    {
+        if (skipTurn > 0)
+        {
+            ChangeState(E_MonsterState.Default);
+            skipTurn--;
+            return true;
+        }
+        return false;
+    }
+    public IEnumerator DelayedStopBall()
+    {
+        yield return new WaitForFixedUpdate();
+        transform.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        StopCoroutine(DelayedStopBall());
+    }
     public void ResetEndPhysicsParameter()
     {
         currentPower = Power;
         rb.mass = Mass;
         rb.drag = Mathf.Max(DefaultDrag + PlayerPrefs.GetFloat("Drag", 0), 0);
     }
+    public void SetSkipTurn(int count)
+    {
+        skipTurn = count;
+    }
     public Vector2 GetCurrVelocity()
     {
         return currVelocity;
     }
+    public E_MonsterState GetMonsterState()
+    {
+        return monsterState;
+    }    
     public void BreakMonster()
     {
         rb.drag = BreakDrag;
