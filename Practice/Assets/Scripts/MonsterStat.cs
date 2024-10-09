@@ -16,6 +16,9 @@ public class MonsterStat : MonoBehaviour
     public float currentDEF;
     public float currentHeal;
 
+    private float originalATK;
+    private float originalDEF;
+
     protected int wallBounce;
     protected int ballBounce;
 
@@ -73,5 +76,45 @@ public class MonsterStat : MonoBehaviour
     {
         // Do Nothing.
         // Override this function.
+    }
+
+    public void IncreaseDamageAmount(float addAmount)
+    {
+        originalATK = currentATK;
+        currentATK += addAmount;
+    }
+
+    public void IncreaseDefenseAmount(float addAmount)
+    {
+        originalDEF = currentDEF;
+        currentDEF += addAmount;
+    }
+
+    public void DecreaseDamageAmount(float addAmount)
+    {
+        currentATK -= addAmount;
+    }
+
+    public void DecreaseDefenseAmount(float addAmount)
+    {
+        currentDEF -= addAmount;
+    }
+
+    public bool IsAttackBuffedOrDebuffed()
+    {
+        if(originalATK != currentATK)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsDefenseBuffedOrDebuffed()
+    {
+        if (originalDEF != currentDEF)
+        {
+            return true;
+        }
+        return false;
     }
 }
