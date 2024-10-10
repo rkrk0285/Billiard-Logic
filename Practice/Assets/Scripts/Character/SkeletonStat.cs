@@ -17,7 +17,10 @@ public class SkeletonStat : MonsterStat
     {
         currentHP -= damage;
         if (currentHP <= 0)
+        {
             Dead();
+            return;
+        }
 
         if (damage >= knockDownDamage)
             StartCoroutine(SkeletonDelayedDown());

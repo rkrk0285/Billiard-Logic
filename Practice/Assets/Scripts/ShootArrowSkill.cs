@@ -23,6 +23,7 @@ public class ShootArrowSkill : SkillBase
             {
                 activeSkill = false;
                 ShootArrow(dir);
+                DisableLine();
             }
             else
                 DrawLine(dir);
@@ -45,9 +46,8 @@ public class ShootArrowSkill : SkillBase
 
     private void ShootArrow(Vector2 dir)
     {
-        // 화살이 발사될 위치를 오프셋을 기준으로 설정
-        Vector2 spawnPosition = (Vector2)transform.position + spawnOffset;
-
+        // 화살이 발사될 위치를 오프셋을 기준으로 설정        
+        Vector2 spawnPosition = (Vector2)transform.position + dir.normalized * 1f;
         // 화살 생성
         GameObject arrow = Instantiate(arrowPrefab, spawnPosition, Quaternion.identity, arrowParents.transform);
         Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();

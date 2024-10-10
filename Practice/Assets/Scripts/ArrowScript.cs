@@ -6,8 +6,7 @@ public class ArrowScript : MonoBehaviour
 {
     [SerializeField] private GameObject droppedArrowPrefab; // 바닥에 떨어진 화살 프리팹
     private Vector2 lastVelocity;
-    private Rigidbody2D rb;
-    private bool hasBounced = false; // 벽에 한 번 부딪힌 후만 데미지 적용
+    private Rigidbody2D rb;    
 
     void Start()
     {
