@@ -19,6 +19,7 @@ public class ShootCannonSkill : SkillBase
             {
                 activeSkill = false;
                 ShootCannon(dir);
+                DisableLine();
             }
             else            
                 DrawLine(dir);            
