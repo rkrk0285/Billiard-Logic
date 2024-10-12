@@ -19582,6 +19582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AllyTransform: {fileID: 286515861}
   EnemyTransform: {fileID: 2145146429}
+  damageZones: []
 --- !u!1 &1982658143
 GameObject:
   m_ObjectHideFlags: 0
