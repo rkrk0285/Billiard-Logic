@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
 
     [Header("GameObject")]
     [SerializeField] private Transform AllyTransform;
-    [SerializeField] private Transform EnemyTransform;    
+    [SerializeField] private Transform EnemyTransform;
+    [SerializeField] private List<DamageZone> damageZones; // Î™®Îì† Îç∞ÎØ∏ÏßÄ Íµ¨Ïó≠ Ï∞∏Ï°∞
 
     [Header("Parameters")]
     private int remainTurnCount;
@@ -30,7 +31,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        Initialize();        
+        Initialize();
     }
     private void Initialize()
     {
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
             if (remainTurnCount % 2 == 0)
             {
                 while (currentAllyTurn < AllyTransform.childCount && !AllyTransform.GetChild(currentAllyTurn).gameObject.activeSelf)
-                {                                        
+                {
                     currentAllyTurn++;
                 }
 
@@ -68,16 +69,24 @@ public class GameManager : MonoBehaviour
                     currentEnemyTurn++;
                 }
             }
-            remainTurnCount++;            
+            remainTurnCount++;
+            ApplyDamageZones();
+
             yield return new WaitForSeconds(1f);
         }
 
         remainTurnCount = 0;
         currentAllyTurn = 0;
         currentEnemyTurn = 0;
-        Debug.Log("≈œ¿Ã ∏µŒ ¡æ∑·µ«æ˙Ω¿¥œ¥Ÿ.");
-    }    
-
+        Debug.Log("ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ«æÔøΩÔøΩÔøΩÔøΩœ¥ÔøΩ.");
+    }
+    private void ApplyDamageZones()
+    {
+        foreach (var zone in damageZones)
+        {
+            zone.ApplyDamage();
+        }
+    }
     // For Debug.
     public void OnClickReadyButton(GameObject clickedObj)
     {
@@ -89,6 +98,8 @@ public class GameManager : MonoBehaviour
         //StartCoroutine(TurnEndAction());
         TurnEndEvent?.Invoke();
         currentObject.GetComponent<MonsterStat>().OnNotifyTurnEnd();
+        ApplyDamageZones();
+
     }
     public void OnClickClearLineRenderer()
     {
@@ -100,7 +111,7 @@ public class GameManager : MonoBehaviour
         {
             EnemyTransform.GetChild(i).GetComponent<LineRenderer>().enabled = false;
         }
-    }   
+    }
     public void OnClickRandomEnemy()
     {
         List<GameObject> aliveEnemy = new List<GameObject>();
