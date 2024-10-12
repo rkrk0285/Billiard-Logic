@@ -17241,6 +17241,7 @@ MonoBehaviour:
   droppedArrowPrefab: {fileID: 3604906096185510738, guid: b25b0467794d41342be920e982b9ee7e, type: 3}
   spawnOffset: {x: 1, y: -1}
   arrowParents: {fileID: 608823630}
+  ChangeDirectionSpeed: 0.1
 --- !u!1 &1197444083
 GameObject:
   m_ObjectHideFlags: 0
@@ -19582,6 +19583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AllyTransform: {fileID: 286515861}
   EnemyTransform: {fileID: 2145146429}
+  damageZones: []
 --- !u!1 &1982658143
 GameObject:
   m_ObjectHideFlags: 0
@@ -20228,15 +20230,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 574170143548590380, guid: f547fe2d88fc8484fa3114fbd352b59b, type: 3}
       propertyPath: MaxPower
-      value: 20
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 574170143548590380, guid: f547fe2d88fc8484fa3114fbd352b59b, type: 3}
       propertyPath: MinPower
-      value: 1
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 574170143548590380, guid: f547fe2d88fc8484fa3114fbd352b59b, type: 3}
       propertyPath: ChangeDirectionPower
-      value: 0.001
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 574170143548590380, guid: f547fe2d88fc8484fa3114fbd352b59b, type: 3}
       propertyPath: ChangeDirectionSpeed
@@ -20293,11 +20295,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4090921795566375712, guid: 93f2bdd98f1c4cb4493f79a029bdd42c, type: 3}
       propertyPath: MaxPower
-      value: 20
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4090921795566375712, guid: 93f2bdd98f1c4cb4493f79a029bdd42c, type: 3}
       propertyPath: MinPower
-      value: 1
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4090921795566375712, guid: 93f2bdd98f1c4cb4493f79a029bdd42c, type: 3}
       propertyPath: monsterStat
@@ -20305,7 +20307,7 @@ PrefabInstance:
       objectReference: {fileID: 1184005353}
     - target: {fileID: 4090921795566375712, guid: 93f2bdd98f1c4cb4493f79a029bdd42c, type: 3}
       propertyPath: ChangeDirectionPower
-      value: 0.001
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4090921795566375712, guid: 93f2bdd98f1c4cb4493f79a029bdd42c, type: 3}
       propertyPath: ChangeDirectionSpeed
@@ -20401,11 +20403,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2314840737106766165, guid: ab430f9a92d4e07409762a5bd59579ee, type: 3}
       propertyPath: MaxPower
-      value: 20
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2314840737106766165, guid: ab430f9a92d4e07409762a5bd59579ee, type: 3}
       propertyPath: MinPower
-      value: 1
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2314840737106766165, guid: ab430f9a92d4e07409762a5bd59579ee, type: 3}
       propertyPath: monsterStat
@@ -20413,7 +20415,7 @@ PrefabInstance:
       objectReference: {fileID: 6964927493821770894}
     - target: {fileID: 2314840737106766165, guid: ab430f9a92d4e07409762a5bd59579ee, type: 3}
       propertyPath: ChangeDirectionPower
-      value: 0.001
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2314840737106766165, guid: ab430f9a92d4e07409762a5bd59579ee, type: 3}
       propertyPath: ChangeDirectionSpeed
@@ -20532,11 +20534,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8925667194102999431, guid: e44fb12e9875e3549bcf7263974b9337, type: 3}
       propertyPath: MaxPower
-      value: 20
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8925667194102999431, guid: e44fb12e9875e3549bcf7263974b9337, type: 3}
       propertyPath: MinPower
-      value: 1
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8925667194102999431, guid: e44fb12e9875e3549bcf7263974b9337, type: 3}
       propertyPath: monsterStat
@@ -20544,7 +20546,7 @@ PrefabInstance:
       objectReference: {fileID: 1790398560}
     - target: {fileID: 8925667194102999431, guid: e44fb12e9875e3549bcf7263974b9337, type: 3}
       propertyPath: ChangeDirectionPower
-      value: 0.001
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8925667194102999431, guid: e44fb12e9875e3549bcf7263974b9337, type: 3}
       propertyPath: ChangeDirectionSpeed

@@ -24,11 +24,6 @@ public class MonsterController : MonoBehaviour
 
     [Space]
     [Range(0,1)][SerializeField] private float ChangeDirectionSpeed;
-    [Tooltip("This parameter is added to the Power Offset Parameter once per update. The Power Offset ranges from 0 to 1.")]
-    [Range(0, 0.1f)][SerializeField] private float ChangeDirectionPower;
-
-    [SerializeField] private float MaxPower;
-    [SerializeField] private float MinPower;
 
     [Header("Current Parameters")]
     private float ballRadius;
@@ -39,8 +34,7 @@ public class MonsterController : MonoBehaviour
     private E_MonsterState monsterState;
     
     private float angleOffset;
-    private float powerOffset;
-    private bool angleIncrease;     
+    private bool angleIncrease;
 
     [Header("Components")]
     [SerializeField] private MonsterStat monsterStat;
@@ -60,13 +54,11 @@ public class MonsterController : MonoBehaviour
         epsilon = rb.sharedMaterial.bounciness;
 
         ballRadius = transform.localScale.x / 2;
-        currVelocity = rb.velocity;
-        currPower = 0f;
-        //currPower = Power + PlayerPrefs.GetFloat("Power", 0);        
+        currVelocity = rb.velocity;        
+        currPower = Power + PlayerPrefs.GetFloat("Power", 0);        
 
         angleOffset = 0f;
-        powerOffset = 0f;
-        angleIncrease = true;        
+        angleIncrease = true;
 
         skipTurn = 0;
         monsterState = E_MonsterState.Default;
@@ -107,8 +99,7 @@ public class MonsterController : MonoBehaviour
                 if (CheckAnyTurnToSkip())
                     break;
 
-                dir = ChangeAngleByDirection(dir);
-                currPower = ChangePower();
+                dir = ChangeAngleByDirection(dir);                
 
                 if (Input.GetMouseButtonDown(0))
                     MoveMonster(dir);                    
@@ -127,8 +118,7 @@ public class MonsterController : MonoBehaviour
     protected void MoveMonster(Vector2 dir)
     {
         rb.velocity = dir.normalized * currPower;
-        rb.drag = DefaultDrag;
-        Debug.Log(currPower);
+        rb.drag = DefaultDrag;        
         monsterState = E_MonsterState.Moving;
         lr.enabled = false;
     }
@@ -158,14 +148,6 @@ public class MonsterController : MonoBehaviour
         float radian = angle * Mathf.Deg2Rad;
         return new Vector2 (Mathf.Cos(radian), Mathf.Sin(radian));       
     }
-    private float ChangePower()
-    {
-        powerOffset += ChangeDirectionPower;
-        if (powerOffset > 1f)
-            powerOffset = 0;
-        
-        return MinPower + (MaxPower - MinPower) * powerOffset;
-    }
     private static float NormalizeAngle(float angle)
     {
         angle %= 360f;
@@ -179,14 +161,14 @@ public class MonsterController : MonoBehaviour
 
         lr.positionCount = 2;
         lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, transform.position + (Vector3)dir.normalized * powerOffset * 10);        
+        lr.SetPosition(1, hit.point);
         lr.startColor = Color.white;
         lr.endColor = Color.white;
         lr.enabled = true;
     }
     protected RaycastHit2D GetCircleCastHit(Vector2 pos, Vector2 dir, GameObject obj)
     {
-        RaycastHit2D[] hit = Physics2D.CircleCastAll(pos, ballRadius, dir, 5f);
+        RaycastHit2D[] hit = Physics2D.CircleCastAll(pos, ballRadius, dir, 100f);
         for (int i = 0; i < hit.Length; i++)
         {
             if (hit[i].collider.gameObject != obj)
@@ -213,6 +195,10 @@ public class MonsterController : MonoBehaviour
     public void ResetEndPhysicsParameter()
     {
         currPower = Power;
+        
+        angleOffset = 0f;
+        angleIncrease = true;
+
         rb.mass = Mass;
         rb.drag = Mathf.Max(DefaultDrag + PlayerPrefs.GetFloat("Drag", 0), 0);
     }

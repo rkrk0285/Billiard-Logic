@@ -20,11 +20,11 @@ public class SkillBase : MonoBehaviour
 
         lr.startColor = Color.white;
         lr.endColor = Color.white;        
-        lr.enabled = true;
+        lr.enabled = true;        
     }
 
     protected RaycastHit2D GetCircleCastHit(Vector2 pos, Vector2 dir, GameObject obj)
-    {
+    {        
         RaycastHit2D[] hit = Physics2D.CircleCastAll(pos, ballRadius, dir, 100f);
         for (int i = 0; i < hit.Length; i++)
         {
