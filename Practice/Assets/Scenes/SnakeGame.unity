@@ -17306,6 +17306,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1178251773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1178251774}
+  m_Layer: 3
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1178251774
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178251773}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.045, y: 0.876, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7196015609470706948}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1184005354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21167,6 +21198,7 @@ GameObject:
   - component: {fileID: 3883607878067926534}
   - component: {fileID: 2299374794160263908}
   - component: {fileID: 1184005354}
+  - component: {fileID: 7196015609470706949}
   m_Layer: 3
   m_Name: Skeleton
   m_TagString: Player
@@ -21389,8 +21421,25 @@ Transform:
   - {fileID: 1116117705125169383}
   - {fileID: 6777934954490423127}
   - {fileID: 583086283}
+  - {fileID: 1178251774}
   m_Father: {fileID: 286515861}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7196015609470706949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6826884726695900070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023177bc82eb6704f95739170e2c06d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cannonBallPrefab: {fileID: 2059791654043668308, guid: 9513e479986ae3c40aa874fa211a75ee, type: 3}
+  shootPoint: {fileID: 1178251774}
+  shootInterval: 1
+  cannonBallDamage: 4
 --- !u!1001 &7705099689317491146
 PrefabInstance:
   m_ObjectHideFlags: 0
