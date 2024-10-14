@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 8789111256510187135}
   - component: {fileID: 9071062987399231749}
   - component: {fileID: 5460137063230563331}
+  - component: {fileID: 6702667716435981423}
   m_Layer: 3
   m_Name: Orange
   m_TagString: Player
@@ -343,7 +344,6 @@ MonoBehaviour:
   followSpeed: 5
   isHead: 0
   BonePrefab: {fileID: 3604906096185510738, guid: 14d50d396651f5043bc64760e0db6f50, type: 3}
-  ObjectTransform: {fileID: 0}
 --- !u!50 &4068816741252734574
 Rigidbody2D:
   serializedVersion: 4
@@ -527,6 +527,22 @@ MonoBehaviour:
   spawnOffset: {x: 1, y: -1}
   arrowParents: {fileID: 0}
   ChangeDirectionSpeed: 1
+--- !u!114 &6702667716435981423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411466370304348678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023177bc82eb6704f95739170e2c06d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cannonBallPrefab: {fileID: 2059791654043668308, guid: 9513e479986ae3c40aa874fa211a75ee, type: 3}
+  shootPoint: {fileID: 8169581133793491454}
+  shootInterval: 1
+  cannonBallDamage: 4
 --- !u!1 &2639952747785568724
 GameObject:
   m_ObjectHideFlags: 0
