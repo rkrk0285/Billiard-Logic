@@ -77,7 +77,11 @@ public class MonsterStat : MonoBehaviour
         // Do Nothing.
         // Override this function.
     }
-
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Do Nothing.
+        // Override this function.
+    }
     public void IncreaseDamageAmount(float addAmount)
     {
         originalATK = currentATK;

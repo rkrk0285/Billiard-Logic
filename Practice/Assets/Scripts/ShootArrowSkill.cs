@@ -10,7 +10,7 @@ public class ShootArrowSkill : SkillBase
     [SerializeField] private Transform arrowParents;
     
     [Space]
-    [Range(0, 1)][SerializeField] private float ChangeDirectionSpeed;
+    [Range(1, 100)][SerializeField] private float ChangeDirectionSpeed;
 
     private float angleOffset;
     private bool angleIncrease;
@@ -73,7 +73,7 @@ public class ShootArrowSkill : SkillBase
     {
         if (angleIncrease)
         {
-            angleOffset += ChangeDirectionSpeed;
+            angleOffset += ChangeDirectionSpeed * Time.deltaTime;
             if (angleOffset > 45f)
             {
                 angleOffset = 45f;
@@ -82,7 +82,7 @@ public class ShootArrowSkill : SkillBase
         }
         else
         {
-            angleOffset -= ChangeDirectionSpeed;
+            angleOffset -= ChangeDirectionSpeed * Time.deltaTime;
             if (angleOffset < -45f)
             {
                 angleOffset = -45f;

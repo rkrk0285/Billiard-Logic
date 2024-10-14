@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2953610894224140357}
+  - component: {fileID: 2836088151692802085}
   - component: {fileID: 1599937283001407778}
   - component: {fileID: 3037536850692197549}
-  - component: {fileID: 2836088151692802085}
   - component: {fileID: 4655639805467841702}
   m_Layer: 0
   m_Name: Boss
@@ -37,6 +37,27 @@ Transform:
   - {fileID: 4408628328893025751}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2836088151692802085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702739152111449267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 610228da961af714bae13cd14118bff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skills:
+  - {fileID: 6883656118729275480}
+  - {fileID: 5061565904827633859}
+  - {fileID: 4268106811603490202}
+  player: {fileID: 0}
+  skillDelay: 2
+  skilltime: 1
+  currentHP: 20
+  infoUI: {fileID: 0}
 --- !u!212 &1599937283001407778
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -124,25 +145,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &2836088151692802085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 702739152111449267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 610228da961af714bae13cd14118bff0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skills:
-  - {fileID: 6883656118729275480}
-  - {fileID: 5061565904827633859}
-  - {fileID: 4268106811603490202}
-  player: {fileID: 0}
-  skillDelay: 2
-  skilltime: 1
 --- !u!50 &4655639805467841702
 Rigidbody2D:
   serializedVersion: 4

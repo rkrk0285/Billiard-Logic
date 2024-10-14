@@ -8,8 +8,13 @@ public class BossScript : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] float skillDelay = 2;
     [SerializeField] float skilltime = 1;
+    
+    [Space]
+    public float currentHP = 100;
 
-    // Start is called before the first frame update
+    [Header("Components")]
+    [SerializeField] private InfoUI infoUI;
+    
     void Start()
     {
         StartCoroutine(UseSkill());
@@ -19,11 +24,15 @@ public class BossScript : MonoBehaviour
     void Update()
     {
         LookAtPlayer();
+        player = UnitManager.Instance.GetUnitHead();
     }
 
     // 플레이어를 바라보는 함수
     void LookAtPlayer()
     {
+        if (player == null)
+            return;
+
         // 플레이어와 보스의 위치 차이를 계산
         Vector3 direction = transform.position - player.transform.position;
         // Z축 회전각을 계산 (2D 환경)
@@ -42,5 +51,23 @@ public class BossScript : MonoBehaviour
             yield return new WaitForSeconds(skilltime);
             skills[index].SetActive(false);
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Debug.Log(damage);
+        currentHP -= damage;
+        if (currentHP <= 0)
+            Dead();
+        ShowInfo();
+    }
+
+    protected void ShowInfo()
+    {
+        infoUI.ShowHpBar(currentHP / 100);
+    }
+    protected void Dead()
+    {
+        gameObject.SetActive(false);
     }
 }

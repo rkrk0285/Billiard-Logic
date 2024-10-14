@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [Header("GameObject")]
     [SerializeField] private Transform AllyTransform;
     [SerializeField] private Transform EnemyTransform;
+    [SerializeField] private GameObject SkeletonObj;
     [SerializeField] private List<DamageZone> damageZones; // 모든 데미지 구역 참조
 
     [Header("Parameters")]
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Initialize();
-    }
+    }    
     private void Initialize()
     {
         remainTurnCount = 0;
@@ -77,8 +78,7 @@ public class GameManager : MonoBehaviour
 
         remainTurnCount = 0;
         currentAllyTurn = 0;
-        currentEnemyTurn = 0;
-        Debug.Log("���� ��� ����Ǿ����ϴ�.");
+        currentEnemyTurn = 0;        
     }
     private void ApplyDamageZones()
     {
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
         currentObject.GetComponent<MonsterController>().BreakMonster();
     }
     private void Update()
-    {
+    {        
         if (Input.GetMouseButtonDown(1))
             OnClickBreak();
     }

@@ -77,12 +77,20 @@ PrefabInstance:
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: monsterStat
+      value: 
+      objectReference: {fileID: -186648886430787492}
+    - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: StopMagnitude
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: DecelerateDrag
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: ChangeDirectionSpeed
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: BeginDecelerateMagnitude
@@ -100,6 +108,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5343083804575145709, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7145597766684118758, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
       propertyPath: ATK
       value: 2
@@ -115,19 +127,20 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -7365604304712473437, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
     - {fileID: 577696515752375278, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+    - {fileID: 7145597766684118758, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2413610394573740877, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 7738907869492437671}
+      insertIndex: 2
+      addedObject: {fileID: -186648886430787492}
   m_SourcePrefab: {fileID: 100100000, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
 --- !u!1 &320247569459651899 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2413610394573740877, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
   m_PrefabInstance: {fileID: 2670461586523635318}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7738907869492437671
+--- !u!114 &-186648886430787492
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,7 +149,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 320247569459651899}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaa92257e24627649bd8c872b660596f, type: 3}
+  m_Script: {fileID: 11500000, guid: ffbf11b70c6b9e74e8ffbd37c3552810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CannonBall: {fileID: 2006673551647739438, guid: 1d5cae73182547d4fab87902f76c7f86, type: 3}
+  MaxHP: 20
+  ATK: 2
+  DEF: 0
+  Heal: 0
+  currentHP: 0
+  currentATK: 0
+  currentDEF: 0
+  currentHeal: 0
+  infoUI: {fileID: 3795406795286844627}
+  monsterController: {fileID: 4090921795566375712}
+  index: 0
+  followSpeed: 15
+  isHead: 0
+--- !u!114 &3795406795286844627 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1271313571312839333, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+  m_PrefabInstance: {fileID: 2670461586523635318}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 466c0f7c952d8444086adbadfdbeaab7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4090921795566375712 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2146736086522670422, guid: 1dd3cd1a8d3c13a448e134081af8c553, type: 3}
+  m_PrefabInstance: {fileID: 2670461586523635318}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320247569459651899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66bd7419c4ec1564d87c2bd86c2011f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

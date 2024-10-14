@@ -23,14 +23,14 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private float BreakDrag;
 
     [Space]
-    [Range(0,1)][SerializeField] private float ChangeDirectionSpeed;
+    [Range(0, 200)][SerializeField] private float ChangeDirectionSpeed;
 
     [Header("Current Parameters")]
     private float ballRadius;
     private float currPower;
-    private float epsilon;
-    private int skipTurn;
+    private float epsilon;    
     private Vector2 currVelocity;
+    private Vector2 currDirection;
     private E_MonsterState monsterState;
     
     private float angleOffset;
@@ -54,18 +54,18 @@ public class MonsterController : MonoBehaviour
         epsilon = rb.sharedMaterial.bounciness;
 
         ballRadius = transform.localScale.x / 2;
-        currVelocity = rb.velocity;        
+        currVelocity = rb.velocity;
+        currDirection = Vector2.zero;
         currPower = Power + PlayerPrefs.GetFloat("Power", 0);        
 
         angleOffset = 0f;
         angleIncrease = true;
-
-        skipTurn = 0;
+        
         monsterState = E_MonsterState.Default;
     }
 
     private void Update()
-    {
+    {        
         DecelerateBall();
         CheckBallState();
 
@@ -85,6 +85,8 @@ public class MonsterController : MonoBehaviour
         switch (monsterState)
         {
             case E_MonsterState.Ready:
+                Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                currDirection = worldPos - new Vector2(transform.position.x, transform.position.y);
                 monsterStat.ResetStartParameter();
                 break;
         }
@@ -93,14 +95,8 @@ public class MonsterController : MonoBehaviour
     {
         switch (monsterState)
         {
-            case E_MonsterState.Ready:
-                Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 dir = worldPos - new Vector2(transform.position.x, transform.position.y);                                
-                if (CheckAnyTurnToSkip())
-                    break;
-
-                dir = ChangeAngleByDirection(dir);                
-
+            case E_MonsterState.Ready:                
+                Vector2 dir = ChangeAngleByDirection(currDirection);
                 if (Input.GetMouseButtonDown(0))
                     MoveMonster(dir);                    
                 else
@@ -119,15 +115,18 @@ public class MonsterController : MonoBehaviour
     {
         rb.velocity = dir.normalized * currPower;
         rb.drag = DefaultDrag;        
-        monsterState = E_MonsterState.Moving;
+        
+        monsterState = E_MonsterState.Moving;        
+
+        angleOffset = 0f;
+        angleIncrease = true;
         lr.enabled = false;
     }
-
     private Vector2 ChangeAngleByDirection(Vector2 dir)
     {                    
         if (angleIncrease)
         {
-            angleOffset += ChangeDirectionSpeed;
+            angleOffset += ChangeDirectionSpeed * Time.deltaTime;
             if (angleOffset > 45f)
             {
                 angleOffset = 45f;
@@ -136,7 +135,7 @@ public class MonsterController : MonoBehaviour
         }
         else
         {
-            angleOffset -= ChangeDirectionSpeed;
+            angleOffset -= ChangeDirectionSpeed * Time.deltaTime;
             if (angleOffset < -45f)
             {
                 angleOffset = -45f;
@@ -161,7 +160,7 @@ public class MonsterController : MonoBehaviour
 
         lr.positionCount = 2;
         lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, hit.point);
+        lr.SetPosition(1, transform.position + (Vector3)dir.normalized * 5f);
         lr.startColor = Color.white;
         lr.endColor = Color.white;
         lr.enabled = true;
@@ -175,17 +174,7 @@ public class MonsterController : MonoBehaviour
                 return hit[i];
         }
         return new RaycastHit2D();
-    }
-    private bool CheckAnyTurnToSkip()
-    {
-        if (skipTurn > 0)
-        {
-            ChangeState(E_MonsterState.Default);
-            skipTurn--;
-            return true;
-        }
-        return false;
-    }
+    }    
     public IEnumerator DelayedStopBall()
     {
         yield return new WaitForFixedUpdate();
@@ -201,11 +190,7 @@ public class MonsterController : MonoBehaviour
 
         rb.mass = Mass;
         rb.drag = Mathf.Max(DefaultDrag + PlayerPrefs.GetFloat("Drag", 0), 0);
-    }
-    public void SetSkipTurn(int count)
-    {
-        skipTurn = count;
-    }
+    }    
     public Vector2 GetCurrVelocity()
     {
         return currVelocity;
@@ -218,4 +203,5 @@ public class MonsterController : MonoBehaviour
     {
         rb.drag = BreakDrag;
     }
+
 }

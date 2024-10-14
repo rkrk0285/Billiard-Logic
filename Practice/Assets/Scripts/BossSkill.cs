@@ -10,7 +10,7 @@ public class BossSkill : MonoBehaviour
         {
             Debug.Log("Damage!");
             //Damage Function
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
         }
     }
 }
