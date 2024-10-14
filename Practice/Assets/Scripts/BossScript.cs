@@ -5,9 +5,13 @@ using UnityEngine;
 public class BossScript : MonoBehaviour
 {
     [SerializeField] GameObject[] skills;
+    [SerializeField] GameObject[] patterns;
+    [SerializeField] GameObject[] patternAlerts;
     [SerializeField] GameObject player;
     [SerializeField] float skillDelay = 2;
     [SerializeField] float skilltime = 1;
+    [SerializeField] float patternDelay = 5;
+    [SerializeField] float patternTime = 1;
     
     [Space]
     public float currentHP = 100;
@@ -18,6 +22,7 @@ public class BossScript : MonoBehaviour
     void Start()
     {
         StartCoroutine(UseSkill());
+        StartCoroutine(Pattern());
     }
 
     // Update is called once per frame
@@ -50,6 +55,25 @@ public class BossScript : MonoBehaviour
             skills[index].SetActive(true);
             yield return new WaitForSeconds(skilltime);
             skills[index].SetActive(false);
+        }
+    }
+
+    IEnumerator Pattern()
+    {
+        while (true)
+        {
+            int index = Random.Range(0, patterns.Length);
+
+            yield return new WaitForSeconds(patternDelay);
+
+            patternAlerts[index].SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            patternAlerts[index].SetActive(false);
+            yield return new WaitForSeconds(skilltime);
+
+            patterns[index].SetActive(true);
+            yield return new WaitForSeconds(skilltime);
+            patterns[index].SetActive(false);
         }
     }
 
