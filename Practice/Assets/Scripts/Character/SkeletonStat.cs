@@ -7,10 +7,13 @@ public class SkeletonStat : MonsterStat
     [Header("Skeleton")]
     [SerializeField] private MonsterController monsterController;
 
-    [Space]    
+    [Space]
+    [SerializeField] private int unitID = 0;
     [SerializeField] private int index = 0;    
     [SerializeField] private float followSpeed = 15f;
     [SerializeField] private bool isHead;
+
+    [SerializeField] private GameObject BonePrefab;    
 
     private Vector2 _targetPos = Vector2.zero;
     private Vector2 _velocity = Vector2.zero;
@@ -29,7 +32,21 @@ public class SkeletonStat : MonsterStat
         }        
         ShowInfo();
     }
-
+    private void OnDestroy()
+    {
+        InstantiateBone();
+        UnitManager.Instance.DelayedUpdateUnit();
+    }
+    private void InstantiateBone()
+    {        
+        for(int i = 0; i < 3; i++)
+        {
+            float randX = Random.Range(-11f, 11f);
+            float randY = Random.Range(-6f, 6f);
+            GameObject clone = Instantiate(BonePrefab, new Vector2(randX, randY), Quaternion.identity);
+            clone.GetComponent<SkeletonBone>().SetSkeletonID(unitID);
+        }
+    }
     private IEnumerator SkeletonDelayedDown()
     {
         yield return new WaitForFixedUpdate();        
@@ -40,17 +57,17 @@ public class SkeletonStat : MonsterStat
         StopCoroutine(SkeletonDelayedDown());
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!isHead)
-            return;
+    //protected override void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (!isHead)
+    //        return;
 
-        base.OnTriggerEnter2D(collision);
-        if (collision.CompareTag("Finish"))
-        {
-            UnitManager.Instance.AddUnit();
-        }
-    }
+    //    base.OnTriggerEnter2D(collision);
+    //    if (collision.CompareTag("Finish"))
+    //    {
+    //        //UnitManager.Instance.AddUnit();
+    //    }
+    //}
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
@@ -68,11 +85,7 @@ public class SkeletonStat : MonsterStat
         
         _targetPos = UnitManager.Instance.GetPrevUnitPosition(index);
         transform.position = Vector2.SmoothDamp(transform.position, _targetPos, ref _velocity, 0.4f, followSpeed);
-    }
-    private void OnDestroy()
-    {
-        UnitManager.Instance.DelayedUpdateUnit();
-    }
+    }    
     public void SetIndex(int index)
     {
         this.index = index;

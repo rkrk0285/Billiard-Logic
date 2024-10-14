@@ -1,14 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class UnitManager : MonoBehaviour
 {
-    // 각 스켈레톤이 죽었을 때 불리는 함수.    
-
-    // 스켈레톤 관리 자료구조 => 리스트 예상.
-
     public static UnitManager Instance;
 
     private void Awake()
@@ -20,15 +16,18 @@ public class UnitManager : MonoBehaviour
     }
 
     [SerializeField] private Transform AllyTransform;
-    [SerializeField] private GameObject unit;
-    [SerializeField] private GameObject firstHead;
+    [SerializeField] private GameObject[] units;        
 
-    private List<GameObject> UnitArmy = new List<GameObject>();    
+    private List<GameObject> UnitArmy = new List<GameObject>();
+    private Dictionary<int, int> boneAcquisitionStatus = new Dictionary<int, int>();
     private GameObject unitHead;
     private void Start()
     {
-        unitHead = firstHead;
-        UnitArmy.Add(firstHead);
+        unitHead = AllyTransform.GetChild(0).gameObject;        
+        for(int i = 0; i < AllyTransform.childCount; i++)
+        {
+            UnitArmy.Add(AllyTransform.GetChild(i).gameObject);
+        }
         UpdateUnitIndex();
     }
     private void UpdateUnitIndex()
@@ -62,15 +61,15 @@ public class UnitManager : MonoBehaviour
             UnitArmy[0].GetComponent<SkeletonStat>().SetHead();
             unitHead = UnitArmy[0];
         }
-    }    
-    public void AddUnit()
-    {
-        GameObject clone = Instantiate(unit, AllyTransform);        
-        UnitArmy.Add(clone);
-
-        int count = UnitArmy.Count - 1;
-        clone.GetComponent<SkeletonStat>().SetIndex(count);
     }
+    //public void AddUnit()
+    //{
+    //    GameObject clone = Instantiate(unit, AllyTransform);
+    //    UnitArmy.Add(clone);
+
+    //    int count = UnitArmy.Count - 1;
+    //    clone.GetComponent<SkeletonStat>().SetIndex(count);
+    //}
     public Vector3 GetPrevUnitPosition(int index)
     {
         if (index >= UnitArmy.Count)
@@ -90,11 +89,7 @@ public class UnitManager : MonoBehaviour
         yield return new WaitForFixedUpdate();
         UpdateUnitIndex();
         StopCoroutine(DelayedUpdate());
-    }
-    public void OnClickHeadDead()
-    {
-        Destroy(unitHead);
-    }
+    }    
     public GameObject GetUnitHead()
     {
         if (unitHead != null)
@@ -106,14 +101,53 @@ public class UnitManager : MonoBehaviour
     {
         return UnitArmy.Count;
     }
+    public void GetBone(int unitID)
+    {
+        if (!boneAcquisitionStatus.ContainsKey(unitID))        
+            boneAcquisitionStatus.Add(unitID, 1);        
+        else        
+            boneAcquisitionStatus[unitID]++;
+
+        Debug.Log(unitID + " " + boneAcquisitionStatus[unitID]);
+        if (boneAcquisitionStatus[unitID] == 3)
+        {
+            boneAcquisitionStatus[unitID] = 0;
+            ReviveUnit(unitID);
+        }
+    }
+    public void ReviveUnit(int unitID)
+    {        
+        GameObject clone = Instantiate(units[unitID], AllyTransform);
+        UnitArmy.Add(clone);
+
+        int count = UnitArmy.Count - 1;
+        clone.GetComponent<SkeletonStat>().SetIndex(count);
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (unitHead != null)
-            {
-                unitHead.GetComponent<MonsterController>().ChangeState(E_MonsterState.Ready);
-            }
+            if (unitHead != null)            
+                unitHead.GetComponent<MonsterController>().ChangeState(E_MonsterState.Ready);                            
+        }
+    }
+}
+
+[InitializeOnLoad]
+public class PlayModeHandler : MonoBehaviour
+{
+    PlayModeHandler()
+    {
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+    }
+
+    private void OnPlayModeStateChanged(PlayModeStateChange state)
+    {
+        if (state == PlayModeStateChange.EnteredEditMode)
+        {
+            // Play 모드에서 멈추고 Edit 모드로 돌아왔을 때
+            Debug.Log("Play 모드가 멈췄습니다.");
+            StopAllCoroutines();
         }
     }
 }

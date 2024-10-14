@@ -54,8 +54,7 @@ public class BossScript : MonoBehaviour
     }
 
     public void TakeDamage(float damage)
-    {
-        Debug.Log(damage);
+    {        
         currentHP -= damage;
         if (currentHP <= 0)
             Dead();
