@@ -93,22 +93,31 @@ public class MonsterController : MonoBehaviour
     }
     private void CheckBallState()
     {
-        switch (monsterState)
+        if (monsterState == E_MonsterState.Ready)
         {
-            case E_MonsterState.Ready:                
-                Vector2 dir = ChangeAngleByDirection(currDirection);
-                if (Input.GetMouseButtonDown(0))
-                    MoveMonster(dir);                    
-                else
-                    DrawLine(dir);               
-                break;
-            case E_MonsterState.Moving:
-                if (rb.velocity.magnitude == 0)
-                {
-                    ResetEndPhysicsParameter();
-                    ChangeState(E_MonsterState.Default);
-                }
-                break;
+            float moveY = 0f;
+            float moveX = 0f;
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                moveY = 1f;
+            }
+
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                moveY = -1f;
+            }
+
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                moveX = -1f;
+            }
+
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                moveX += 1f;
+            }
+
+            transform.Translate(new Vector3(moveX, moveY, 0f) * 0.005f);
         }
     }
     protected void MoveMonster(Vector2 dir)
