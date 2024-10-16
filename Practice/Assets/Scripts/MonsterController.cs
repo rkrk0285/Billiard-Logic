@@ -22,20 +22,26 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private float StopMagnitude;
     [SerializeField] private float BreakDrag;
 
+    [Space]
+    [Range(0, 200)][SerializeField] private float ChangeDirectionSpeed;
+
     [Header("Current Parameters")]
     private float ballRadius;
-    private float currentPower;
-    private float epsilon;
-    private int skipTurn;
+    private float currPower;
+    private float epsilon;    
     private Vector2 currVelocity;
+    private Vector2 currDirection;
     private E_MonsterState monsterState;
+    
+    private float angleOffset;
+    private bool angleIncrease;
 
     [Header("Components")]
     [SerializeField] private MonsterStat monsterStat;
 
     private Rigidbody2D rb;
     private BallStat ballStat;
-    private LineRenderer lr;
+    private LineRenderer lr;   
     
     private void Start()
     {
@@ -49,13 +55,17 @@ public class MonsterController : MonoBehaviour
 
         ballRadius = transform.localScale.x / 2;
         currVelocity = rb.velocity;
-        currentPower = Power + PlayerPrefs.GetFloat("Power", 0);
-        skipTurn = 0;
+        currDirection = Vector2.zero;
+        currPower = Power + PlayerPrefs.GetFloat("Power", 0);        
+
+        angleOffset = 0f;
+        angleIncrease = true;
+        
         monsterState = E_MonsterState.Default;
     }
 
     private void Update()
-    {
+    {        
         DecelerateBall();
         CheckBallState();
 
@@ -75,6 +85,8 @@ public class MonsterController : MonoBehaviour
         switch (monsterState)
         {
             case E_MonsterState.Ready:
+                Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                currDirection = worldPos - new Vector2(transform.position.x, transform.position.y);
                 monsterStat.ResetStartParameter();
                 break;
         }
@@ -83,18 +95,12 @@ public class MonsterController : MonoBehaviour
     {
         switch (monsterState)
         {
-            case E_MonsterState.Ready:
-                Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 dir = worldPos - new Vector2(transform.position.x, transform.position.y);
-
-                if (CheckAnyTurnToSkip())
-                    break;                
-
+            case E_MonsterState.Ready:                
+                Vector2 dir = ChangeAngleByDirection(currDirection);
                 if (Input.GetMouseButtonDown(0))
                     MoveMonster(dir);                    
                 else
-                    DrawLine(dir);
-
+                    DrawLine(dir);               
                 break;
             case E_MonsterState.Moving:
                 if (rb.velocity.magnitude == 0)
@@ -107,23 +113,57 @@ public class MonsterController : MonoBehaviour
     }
     protected void MoveMonster(Vector2 dir)
     {
-        rb.velocity = dir.normalized * currentPower;
-        rb.drag = DefaultDrag;
+        rb.velocity = dir.normalized * currPower;
+        rb.drag = DefaultDrag;        
+        
+        monsterState = E_MonsterState.Moving;        
 
-        monsterState = E_MonsterState.Moving;
+        angleOffset = 0f;
+        angleIncrease = true;
         lr.enabled = false;
-    }    
+    }
+    private Vector2 ChangeAngleByDirection(Vector2 dir)
+    {                    
+        if (angleIncrease)
+        {
+            angleOffset += ChangeDirectionSpeed * Time.deltaTime;
+            if (angleOffset > 45f)
+            {
+                angleOffset = 45f;
+                angleIncrease = false;
+            }
+        }
+        else
+        {
+            angleOffset -= ChangeDirectionSpeed * Time.deltaTime;
+            if (angleOffset < -45f)
+            {
+                angleOffset = -45f;
+                angleIncrease = true;
+            }
+        }
+
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + angleOffset;
+        float radian = angle * Mathf.Deg2Rad;
+        return new Vector2 (Mathf.Cos(radian), Mathf.Sin(radian));       
+    }
+    private static float NormalizeAngle(float angle)
+    {
+        angle %= 360f;
+        if (angle < 0)
+            angle += 360f;
+        return angle;
+    }
     private void DrawLine(Vector2 dir)
     {        
-        RaycastHit2D hit = GetCircleCastHit(transform.position, dir, gameObject);        
-        
+        RaycastHit2D hit = GetCircleCastHit(transform.position, dir, gameObject);
+
         lr.positionCount = 2;
         lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, hit.point + hit.normal * ballRadius);
-
+        lr.SetPosition(1, transform.position + (Vector3)dir.normalized * 5f);
         lr.startColor = Color.white;
         lr.endColor = Color.white;
-        lr.enabled = true;        
+        lr.enabled = true;
     }
     protected RaycastHit2D GetCircleCastHit(Vector2 pos, Vector2 dir, GameObject obj)
     {
@@ -134,17 +174,7 @@ public class MonsterController : MonoBehaviour
                 return hit[i];
         }
         return new RaycastHit2D();
-    }
-    private bool CheckAnyTurnToSkip()
-    {
-        if (skipTurn > 0)
-        {
-            ChangeState(E_MonsterState.Default);
-            skipTurn--;
-            return true;
-        }
-        return false;
-    }
+    }    
     public IEnumerator DelayedStopBall()
     {
         yield return new WaitForFixedUpdate();
@@ -153,14 +183,14 @@ public class MonsterController : MonoBehaviour
     }
     public void ResetEndPhysicsParameter()
     {
-        currentPower = Power;
+        currPower = Power;
+        
+        angleOffset = 0f;
+        angleIncrease = true;
+
         rb.mass = Mass;
         rb.drag = Mathf.Max(DefaultDrag + PlayerPrefs.GetFloat("Drag", 0), 0);
-    }
-    public void SetSkipTurn(int count)
-    {
-        skipTurn = count;
-    }
+    }    
     public Vector2 GetCurrVelocity()
     {
         return currVelocity;
@@ -173,4 +203,5 @@ public class MonsterController : MonoBehaviour
     {
         rb.drag = BreakDrag;
     }
+
 }

@@ -11,9 +11,11 @@ public class BiteSkill : SkillBase
         Debug.Log(this.gameObject.name + " 스킬 발동");
         
         GameObject target = GetClosestMonster(this.gameObject);
-        target.GetComponent<MonsterStat>().TakeDamage(damage);
-        
-        Vector3 dir = target.transform.position - transform.position;
-        transform.position = target.transform.position + dir.normalized;
+        if (target != null)
+        {
+            target.GetComponent<MonsterStat>().TakeDamage(damage);
+            Vector3 dir = target.transform.position - transform.position;
+            transform.position = target.transform.position - dir.normalized;
+        }
     }
 }

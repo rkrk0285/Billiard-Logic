@@ -19,12 +19,12 @@ public class SkillBase : MonoBehaviour
         lr.SetPosition(1, hit.point + hit.normal * ballRadius);
 
         lr.startColor = Color.white;
-        lr.endColor = Color.white;
-        lr.enabled = true;
+        lr.endColor = Color.white;        
+        lr.enabled = true;        
     }
 
     protected RaycastHit2D GetCircleCastHit(Vector2 pos, Vector2 dir, GameObject obj)
-    {
+    {        
         RaycastHit2D[] hit = Physics2D.CircleCastAll(pos, ballRadius, dir, 100f);
         for (int i = 0; i < hit.Length; i++)
         {
@@ -43,7 +43,7 @@ public class SkillBase : MonoBehaviour
         float closestDist = float.MaxValue;
         for (int i = 0; i < AllyTransform.childCount; i++)
         {
-            if (AllyTransform.GetChild(i).gameObject != currObj)
+            if (AllyTransform.GetChild(i).gameObject != currObj && AllyTransform.GetChild(i).gameObject.activeSelf)
             {
                 float dist = Vector2.Distance(currObj.transform.position, AllyTransform.GetChild(i).position);
                 if (closestDist > dist)
@@ -56,7 +56,7 @@ public class SkillBase : MonoBehaviour
 
         for (int i = 0; i < EnemyTransform.childCount; i++)
         {
-            if (EnemyTransform.GetChild(i).gameObject != currObj)
+            if (EnemyTransform.GetChild(i).gameObject != currObj && EnemyTransform.GetChild(i).gameObject.activeSelf)
             {
                 float dist = Vector2.Distance(currObj.transform.position, EnemyTransform.GetChild(i).position);
                 if (closestDist > dist)
@@ -69,5 +69,10 @@ public class SkillBase : MonoBehaviour
         return result;
     }
 
+    protected void DisableLine()
+    {
+        LineRenderer lr = GetComponent<LineRenderer>();
+        lr.enabled = false;
+    }
     public virtual void Activate() { }
 }
