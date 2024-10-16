@@ -5631,9 +5631,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4881774422831453883, guid: 68b558f1b718dc94d88c881b7dd17e2f, type: 3}
+      propertyPath: DefaultDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881774422831453883, guid: 68b558f1b718dc94d88c881b7dd17e2f, type: 3}
+      propertyPath: ChangeDirectionSpeed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8028466400815073250, guid: 68b558f1b718dc94d88c881b7dd17e2f, type: 3}
       propertyPath: m_Name
       value: Red
+      objectReference: {fileID: 0}
+    - target: {fileID: 8380788655615100535, guid: 68b558f1b718dc94d88c881b7dd17e2f, type: 3}
+      propertyPath: followSpeed
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19532,6 +19544,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Orange
       objectReference: {fileID: 0}
+    - target: {fileID: 6835376110530531831, guid: 3edf3fd5feb869a4e95b67372b983987, type: 3}
+      propertyPath: followSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7207535455158015851, guid: 3edf3fd5feb869a4e95b67372b983987, type: 3}
+      propertyPath: DefaultDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7207535455158015851, guid: 3edf3fd5feb869a4e95b67372b983987, type: 3}
+      propertyPath: ChangeDirectionSpeed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8169581133793491454, guid: 3edf3fd5feb869a4e95b67372b983987, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.42
@@ -20292,6 +20316,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 286515861}
     m_Modifications:
+    - target: {fileID: 3018165372207438580, guid: f789e2051967de448b8464cf0c815b66, type: 3}
+      propertyPath: followSpeed
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3101375113014149165, guid: f789e2051967de448b8464cf0c815b66, type: 3}
       propertyPath: m_Name
       value: Yellow
@@ -20334,6 +20362,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5258446134009744727, guid: f789e2051967de448b8464cf0c815b66, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8772927401783637647, guid: f789e2051967de448b8464cf0c815b66, type: 3}
+      propertyPath: DefaultDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8772927401783637647, guid: f789e2051967de448b8464cf0c815b66, type: 3}
+      propertyPath: ChangeDirectionSpeed
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -21148,6 +21184,18 @@ PrefabInstance:
     - target: {fileID: 6137230080919194420, guid: a3471b0999836a54aaa16b81acefedc4, type: 3}
       propertyPath: m_Name
       value: Green
+      objectReference: {fileID: 0}
+    - target: {fileID: 6157227449050264143, guid: a3471b0999836a54aaa16b81acefedc4, type: 3}
+      propertyPath: DefaultDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6157227449050264143, guid: a3471b0999836a54aaa16b81acefedc4, type: 3}
+      propertyPath: ChangeDirectionSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7809556272853101870, guid: a3471b0999836a54aaa16b81acefedc4, type: 3}
+      propertyPath: followSpeed
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

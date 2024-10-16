@@ -84,7 +84,7 @@ public class SkeletonStat : MonsterStat
             return;
         
         _targetPos = UnitManager.Instance.GetPrevUnitPosition(index);
-        transform.position = Vector2.SmoothDamp(transform.position, _targetPos, ref _velocity, 0.4f, followSpeed);
+        transform.position = Vector2.SmoothDamp(transform.position, _targetPos, ref _velocity, 0.1f, followSpeed);
     }    
     public void SetIndex(int index)
     {

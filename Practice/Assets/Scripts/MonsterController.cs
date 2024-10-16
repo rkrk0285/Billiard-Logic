@@ -67,6 +67,8 @@ public class MonsterController : MonoBehaviour
     private void Update()
     {        
         DecelerateBall();
+        if(GetComponent<SkeletonStat>().GetIsHead())
+            ChangeState(E_MonsterState.Ready);
         CheckBallState();
 
         currVelocity = rb.velocity;
@@ -96,7 +98,7 @@ public class MonsterController : MonoBehaviour
         switch (monsterState)
         {
             case E_MonsterState.Ready:                
-                Vector2 dir = ChangeAngleByDirection(currDirection);
+                Vector2 dir = GetDirectionToMouse(transform.position);
                 if (Input.GetMouseButtonDown(0))
                     MoveMonster(dir);                    
                 else
@@ -147,6 +149,20 @@ public class MonsterController : MonoBehaviour
         float radian = angle * Mathf.Deg2Rad;
         return new Vector2 (Mathf.Cos(radian), Mathf.Sin(radian));       
     }
+    private Vector2 GetDirectionToMouse(Vector2 objectPosition)
+    {
+        // 마우스 포인터의 화면 좌표를 가져옵니다.
+        Vector3 mouseScreenPosition = Input.mousePosition;
+        
+        // 화면 좌표를 월드 좌표로 변환합니다.
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+        // 마우스 월드 좌표와 오브젝트 위치 사이의 방향을 계산합니다.
+        Vector2 dir = (mouseWorldPosition - (Vector3)objectPosition).normalized;
+
+        // 계산된 방향 벡터를 반환합니다.
+        return dir;
+    }
+
     private static float NormalizeAngle(float angle)
     {
         angle %= 360f;

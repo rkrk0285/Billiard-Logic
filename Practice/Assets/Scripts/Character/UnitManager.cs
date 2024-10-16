@@ -132,22 +132,3 @@ public class UnitManager : MonoBehaviour
         }
     }
 }
-
-[InitializeOnLoad]
-public class PlayModeHandler : MonoBehaviour
-{
-    PlayModeHandler()
-    {
-        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-    }
-
-    private void OnPlayModeStateChanged(PlayModeStateChange state)
-    {
-        if (state == PlayModeStateChange.EnteredEditMode)
-        {
-            // Play 모드에서 멈추고 Edit 모드로 돌아왔을 때
-            Debug.Log("Play 모드가 멈췄습니다.");
-            StopAllCoroutines();
-        }
-    }
-}

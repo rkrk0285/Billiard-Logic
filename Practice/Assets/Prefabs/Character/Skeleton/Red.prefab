@@ -439,12 +439,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Power: 8
   Mass: 1
-  DefaultDrag: 0.3
+  DefaultDrag: 0
   BeginDecelerateMagnitude: 4
   DecelerateDrag: 2
   StopMagnitude: 0.4
   BreakDrag: 2.5
-  ChangeDirectionSpeed: 100
+  ChangeDirectionSpeed: 0
   monsterStat: {fileID: 8380788655615100535}
 --- !u!114 &8380788655615100535
 MonoBehaviour:
@@ -470,7 +470,7 @@ MonoBehaviour:
   monsterController: {fileID: 4881774422831453883}
   unitID: 0
   index: 0
-  followSpeed: 5
+  followSpeed: 15
   isHead: 0
   BonePrefab: {fileID: 3604906096185510738, guid: 14d50d396651f5043bc64760e0db6f50, type: 3}
 --- !u!50 &4382114295840619923

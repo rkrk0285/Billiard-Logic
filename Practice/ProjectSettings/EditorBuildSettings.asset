@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MoveTest.unity
-    guid: 43af277689276af4ba62cafd385eb7e8
+    path: Assets/Scenes/SnakeGame.unity
+    guid: 9c5f4391be3ef3f4da30852d096fdb89
   m_configObjects: {}
