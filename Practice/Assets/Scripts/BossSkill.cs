@@ -7,9 +7,9 @@ public class BossSkill : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
-        {            
+        {
             //Damage Function
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<SkeletonStat>().TakeDamage(100);
         }
     }
 }

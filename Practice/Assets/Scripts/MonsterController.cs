@@ -68,7 +68,7 @@ public class MonsterController : MonoBehaviour
     {        
         DecelerateBall();
         CheckBallState();
-
+        
         currVelocity = rb.velocity;
     }
 
@@ -84,9 +84,7 @@ public class MonsterController : MonoBehaviour
         monsterState = state;
         switch (monsterState)
         {
-            case E_MonsterState.Ready:
-                Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                currDirection = worldPos - new Vector2(transform.position.x, transform.position.y);
+            case E_MonsterState.Ready:                
                 monsterStat.ResetStartParameter();
                 break;
         }
@@ -95,12 +93,14 @@ public class MonsterController : MonoBehaviour
     {
         switch (monsterState)
         {
-            case E_MonsterState.Ready:                
-                Vector2 dir = ChangeAngleByDirection(currDirection);
-                if (Input.GetMouseButtonDown(0))
-                    MoveMonster(dir);                    
-                else
-                    DrawLine(dir);               
+            case E_MonsterState.Ready:
+                Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);                
+                currDirection = worldPos - new Vector2(transform.position.x, transform.position.y);
+                //Vector2 dir = ChangeAngleByDirection(currDirection);
+                //if (Input.GetMouseButtonDown(0))
+                //    MoveMonster(dir);
+                //else
+                DrawLine(currDirection);               
                 break;
             case E_MonsterState.Moving:
                 if (rb.velocity.magnitude == 0)
@@ -117,6 +117,17 @@ public class MonsterController : MonoBehaviour
         rb.drag = DefaultDrag;        
         
         monsterState = E_MonsterState.Moving;        
+
+        angleOffset = 0f;
+        angleIncrease = true;
+        lr.enabled = false;
+    }
+    public void MoveMonster(float pushPower)
+    {
+        rb.velocity = currDirection.normalized * pushPower;
+        rb.drag = DefaultDrag;
+
+        monsterState = E_MonsterState.Moving;
 
         angleOffset = 0f;
         angleIncrease = true;

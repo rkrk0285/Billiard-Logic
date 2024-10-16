@@ -63,14 +63,15 @@ public class MonsterStat : MonoBehaviour
     protected void ShowInfo()
     {
         infoUI.ShowHpBar(currentHP / MaxHP);
-    }
-    protected void Dead()
-    {        
-        gameObject.SetActive(false);
-    }
+    }    
     public virtual void OnNotifyTurnEnd()
     {        
         skill?.Invoke();
+    }
+    protected virtual void Dead()
+    {
+        // Do Nothing.
+        // Override this function.
     }
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {

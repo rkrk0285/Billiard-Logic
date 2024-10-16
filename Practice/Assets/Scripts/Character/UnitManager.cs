@@ -21,6 +21,8 @@ public class UnitManager : MonoBehaviour
     private List<GameObject> UnitArmy = new List<GameObject>();
     private Dictionary<int, int> boneAcquisitionStatus = new Dictionary<int, int>();
     private GameObject unitHead;
+
+    private float pushPower = 0f;
     private void Start()
     {
         unitHead = AllyTransform.GetChild(0).gameObject;        
@@ -29,19 +31,22 @@ public class UnitManager : MonoBehaviour
             UnitArmy.Add(AllyTransform.GetChild(i).gameObject);
         }
         UpdateUnitIndex();
+
+        pushPower = 0f;
     }
-    private void UpdateUnitIndex()
+    public void UpdateUnitIndex()
     {
         Stack<int> deleteIndex = new Stack<int>();
 
         // Remove Dead Unit
         for(int i = 0; i < UnitArmy.Count; i++)
         {
-            if (UnitArmy[i] == null)            
+            if (UnitArmy[i].GetComponent<SkeletonStat>().GetIsDead())
                 deleteIndex.Push(i);            
         }
         while (deleteIndex.Count > 0)
         {
+            Destroy(UnitArmy[deleteIndex.Peek()]);
             UnitArmy.RemoveAt(deleteIndex.Pop());
         }
 
@@ -61,15 +66,7 @@ public class UnitManager : MonoBehaviour
             UnitArmy[0].GetComponent<SkeletonStat>().SetHead();
             unitHead = UnitArmy[0];
         }
-    }
-    //public void AddUnit()
-    //{
-    //    GameObject clone = Instantiate(unit, AllyTransform);
-    //    UnitArmy.Add(clone);
-
-    //    int count = UnitArmy.Count - 1;
-    //    clone.GetComponent<SkeletonStat>().SetIndex(count);
-    //}
+    }    
     public Vector3 GetPrevUnitPosition(int index)
     {
         if (index >= UnitArmy.Count)
@@ -116,8 +113,8 @@ public class UnitManager : MonoBehaviour
         }
     }
     public void ReviveUnit(int unitID)
-    {        
-        GameObject clone = Instantiate(units[unitID], AllyTransform);
+    {
+        GameObject clone = Instantiate(units[unitID], unitHead.transform.position, Quaternion.identity, AllyTransform);
         UnitArmy.Add(clone);
 
         int count = UnitArmy.Count - 1;
@@ -127,8 +124,21 @@ public class UnitManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            pushPower = 0;
             if (unitHead != null)            
                 unitHead.GetComponent<MonsterController>().ChangeState(E_MonsterState.Ready);                            
+        }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            pushPower += Time.deltaTime * 25f;
+
+            if (pushPower > 20)
+                pushPower = 20;
+        }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            Debug.Log(pushPower);
+            unitHead.GetComponent<MonsterController>().MoveMonster(pushPower);
         }
     }
 }

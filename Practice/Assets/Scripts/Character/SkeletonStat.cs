@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SkeletonStat : MonsterStat
@@ -11,7 +10,8 @@ public class SkeletonStat : MonsterStat
     [SerializeField] private int unitID = 0;
     [SerializeField] private int index = 0;    
     [SerializeField] private float followSpeed = 15f;
-    [SerializeField] private bool isHead;
+    [SerializeField] private bool isHead;    
+    private bool isDead = false;
 
     [SerializeField] private GameObject BonePrefab;    
 
@@ -31,12 +31,7 @@ public class SkeletonStat : MonsterStat
             return;
         }        
         ShowInfo();
-    }
-    private void OnDestroy()
-    {
-        InstantiateBone();
-        UnitManager.Instance.DelayedUpdateUnit();
-    }
+    }    
     private void InstantiateBone()
     {        
         for(int i = 0; i < 3; i++)
@@ -56,19 +51,12 @@ public class SkeletonStat : MonsterStat
 
         StopCoroutine(SkeletonDelayedDown());
     }
-
-    //protected override void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (!isHead)
-    //        return;
-
-    //    base.OnTriggerEnter2D(collision);
-    //    if (collision.CompareTag("Finish"))
-    //    {
-    //        //UnitManager.Instance.AddUnit();
-    //    }
-    //}
-
+    protected override void Dead()
+    {
+        isDead = true;
+        InstantiateBone();
+        UnitManager.Instance.UpdateUnitIndex();
+    }
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
@@ -84,7 +72,7 @@ public class SkeletonStat : MonsterStat
             return;
         
         _targetPos = UnitManager.Instance.GetPrevUnitPosition(index);
-        transform.position = Vector2.SmoothDamp(transform.position, _targetPos, ref _velocity, 0.4f, followSpeed);
+        transform.position = Vector2.SmoothDamp(transform.position, _targetPos, ref _velocity, 0.1f, followSpeed);
     }    
     public void SetIndex(int index)
     {
@@ -98,4 +86,8 @@ public class SkeletonStat : MonsterStat
     {
         isHead = true;
     }    
+    public bool GetIsDead()
+    {
+        return isDead;
+    }
 }

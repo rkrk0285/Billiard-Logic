@@ -426,10 +426,9 @@ MonoBehaviour:
   monsterController: {fileID: 6157227449050264143}
   unitID: 3
   index: 0
-  followSpeed: 5
+  followSpeed: 15
   isHead: 0
   BonePrefab: {fileID: 3604906096185510738, guid: 14d50d396651f5043bc64760e0db6f50, type: 3}
-  ObjectTransform: {fileID: 0}
 --- !u!50 &7712848289280123651
 Rigidbody2D:
   serializedVersion: 4

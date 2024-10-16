@@ -460,7 +460,7 @@ MonoBehaviour:
   monsterController: {fileID: 8772927401783637647}
   unitID: 2
   index: 0
-  followSpeed: 5
+  followSpeed: 15
   isHead: 0
   BonePrefab: {fileID: 3604906096185510738, guid: 14d50d396651f5043bc64760e0db6f50, type: 3}
 --- !u!50 &5180089730946533527
